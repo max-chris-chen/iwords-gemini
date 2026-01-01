@@ -4,7 +4,7 @@
 
 - [x] Task: Initialize SvelteKit project with Svelte 5, Tailwind CSS, and Vitest [2ec1d35]
 - [x] Task: Set up MongoDB connection and basic word/scenario schema [fb4fddb]
-- [ ] Task: Implement configurable AI service wrapper for Deepseek API
+- [x] Task: Implement configurable AI service wrapper for Deepseek API [ddf6742]
 - [ ] Task: Write Tests: Scenario-based word generation logic (Unit)
 - [ ] Task: Implement Feature: AI generation of word list from scenario
 - [ ] Task: Implement Feature: Comprehensive security measures (XSS sanitization, NoSQL injection prevention, Rate limiting)
