@@ -1,7 +1,10 @@
 import type { Scenario, Word } from '../models/types';
 import { generateContent } from './ai';
+import { validatePrompt, sanitizeScenarioData } from './security';
 
 export async function generateScenario(prompt: string): Promise<Scenario> {
+    validatePrompt(prompt);
+
     const aiPrompt = `
 Generate a list of English words related to the scenario: "${prompt}".
 Output strictly valid JSON with the following structure:
@@ -23,7 +26,7 @@ Provide at least 5 words. Each word should have 5 examples.
     const content = await generateContent(aiPrompt);
 
     try {
-        // Clean up markdown code blocks if present (Deepseek might wrap in ```json ... ```)
+        // Clean up markdown code blocks if present
         const cleanedContent = content.replace(/```json/g, '').replace(/```/g, '').trim();
         const parsed = JSON.parse(cleanedContent);
         
@@ -31,11 +34,12 @@ Provide at least 5 words. Each word should have 5 examples.
              throw new Error('Invalid JSON structure: missing words array');
         }
 
-        const words: Word[] = parsed.words.map((w: any) => ({
+        const words: Word[] = parsed.words.map((w: any) => sanitizeScenarioData({
             word: w.word,
             phonetics: w.phonetics,
             definition: w.definition,
-            examples: w.examples || []
+            examples: w.examples || [],
+            audioUrl: w.audioUrl
         }));
 
         return {
