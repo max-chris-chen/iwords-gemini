@@ -3,7 +3,7 @@
 ## Phase 1: Infrastructure and AI Integration
 
 - [x] Task: Initialize SvelteKit project with Svelte 5, Tailwind CSS, and Vitest [2ec1d35]
-- [~] Task: Set up MongoDB connection and basic word/scenario schema
+- [x] Task: Set up MongoDB connection and basic word/scenario schema [fb4fddb]
 - [ ] Task: Implement configurable AI service wrapper for Deepseek API
 - [ ] Task: Write Tests: Scenario-based word generation logic (Unit)
 - [ ] Task: Implement Feature: AI generation of word list from scenario
