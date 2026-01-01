@@ -1,0 +1,50 @@
+import type { Scenario, Word } from '../models/types';
+import { generateContent } from './ai';
+
+export async function generateScenario(prompt: string): Promise<Scenario> {
+    const aiPrompt = `
+Generate a list of English words related to the scenario: "${prompt}".
+Output strictly valid JSON with the following structure:
+{
+  "words": [
+    {
+      "word": "english word",
+      "phonetics": "IPA",
+      "definition": "english definition",
+      "examples": [
+        { "en": "example sentence 1", "cn": "chinese translation" }
+      ]
+    }
+  ]
+}
+Provide at least 5 words. Each word should have 5 examples.
+`;
+
+    const content = await generateContent(aiPrompt);
+
+    try {
+        // Clean up markdown code blocks if present (Deepseek might wrap in ```json ... ```)
+        const cleanedContent = content.replace(/```json/g, '').replace(/```/g, '').trim();
+        const parsed = JSON.parse(cleanedContent);
+        
+        if (!parsed.words || !Array.isArray(parsed.words)) {
+             throw new Error('Invalid JSON structure: missing words array');
+        }
+
+        const words: Word[] = parsed.words.map((w: any) => ({
+            word: w.word,
+            phonetics: w.phonetics,
+            definition: w.definition,
+            examples: w.examples || []
+        }));
+
+        return {
+            prompt,
+            createdAt: new Date(),
+            words
+        };
+    } catch (error) {
+        console.error('Failed to parse AI response:', content);
+        throw new Error('Failed to parse AI response: ' + (error as Error).message);
+    }
+}
