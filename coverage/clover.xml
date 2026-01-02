@@ -1,7 +1,25 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<coverage generated="1767348907309" clover="3.2.0">
-  <project timestamp="1767348907310" name="All files">
-    <metrics statements="86" coveredstatements="71" conditionals="34" coveredconditionals="21" methods="15" coveredmethods="14" elements="135" coveredelements="106" complexity="0" loc="86" ncloc="86" packages="4" files="8" classes="8"/>
+<coverage generated="1767349253584" clover="3.2.0">
+  <project timestamp="1767349253584" name="All files">
+    <metrics statements="98" coveredstatements="83" conditionals="34" coveredconditionals="21" methods="18" coveredmethods="17" elements="150" coveredelements="121" complexity="0" loc="98" ncloc="98" packages="5" files="9" classes="9"/>
+    <package name="lib">
+      <metrics statements="12" coveredstatements="12" conditionals="0" coveredconditionals="0" methods="3" coveredmethods="3"/>
+      <file name="mindmap.ts" path="C:\data\workspace\iwords\src\lib\mindmap.ts">
+        <metrics statements="12" coveredstatements="12" conditionals="0" coveredconditionals="0" methods="3" coveredmethods="3"/>
+        <line num="5" count="1" type="stmt"/>
+        <line num="6" count="1" type="stmt"/>
+        <line num="9" count="1" type="stmt"/>
+        <line num="17" count="1" type="stmt"/>
+        <line num="18" count="2" type="stmt"/>
+        <line num="19" count="2" type="stmt"/>
+        <line num="24" count="2" type="stmt"/>
+        <line num="30" count="2" type="stmt"/>
+        <line num="31" count="3" type="stmt"/>
+        <line num="32" count="3" type="stmt"/>
+        <line num="37" count="3" type="stmt"/>
+        <line num="45" count="1" type="stmt"/>
+      </file>
+    </package>
     <package name="lib.components">
       <metrics statements="6" coveredstatements="6" conditionals="0" coveredconditionals="0" methods="4" coveredmethods="4"/>
       <file name="MindMap.svelte" path="C:\data\workspace\iwords\src\lib\components\MindMap.svelte">

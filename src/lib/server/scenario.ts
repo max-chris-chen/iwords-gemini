@@ -68,7 +68,20 @@ async function save(scenario: Scenario) {
 	return result;
 }
 
+import { ObjectId } from 'mongodb';
+
+// ... (existing code)
+
+async function getById(id: string) {
+	const client = await clientPromise;
+	const db = client.db('iwords');
+	const collection = db.collection<Scenario>('scenarios');
+	const scenario = await collection.findOne({ _id: new ObjectId(id) });
+	return scenario;
+}
+
 export const scenarioService = {
 	generate: generate,
-	save: save
+	save: save,
+	getById: getById
 };

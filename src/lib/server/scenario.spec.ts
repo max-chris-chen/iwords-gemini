@@ -82,5 +82,46 @@ describe('Scenario Logic', () => {
 			expect(insertOneMock).toHaveBeenCalledWith(mockScenario);
 			expect(result).toEqual({ acknowledged: true, insertedId: 'mock-id' });
 		});
+	});	describe('getById', () => {
+		it('should retrieve a scenario by its ID', async () => {
+			const scenarioId = '60d0fe4f5311236168a109ca';
+			const mockScenario = { _id: scenarioId, prompt: 'test', words: [] };
+			
+			const findOneMock = vi.fn().mockResolvedValue(mockScenario);
+			const collectionMock = { findOne: findOneMock };
+			const dbMock = { collection: vi.fn().mockReturnValue(collectionMock) };
+			const clientMock = { db: vi.fn().mockReturnValue(dbMock) };
+
+			vi.doMock('./db', () => ({
+				default: Promise.resolve(clientMock)
+			}));
+
+			const { scenarioService: mockedService } = await import('./scenario');
+			const result = await mockedService.getById(scenarioId);
+
+			expect(clientMock.db).toHaveBeenCalledWith('iwords');
+			expect(dbMock.collection).toHaveBeenCalledWith('scenarios');
+			expect(findOneMock).toHaveBeenCalledWith({ _id: new (await import('mongodb')).ObjectId(scenarioId) });
+			expect(result).toEqual(mockScenario);
+		});
+
+		it('should return null if scenario is not found', async () => {
+			const scenarioId = '60d0fe4f5311236168a109cb';
+			
+			const findOneMock = vi.fn().mockResolvedValue(null);
+			const collectionMock = { findOne: findOneMock };
+			const dbMock = { collection: vi.fn().mockReturnValue(collectionMock) };
+			const clientMock = { db: vi.fn().mockReturnValue(dbMock) };
+
+			vi.doMock('./db', () => ({
+				default: Promise.resolve(clientMock)
+			}));
+
+			const { scenarioService: mockedService } = await import('./scenario');
+			const result = await mockedService.getById(scenarioId);
+
+			expect(result).toBeNull();
+		});
 	});
 });
+
