@@ -2,7 +2,7 @@
 
 This plan outlines the steps required to implement the features described in the `spec.md` for UI/UX Enhancements, Navigation, and Enhanced Scenario Management.
 
-## Phase 1: Core UI/UX Framework and Navigation
+## Phase 1: Core UI/UX Framework and Navigation [checkpoint: 8981314]
 
 - [x] Task: Set up basic styling infrastructure
     - [ ] Sub-task: Analyze existing CSS/styling setup and conventions
@@ -15,7 +15,7 @@ This plan outlines the steps required to implement the features described in the
     - [ ] Sub-task: Integrate application logo/name into the navigation bar
     - [ ] Sub-task: Add "Home" link to the navigation bar
     - [ ] Sub-task: Ensure navigation bar is consistently displayed across relevant pages
-- [ ] Task: Conductor - User Manual Verification 'Core UI/UX Framework and Navigation' (Protocol in workflow.md)
+- [x] Task: Conductor - User Manual Verification 'Core UI/UX Framework and Navigation' (Protocol in workflow.md)
 
 ## Phase 2: Home Page - Scenario Input and Display
 
