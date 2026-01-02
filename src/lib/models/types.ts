@@ -1,4 +1,4 @@
-import type { ObjectId } from 'mongodb';
+// import type { ObjectId } from 'mongodb';
 
 export interface ExampleSentence {
     en: string;
@@ -15,7 +15,7 @@ export interface Word {
 }
 
 export interface Scenario {
-    _id?: ObjectId;
+    _id?: string;
     prompt: string;
     createdAt: Date;
     words: Word[];
