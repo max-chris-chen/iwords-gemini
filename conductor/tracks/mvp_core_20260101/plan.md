@@ -14,7 +14,7 @@
 
 ## Phase 2: Mind Map Visualization
 
-- [ ] Task: Integrate Svelte Flow and create a basic interactive node structure
+- [~] Task: Integrate Svelte Flow and create a basic interactive node structure
 - [ ] Task: Write Tests: Mind map data transformation logic
 - [ ] Task: Implement Feature: Transform AI output into Svelte Flow nodes/edges
 - [ ] Task: Implement Feature: Display interactive mind map for a scenario
