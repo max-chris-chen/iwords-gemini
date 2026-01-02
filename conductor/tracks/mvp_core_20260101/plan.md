@@ -24,7 +24,7 @@
 
 ## Phase 3: Multi-modal Support and Polishing
 
-- [ ] Task: Integrate audio playback for words and example sentences
+- [x] Task: Integrate audio playback for words and example sentences [41d600e]
 - [ ] Task: Write Tests: Audio service and component logic
 - [ ] Task: Refine UI for 'Modern & Minimalist' guidelines
 - [ ] Task: Ensure 80% test coverage and perform final E2E tests with Playwright
