@@ -1,0 +1,1 @@
+Invoke-WebRequest -Uri http://localhost:5173/api/generate -Method POST -ContentType "application/json" -Body '{"prompt": "a trip to the beach"}'

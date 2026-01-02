@@ -1,5 +1,9 @@
 import { MongoClient } from 'mongodb';
-import { MONGO_URI } from '$env/static/private';
+import * as dotenv from 'dotenv';
+
+dotenv.config();
+
+const MONGO_URI = process.env.MONGO_URI;
 
 if (!MONGO_URI) {
     throw new Error('Invalid/Missing environment variable: "MONGO_URI"');

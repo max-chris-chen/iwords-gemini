@@ -1,9 +1,9 @@
 import { describe, it, expect, vi, beforeEach } from 'vitest';
 import { MongoClient } from 'mongodb';
 
-// Mock the environment variable
-vi.mock('$env/static/private', () => ({
-    MONGO_URI: 'mongodb://localhost:27017/test_db'
+// Mock dotenv to prevent it from reading the real .env file in tests
+vi.mock('dotenv', () => ({
+    config: () => { /* do nothing */ }
 }));
 
 // Mock MongoClient
@@ -25,18 +25,20 @@ vi.mock('mongodb', () => {
 
 describe('Database Connection', () => {
     beforeEach(() => {
-        vi.clearAllMocks();
-        // Reset modules to ensure the db module is re-evaluated
         vi.resetModules();
+        vi.clearAllMocks();
+        process.env.MONGO_URI = 'mongodb://localhost:27017/test_db';
     });
 
     it('should create a MongoClient with the URI from env', async () => {
-        const clientPromise = (await import('./db')).default;
+        const { default: clientPromise } = await import('./db');
+        // We don't await the promise here, just trigger the import
         expect(MongoClient).toHaveBeenCalledWith('mongodb://localhost:27017/test_db');
     });
 
     it('should export a promise that resolves to the client', async () => {
-        const clientPromise = (await import('./db')).default;
+        const { default: clientPromise } = await import('./db');
         await expect(clientPromise).resolves.toBe('connected');
     });
 });
+
