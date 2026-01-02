@@ -12,7 +12,7 @@
 - [x] Task: Implement Feature: Save generated scenario and word data to MongoDB [18ea735]
 - [x] Task: Conductor - User Manual Verification 'Infrastructure and AI Integration' (Protocol in workflow.md) [checkpoint: 965c0cc]
 
-## Phase 2: Mind Map Visualization
+## Phase 2: Mind Map Visualization [checkpoint: 9ffc202]
 
 - [x] Task: Integrate Svelte Flow and create a basic interactive node structure [ac4c85b]
 - [x] Task: Write Tests: Mind map data transformation logic [6c597d4]
@@ -20,7 +20,7 @@
 - [x] Task: Implement Feature: Display interactive mind map for a scenario [093cc68]
 - [x] Task: Write Tests: Scenario list and retrieval logic [3cc5a48]
 - [x] Task: Implement Feature: Scenario List Page and loading saved mind maps [a4d027f]
-- [ ] Task: Conductor - User Manual Verification 'Mind Map Visualization' (Protocol in workflow.md) [checkpoint: ]
+- [x] Task: Conductor - User Manual Verification 'Mind Map Visualization' (Protocol in workflow.md) [checkpoint: ]
 
 ## Phase 3: Multi-modal Support and Polishing
 
