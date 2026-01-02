@@ -80,8 +80,17 @@ async function getById(id: string) {
 	return scenario;
 }
 
+async function getAll() {
+	const client = await clientPromise;
+	const db = client.db('iwords');
+	const collection = db.collection<Scenario>('scenarios');
+	const scenarios = await collection.find().toArray();
+	return scenarios;
+}
+
 export const scenarioService = {
 	generate: generate,
 	save: save,
-	getById: getById
+	getById: getById,
+	getAll: getAll
 };

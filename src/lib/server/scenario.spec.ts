@@ -123,5 +123,33 @@ describe('Scenario Logic', () => {
 			expect(result).toBeNull();
 		});
 	});
+
+	describe('getAll', () => {
+		it('should retrieve all scenarios', async () => {
+			const mockScenarios = [
+				{ _id: '1', prompt: 'test1', words: [] },
+				{ _id: '2', prompt: 'test2', words: [] },
+			];
+			
+			const toArrayMock = vi.fn().mockResolvedValue(mockScenarios);
+			const findMock = vi.fn().mockReturnValue({ toArray: toArrayMock });
+			const collectionMock = { find: findMock };
+			const dbMock = { collection: vi.fn().mockReturnValue(collectionMock) };
+			const clientMock = { db: vi.fn().mockReturnValue(dbMock) };
+
+			vi.doMock('./db', () => ({
+				default: Promise.resolve(clientMock)
+			}));
+
+			const { scenarioService: mockedService } = await import('./scenario');
+			const result = await mockedService.getAll();
+
+			expect(clientMock.db).toHaveBeenCalledWith('iwords');
+			expect(dbMock.collection).toHaveBeenCalledWith('scenarios');
+			expect(findMock).toHaveBeenCalled();
+			expect(result).toEqual(mockScenarios);
+		});
+	});
 });
+
 
