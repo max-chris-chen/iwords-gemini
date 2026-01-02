@@ -1,6 +1,7 @@
 import type { Scenario, Word } from '../models/types';
 import { generateContent } from './ai';
 import { validatePrompt, sanitizeScenarioData } from './security';
+import clientPromise from './db';
 
 export async function generateScenario(prompt: string): Promise<Scenario> {
     validatePrompt(prompt);
@@ -51,4 +52,12 @@ Provide at least 5 words. Each word should have 5 examples.
         console.error('Failed to parse AI response:', content);
         throw new Error('Failed to parse AI response: ' + (error as Error).message);
     }
+}
+
+export async function saveScenario(scenario: Scenario) {
+    const client = await clientPromise;
+    const db = client.db('iwords');
+    const collection = db.collection<Scenario>('scenarios');
+    const result = await collection.insertOne(scenario);
+    return result;
 }
