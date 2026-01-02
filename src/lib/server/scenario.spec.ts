@@ -1,5 +1,5 @@
 import { describe, it, expect, vi, beforeEach } from 'vitest';
-import { generateScenario } from './scenario'; // Only import what's needed for non-db tests
+import { scenarioService } from './scenario';
 import * as ai from './ai';
 import type { Scenario } from '../models/types';
 
@@ -11,7 +11,7 @@ describe('Scenario Logic', () => {
 		vi.resetModules(); // This is crucial to re-import modules with fresh mocks
 	});
 
-	describe('generateScenario', () => {
+	describe('generate', () => {
 		it('should generate a scenario with words from a prompt', async () => {
 			const mockAiResponse = JSON.stringify({
 				words: [
@@ -24,8 +24,13 @@ describe('Scenario Logic', () => {
 				]
 			});
 			(ai.generateContent as any).mockResolvedValue(mockAiResponse);
+			
+			// Since we refactored, let's spy on the save method to avoid actual DB calls
+			vi.spyOn(scenarioService, 'save').mockResolvedValue({} as any);
+
 			const prompt = 'fruit';
-			const result = await generateScenario(prompt);
+			const result = await scenarioService.generate(prompt);
+
 			expect(ai.generateContent).toHaveBeenCalledWith(expect.stringContaining('fruit'));
 			expect(ai.generateContent).toHaveBeenCalledWith(expect.stringContaining('JSON'));
 			expect(result.prompt).toBe('fruit');
@@ -35,11 +40,22 @@ describe('Scenario Logic', () => {
 
 		it('should handle invalid JSON from AI', async () => {
 			(ai.generateContent as any).mockResolvedValue('Not JSON');
-			await expect(generateScenario('test')).rejects.toThrow();
+			await expect(scenarioService.generate('test')).rejects.toThrow();
+		});
+
+		it('should save the generated scenario', async () => {
+			const mockAiResponse = JSON.stringify({ words: [{ word: 'test' }] });
+			(ai.generateContent as any).mockResolvedValue(mockAiResponse);
+			const saveSpy = vi.spyOn(scenarioService, 'save').mockResolvedValue({} as any);
+			
+			const result = await scenarioService.generate('test');
+
+			expect(saveSpy).toHaveBeenCalledOnce();
+			expect(saveSpy).toHaveBeenCalledWith(result);
 		});
 	});
 
-	describe('saveScenario', () => {
+	describe('save', () => {
 		it('should save a scenario to the database', async () => {
 			const insertOneMock = vi.fn().mockResolvedValue({ acknowledged: true, insertedId: 'mock-id' });
 			const collectionMock = { insertOne: insertOneMock };
@@ -49,9 +65,9 @@ describe('Scenario Logic', () => {
 			vi.doMock('./db', () => ({
 				default: Promise.resolve(clientMock)
 			}));
-
-			// Dynamically import the module to get the version with the mock
-			const { saveScenario } = await import('./scenario');
+			
+			// Re-import the service to get the version with the mocked 'db'
+			const { scenarioService: mockedService } = await import('./scenario');
 
 			const mockScenario: Scenario = {
 				prompt: 'test',
@@ -59,7 +75,7 @@ describe('Scenario Logic', () => {
 				words: []
 			};
 
-			const result = await saveScenario(mockScenario);
+			const result = await mockedService.save(mockScenario);
 
 			expect(clientMock.db).toHaveBeenCalledWith('iwords');
 			expect(dbMock.collection).toHaveBeenCalledWith('scenarios');

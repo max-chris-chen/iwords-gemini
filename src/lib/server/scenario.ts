@@ -3,10 +3,10 @@ import { generateContent } from './ai';
 import { validatePrompt, sanitizeScenarioData } from './security';
 import clientPromise from './db';
 
-export async function generateScenario(prompt: string): Promise<Scenario> {
-    validatePrompt(prompt);
+async function generate(prompt: string): Promise<Scenario> {
+	validatePrompt(prompt);
 
-    const aiPrompt = `
+	const aiPrompt = `
 Generate a list of English words related to the scenario: "${prompt}".
 Output strictly valid JSON with the following structure:
 {
@@ -24,40 +24,51 @@ Output strictly valid JSON with the following structure:
 Provide at least 5 words. Each word should have 5 examples.
 `;
 
-    const content = await generateContent(aiPrompt);
+	const content = await generateContent(aiPrompt);
 
-    try {
-        // Clean up markdown code blocks if present
-        const cleanedContent = content.replace(/```json/g, '').replace(/```/g, '').trim();
-        const parsed = JSON.parse(cleanedContent);
-        
-        if (!parsed.words || !Array.isArray(parsed.words)) {
-             throw new Error('Invalid JSON structure: missing words array');
-        }
+	try {
+		// Clean up markdown code blocks if present
+		const cleanedContent = content.replace(/```json/g, '').replace(/```/g, '').trim();
+		const parsed = JSON.parse(cleanedContent);
 
-        const words: Word[] = parsed.words.map((w: any) => sanitizeScenarioData({
-            word: w.word,
-            phonetics: w.phonetics,
-            definition: w.definition,
-            examples: w.examples || [],
-            audioUrl: w.audioUrl
-        }));
+		if (!parsed.words || !Array.isArray(parsed.words)) {
+			throw new Error('Invalid JSON structure: missing words array');
+		}
 
-        return {
-            prompt,
-            createdAt: new Date(),
-            words
-        };
-    } catch (error) {
-        console.error('Failed to parse AI response:', content);
-        throw new Error('Failed to parse AI response: ' + (error as Error).message);
-    }
+		const words: Word[] = parsed.words.map((w: any) =>
+			sanitizeScenarioData({
+				word: w.word,
+				phonetics: w.phonetics,
+				definition: w.definition,
+				examples: w.examples || [],
+				audioUrl: w.audioUrl
+			})
+		);
+
+		const scenario: Scenario = {
+			prompt,
+			createdAt: new Date(),
+			words
+		};
+
+		await scenarioService.save(scenario);
+
+		return scenario;
+	} catch (error) {
+		console.error('Failed to parse AI response:', content);
+		throw new Error('Failed to parse AI response: ' + (error as Error).message);
+	}
 }
 
-export async function saveScenario(scenario: Scenario) {
-    const client = await clientPromise;
-    const db = client.db('iwords');
-    const collection = db.collection<Scenario>('scenarios');
-    const result = await collection.insertOne(scenario);
-    return result;
+async function save(scenario: Scenario) {
+	const client = await clientPromise;
+	const db = client.db('iwords');
+	const collection = db.collection<Scenario>('scenarios');
+	const result = await collection.insertOne(scenario);
+	return result;
 }
+
+export const scenarioService = {
+	generate: generate,
+	save: save
+};
