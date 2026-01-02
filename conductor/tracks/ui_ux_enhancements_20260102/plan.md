@@ -19,7 +19,7 @@ This plan outlines the steps required to implement the features described in the
 
 ## Phase 2: Home Page - Scenario Input and Display
 
-- [ ] Task: Implement Scenario Input Area
+- [~] Task: Implement Scenario Input Area
     - [ ] Sub-task: Write unit tests for scenario input component
     - [ ] Sub-task: Create a new Svelte component for the prominent text area input on the home page
     - [ ] Sub-task: Integrate the input component into `routes/+page.svelte`
