@@ -26,7 +26,9 @@ export default defineConfig({
 					},
 
 					include: ['src/**/*.svelte.{test,spec}.{js,ts}', 'src/**/*.spec.ts'],
-					exclude: ['src/lib/server/**', 'src/**/*.server.spec.ts']
+					exclude: ['src/lib/server/**', 'src/**/*.server.spec.ts'],
+
+					coverage: { reporter: ['text', 'json', 'html'] }
 				}
 			},
 

@@ -18,7 +18,8 @@ export function transformScenarioToFlowData(scenario: Scenario): { nodes: Node[]
         const wordId = `word-${word.word}`;
         nodes.push({
             id: wordId,
-            data: { label: `${word.word} (${word.phonetics})` },
+            type: 'word', // Use the custom word node type
+            data: { label: `${word.word} (${word.phonetics})`, word: word },
             position: { x: 150 + wordIndex * 250, y: 200 }
         });
         edges.push({
