@@ -19,7 +19,7 @@
 - [x] Task: Implement Feature: Transform AI output into Svelte Flow nodes/edges [6c597d4]
 - [x] Task: Implement Feature: Display interactive mind map for a scenario [093cc68]
 - [x] Task: Write Tests: Scenario list and retrieval logic [3cc5a48]
-- [~] Task: Implement Feature: Scenario List Page and loading saved mind maps
+- [x] Task: Implement Feature: Scenario List Page and loading saved mind maps [a4d027f]
 - [ ] Task: Conductor - User Manual Verification 'Mind Map Visualization' (Protocol in workflow.md) [checkpoint: ]
 
 ## Phase 3: Multi-modal Support and Polishing
