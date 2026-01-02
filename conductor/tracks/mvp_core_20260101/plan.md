@@ -9,7 +9,7 @@
 - [x] Task: Implement Feature: AI generation of word list from scenario [0a3050b]
 - [x] Task: Implement Feature: Comprehensive security measures (XSS sanitization, NoSQL injection prevention, Rate limiting) [1595dc6]
 - [x] Task: Write Tests: Database operations for saving scenarios [4b34fd7]
-- [ ] Task: Implement Feature: Save generated scenario and word data to MongoDB
+- [~] Task: Implement Feature: Save generated scenario and word data to MongoDB
 - [ ] Task: Conductor - User Manual Verification 'Infrastructure and AI Integration' (Protocol in workflow.md) [checkpoint: ]
 
 ## Phase 2: Mind Map Visualization
