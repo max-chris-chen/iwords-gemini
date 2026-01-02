@@ -17,7 +17,7 @@
 - [x] Task: Integrate Svelte Flow and create a basic interactive node structure [ac4c85b]
 - [x] Task: Write Tests: Mind map data transformation logic [6c597d4]
 - [x] Task: Implement Feature: Transform AI output into Svelte Flow nodes/edges [6c597d4]
-- [~] Task: Implement Feature: Display interactive mind map for a scenario
+- [x] Task: Implement Feature: Display interactive mind map for a scenario [093cc68]
 - [ ] Task: Write Tests: Scenario list and retrieval logic
 - [ ] Task: Implement Feature: Scenario List Page and loading saved mind maps
 - [ ] Task: Conductor - User Manual Verification 'Mind Map Visualization' (Protocol in workflow.md) [checkpoint: ]
