@@ -4,12 +4,12 @@ This plan outlines the steps required to implement the features described in the
 
 ## Phase 1: Core UI/UX Framework and Navigation
 
-- [ ] Task: Set up basic styling infrastructure
+- [x] Task: Set up basic styling infrastructure
     - [ ] Sub-task: Analyze existing CSS/styling setup and conventions
     - [ ] Sub-task: Implement a global CSS reset or normalize styles if necessary
     - [ ] Sub-task: Define core design tokens (colors, typography, spacing)
     - [ ] Sub-task: Write tests for styling setup (e.g., visual regression tests if applicable, or simple DOM checks)
-- [ ] Task: Implement Navigation Bar
+- [x] Task: Implement Navigation Bar
     - [ ] Sub-task: Write unit tests for navigation bar component
     - [ ] Sub-task: Create a new Svelte component for the navigation bar
     - [ ] Sub-task: Integrate application logo/name into the navigation bar
