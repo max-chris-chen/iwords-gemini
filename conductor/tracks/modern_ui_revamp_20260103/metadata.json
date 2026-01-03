@@ -1,0 +1,8 @@
+{
+  "track_id": "modern_ui_revamp_20260103",
+  "type": "feature",
+  "status": "new",
+  "created_at": "2026-01-03T20:27:00Z",
+  "updated_at": "2026-01-03T20:27:00Z",
+  "description": "首页的scenario list 没有样式 修改一下 改成card 并可以分页 有一个友好现代的样式 navigation 也有些严肃 修改一下样式"
+}

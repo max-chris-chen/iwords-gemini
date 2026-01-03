@@ -9,5 +9,28 @@ This file tracks all major tracks for the project. Each track has its own detail
 
 ---
 
+
+
 ## [~] Track: UI/UX Enhancements and Improved Scenario Management
+
 *Link: [./conductor/tracks/ui_ux_enhancements_20260102/](./conductor/tracks/ui_ux_enhancements_20260102/)*
+
+
+
+---
+
+
+
+
+
+
+
+## [~] Track: Modern UI Revamp (Home Page Cards, Navigation, Pagination)
+
+
+
+*Link: [./conductor/tracks/modern_ui_revamp_20260103/](./conductor/tracks/modern_ui_revamp_20260103/)*
+
+
+
+
