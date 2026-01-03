@@ -15,4 +15,15 @@ describe('ScenarioInput component', () => {
         const button = getByRole('button', { name: 'Generate Scenario' });
         expect(button).toBeInTheDocument();
     });
+
+    it('should disable inputs and show loading state when isLoading is true', () => {
+        const { getByRole } = render(ScenarioInput, { isLoading: true });
+        
+        const button = getByRole('button', { name: 'Generating...' });
+        const textarea = getByRole('textbox');
+        
+        expect(button).toBeInTheDocument();
+        expect(button).toBeDisabled();
+        expect(textarea).toBeDisabled();
+    });
 });
