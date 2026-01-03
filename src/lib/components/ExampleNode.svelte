@@ -1,15 +1,15 @@
 <script lang="ts">
   import { Handle, Position, type NodeProps } from '@xyflow/svelte';
+  import { audioManager } from '$lib/audio';
 
-  export let data: NodeProps['data'];
+  const { data }: NodeProps = $props();
 
   function handlePlayAudio(event: MouseEvent) {
     event.stopPropagation();
+    event.preventDefault();
+
     if (data?.example?.en) {
-        const textToSpeak = data.example.en;
-        const utterance = new SpeechSynthesisUtterance(textToSpeak);
-        utterance.lang = 'en-US';
-        window.speechSynthesis.speak(utterance);
+        audioManager.speak(data.example.en);
     }
   }
 </script>
@@ -26,9 +26,10 @@
   
   <div class="flex justify-end">
     <button 
-      class="p-1.5 bg-white hover:bg-gray-100 text-gray-600 rounded-full border border-gray-200 transition-colors cursor-pointer inline-flex items-center justify-center"
+      type="button"
+      class="p-1.5 bg-white hover:bg-gray-100 text-gray-600 rounded-full border border-gray-200 transition-colors cursor-pointer inline-flex items-center justify-center z-50"
       aria-label="play audio" 
-      on:click={handlePlayAudio}
+      onclick={handlePlayAudio}
     >
       <span class="text-sm">🔊</span>
     </button>

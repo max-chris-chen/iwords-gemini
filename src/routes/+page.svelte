@@ -1,10 +1,43 @@
 <script lang="ts">
     import ScenarioCard from '$lib/components/ScenarioCard.svelte';
     import ScenarioInput from '$lib/components/ScenarioInput.svelte';
-    import { invalidateAll } from '$app/navigation';
+    import { invalidateAll, goto } from '$app/navigation';
 
     let { data } = $props();
     let scenarios = $derived(data.scenarios);
+    let isLoading = $state(false);
+
+    async function handleGenerate(event: CustomEvent<string>) {
+        const prompt = event.detail;
+        if (!prompt) return;
+
+        isLoading = true;
+
+        try {
+            const response = await fetch('/api/generate', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify({ prompt }),
+            });
+
+            if (response.ok) {
+                const result = await response.json();
+                const scenarioId = result._id;
+                await goto(`/scenario/${scenarioId}`);
+            } else {
+                const errorData = await response.json();
+                console.error('Failed to generate scenario:', errorData);
+                alert(`Error: ${errorData.message || 'Unknown error'}`);
+            }
+        } catch (error) {
+            console.error('Network or unexpected error:', error);
+            alert('An unexpected error occurred.');
+        } finally {
+            isLoading = false;
+        }
+    }
 
     async function handleDelete(id: string) {
         const response = await fetch(`/api/scenario/${id}`, {
@@ -34,7 +67,7 @@
             <span class="bg-indigo-100 p-2 rounded-lg mr-3">✨</span>
             Create New Scenario
         </h2>
-        <ScenarioInput />
+        <ScenarioInput on:generate={handleGenerate} {isLoading} />
     </section>
 
     <section>

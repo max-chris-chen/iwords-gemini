@@ -5,8 +5,7 @@
   import WordNode from './WordNode.svelte';
   import ExampleNode from './ExampleNode.svelte';
 
-  export let nodes: Node[] = [];
-  export let edges: Edge[] = [];
+  const { nodes, edges }: { nodes: Node[], edges: Edge[] } = $props();
 
   const nodeTypes = {
     word: WordNode,
@@ -14,8 +13,9 @@
   };
 </script>
 
-<SvelteFlow {nodes} {edges} {nodeTypes}>
-  <Background />
-  <Controls />
-</SvelteFlow>
-
+<div style="height: 100%; width: 100%;">
+  <SvelteFlow {nodes} {edges} {nodeTypes}>
+    <Background />
+    <Controls />
+  </SvelteFlow>
+</div>

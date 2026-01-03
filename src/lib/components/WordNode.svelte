@@ -1,19 +1,15 @@
 <script lang="ts">
   import { Handle, Position, type NodeProps } from '@xyflow/svelte';
+  import { audioManager } from '$lib/audio';
 
-  export let data: NodeProps['data'];
+  const { data }: NodeProps = $props();
 
   function handlePlayAudio(event: MouseEvent) {
-    event.stopPropagation(); // Prevent node selection when clicking button
+    // 必须同步调用，不能有 await
+    event.stopPropagation();
+    
     if (data?.word?.word) {
-        const textToSpeak = data.word.word;
-        
-        // Use the Web Speech API
-        const utterance = new SpeechSynthesisUtterance(textToSpeak);
-        utterance.lang = 'en-US';
-        window.speechSynthesis.speak(utterance);
-    } else {
-        console.warn("No word data found for audio");
+        audioManager.speak(data.word.word);
     }
   }
 </script>
@@ -33,9 +29,10 @@
   </div>
   
   <button 
-    class="p-2 bg-blue-50 hover:bg-blue-100 text-blue-600 rounded-full transition-colors cursor-pointer inline-flex items-center justify-center"
+    type="button"
+    class="p-2 bg-blue-50 hover:bg-blue-100 text-blue-600 rounded-full transition-colors cursor-pointer inline-flex items-center justify-center z-50"
     aria-label="play audio" 
-    on:click={handlePlayAudio}
+    onclick={handlePlayAudio}
   >
     <span class="text-lg">🔊</span>
   </button>

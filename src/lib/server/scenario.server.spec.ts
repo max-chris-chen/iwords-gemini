@@ -103,7 +103,8 @@ describe('Scenario Logic', () => {
 	describe('getById', () => {
 		it('should retrieve a scenario by its ID', async () => {
 			const scenarioId = new ObjectId();
-			const mockScenario = { _id: scenarioId, prompt: 'test', words: [] };
+			const mockDate = new Date();
+			const mockScenario = { _id: scenarioId, prompt: 'test', words: [], createdAt: mockDate };
 			
 			const findOneMock = vi.fn().mockResolvedValue(mockScenario);
 			const collectionMock = { findOne: findOneMock };
@@ -122,7 +123,8 @@ describe('Scenario Logic', () => {
 			expect(findOneMock).toHaveBeenCalledWith({ _id: scenarioId });
 			expect(result).toEqual({
 				...mockScenario,
-				_id: scenarioId.toHexString()
+				_id: scenarioId.toHexString(),
+				createdAt: mockDate
 			});
 		});
 
@@ -149,9 +151,10 @@ describe('Scenario Logic', () => {
 		it('should retrieve all scenarios', async () => {
 			const id1 = new ObjectId();
 			const id2 = new ObjectId();
+			const mockDate = new Date();
 			const mockScenarios = [
-				{ _id: id1, prompt: 'test1', words: [] },
-				{ _id: id2, prompt: 'test2', words: [] },
+				{ _id: id1, prompt: 'test1', words: [], createdAt: mockDate },
+				{ _id: id2, prompt: 'test2', words: [], createdAt: mockDate },
 			];
 			
 			const toArrayMock = vi.fn().mockResolvedValue(mockScenarios);
@@ -172,8 +175,8 @@ describe('Scenario Logic', () => {
 			expect(dbMock.collection).toHaveBeenCalledWith('scenarios');
 			expect(findMock).toHaveBeenCalled();
 			expect(result).toEqual([
-				{ _id: id1.toHexString(), prompt: 'test1', words: [] },
-				{ _id: id2.toHexString(), prompt: 'test2', words: [] }
+				{ _id: id1.toHexString(), prompt: 'test1', words: [], createdAt: mockDate },
+				{ _id: id2.toHexString(), prompt: 'test2', words: [], createdAt: mockDate }
 			]);
 		});
 	});

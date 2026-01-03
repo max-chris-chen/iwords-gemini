@@ -14,9 +14,10 @@ type ScenarioDocument = Omit<Scenario, '_id'> & { _id?: ObjectId };
  * @returns A Scenario object with _id as a string.
  */
 function toScenario(doc: ScenarioDocument): Scenario {
-	const { _id, ...rest } = doc;
+	const { _id, createdAt, ...rest } = doc;
 	return {
 		...rest,
+		createdAt: new Date(createdAt),
 		_id: _id?.toHexString()
 	};
 }

@@ -6,8 +6,5 @@
         <li>
             <a href="/" data-testid="home-link" class="hover:text-yellow-300 transition-colors duration-200">Home</a>
         </li>
-        <li>
-            <a href="/generate" data-testid="generate-link" class="hover:text-yellow-300 transition-colors duration-200">Generate</a>
-        </li>
     </ul>
 </nav>
