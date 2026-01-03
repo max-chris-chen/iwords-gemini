@@ -10,11 +10,11 @@
 
 ## Phase 2: Scenario Card Component
 
-- [ ] Task: Implement ScenarioCard component
-    - [ ] Sub-task: Write unit tests for `ScenarioCard.svelte`
-    - [ ] Sub-task: Create `src/lib/components/ScenarioCard.svelte` with card layout, shadows, and hover effects
-    - [ ] Sub-task: Implement "Open" and "Delete" actions within the card
-    - [ ] Sub-task: Add logic for thematic icon/emoji display
+- [x] Task: Implement ScenarioCard component fbc8e74
+    - [x] Sub-task: Write unit tests for `ScenarioCard.svelte`
+    - [x] Sub-task: Create `src/lib/components/ScenarioCard.svelte` with card layout, shadows, and hover effects
+    - [x] Sub-task: Implement "Open" and "Delete" actions within the card
+    - [x] Sub-task: Add logic for thematic icon/emoji display
 - [ ] Task: Conductor - User Manual Verification 'Scenario Card Component' (Protocol in workflow.md)
 
 ## Phase 3: Home Page Layout & Sorting
