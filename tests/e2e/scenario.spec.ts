@@ -10,12 +10,12 @@ test('should generate a scenario and display its mind map', async ({ page }) => 
   await page.getByRole('button', { name: 'Generate Scenario' }).click();
 
   // Assert that the URL has changed to the scenario page
-  await expect(page).toHaveURL(/.*\/scenario\/[a-f0-9]+$/);
+  // Increased timeout to 60s because AI generation can be slow
+  await expect(page).toHaveURL(/.*\/scenario\/[a-f0-9]+$/, { timeout: 60000 });
 
-  // Assert that the scenario prompt is displayed on the page
-  await expect(page.getByText('a trip to the mountains')).toBeVisible();
+  // Assert that the scenario prompt is displayed on the page as a heading
+  await expect(page.getByRole('heading', { name: 'a trip to the mountains', exact: false })).toBeVisible();
 
-  // Assert that the Mind Map container is visible (or some other indicator of the mind map)
-  // This might require a more specific selector depending on how SvelteFlow renders
-  await expect(page.locator('.react-flow__renderer')).toBeVisible(); // Assuming SvelteFlow uses this class
+  // Assert that the Mind Map container is visible
+  await expect(page.locator('.svelte-flow')).toBeVisible();
 });

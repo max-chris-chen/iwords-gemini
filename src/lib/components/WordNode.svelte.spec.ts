@@ -1,7 +1,18 @@
 
 import { render, cleanup } from '@testing-library/svelte';
-import { describe, it, expect, afterEach } from 'vitest';
+import { describe, it, expect, afterEach, vi } from 'vitest';
 import WordNode from './WordNode.svelte';
+
+// Mock @xyflow/svelte
+vi.mock('@xyflow/svelte', () => ({
+  Handle: vi.fn(),
+  Position: {
+    Top: 'top',
+    Bottom: 'bottom',
+    Left: 'left',
+    Right: 'right'
+  }
+}));
 
 describe('WordNode component', () => {
   afterEach(() => {

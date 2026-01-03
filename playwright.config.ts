@@ -7,8 +7,9 @@ export default defineConfig({
   retries: process.env.CI ? 2 : 0, // Retry failed tests in CI
   workers: process.env.CI ? 1 : undefined, // Limit workers in CI
   reporter: 'html', // Report results as HTML
+  timeout: 90000,
   use: {
-    baseURL: 'http://localhost:4174', // Your SvelteKit preview server URL
+    baseURL: 'http://127.0.0.1:4174', // Your SvelteKit preview server URL
     trace: 'on-first-retry', // Capture trace on first retry
   },
   projects: [
@@ -17,9 +18,10 @@ export default defineConfig({
       use: { ...devices['Desktop Chrome'] },
     },
   ],
-  /* webServer: {
-    command: 'npm run preview', // Command to start your SvelteKit app for testing
-    url: 'http://localhost:4174',
+  webServer: {
+    command: 'npm run preview -- --port 4174 --host 0.0.0.0',
+    url: 'http://127.0.0.1:4174',
     reuseExistingServer: !process.env.CI,
-  }, */
+    timeout: 120000,
+  },
 });
