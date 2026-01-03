@@ -2,6 +2,7 @@ import { describe, it, expect, vi, beforeEach } from 'vitest';
 import { scenarioService } from './scenario';
 import * as ai from './ai';
 import type { Scenario } from '../models/types';
+import { ObjectId } from 'mongodb';
 
 vi.mock('./ai');
 
@@ -25,8 +26,11 @@ describe('Scenario Logic', () => {
 			});
 			(ai.generateContent as any).mockResolvedValue(mockAiResponse);
 			
-			// Since we refactored, let's spy on the save method to avoid actual DB calls
-			vi.spyOn(scenarioService, 'save').mockResolvedValue({} as any);
+			// Mock save to return what it receives (plus an ID ideally, but minimal for this test)
+			vi.spyOn(scenarioService, 'save').mockImplementation(async (s) => ({
+				...s,
+				_id: 'mock-id'
+			}));
 
 			const prompt = 'fruit';
 			const result = await scenarioService.generate(prompt);
@@ -46,18 +50,27 @@ describe('Scenario Logic', () => {
 		it('should save the generated scenario', async () => {
 			const mockAiResponse = JSON.stringify({ words: [{ word: 'test' }] });
 			(ai.generateContent as any).mockResolvedValue(mockAiResponse);
-			const saveSpy = vi.spyOn(scenarioService, 'save').mockResolvedValue({} as any);
+			const saveSpy = vi.spyOn(scenarioService, 'save').mockImplementation(async (s) => ({ ...s, _id: 'id' }));
 			
 			const result = await scenarioService.generate('test');
 
 			expect(saveSpy).toHaveBeenCalledOnce();
-			expect(saveSpy).toHaveBeenCalledWith(result);
+			// result is the return value of save, so this check is circular but valid for flow verification
+			// Better to check the arguments passed to save
+			expect(saveSpy).toHaveBeenCalledWith(expect.objectContaining({
+				prompt: 'test',
+				words: expect.arrayContaining([expect.objectContaining({ word: 'test' })])
+			}));
 		});
 	});
 
 	describe('save', () => {
 		it('should save a scenario to the database', async () => {
-			const insertOneMock = vi.fn().mockResolvedValue({ acknowledged: true, insertedId: 'mock-id' });
+			const mockId = new ObjectId();
+			const insertOneMock = vi.fn().mockImplementation(async (doc) => {
+				doc._id = mockId; // Simulate MongoDB driver mutation
+				return { acknowledged: true, insertedId: mockId };
+			});
 			const collectionMock = { insertOne: insertOneMock };
 			const dbMock = { collection: vi.fn().mockReturnValue(collectionMock) };
 			const clientMock = { db: vi.fn().mockReturnValue(dbMock) };
@@ -79,12 +92,17 @@ describe('Scenario Logic', () => {
 
 			expect(clientMock.db).toHaveBeenCalledWith('iwords');
 			expect(dbMock.collection).toHaveBeenCalledWith('scenarios');
-			expect(insertOneMock).toHaveBeenCalledWith(mockScenario);
-			expect(result).toEqual({ acknowledged: true, insertedId: 'mock-id' });
+			expect(insertOneMock).toHaveBeenCalledWith(expect.objectContaining({ prompt: 'test' }));
+			
+			// Expect the returned object to be the Scenario with the new ID string
+			expect(result._id).toBe(mockId.toHexString());
+			expect(result.prompt).toBe('test');
 		});
-	});	describe('getById', () => {
+	});
+
+	describe('getById', () => {
 		it('should retrieve a scenario by its ID', async () => {
-			const scenarioId = '60d0fe4f5311236168a109ca';
+			const scenarioId = new ObjectId();
 			const mockScenario = { _id: scenarioId, prompt: 'test', words: [] };
 			
 			const findOneMock = vi.fn().mockResolvedValue(mockScenario);
@@ -97,16 +115,19 @@ describe('Scenario Logic', () => {
 			}));
 
 			const { scenarioService: mockedService } = await import('./scenario');
-			const result = await mockedService.getById(scenarioId);
+			const result = await mockedService.getById(scenarioId.toHexString());
 
 			expect(clientMock.db).toHaveBeenCalledWith('iwords');
 			expect(dbMock.collection).toHaveBeenCalledWith('scenarios');
-			expect(findOneMock).toHaveBeenCalledWith({ _id: new (await import('mongodb')).ObjectId(scenarioId) });
-			expect(result).toEqual(mockScenario);
+			expect(findOneMock).toHaveBeenCalledWith({ _id: scenarioId });
+			expect(result).toEqual({
+				...mockScenario,
+				_id: scenarioId.toHexString()
+			});
 		});
 
 		it('should return null if scenario is not found', async () => {
-			const scenarioId = '60d0fe4f5311236168a109cb';
+			const scenarioId = new ObjectId().toHexString();
 			
 			const findOneMock = vi.fn().mockResolvedValue(null);
 			const collectionMock = { findOne: findOneMock };
@@ -126,9 +147,11 @@ describe('Scenario Logic', () => {
 
 	describe('getAll', () => {
 		it('should retrieve all scenarios', async () => {
+			const id1 = new ObjectId();
+			const id2 = new ObjectId();
 			const mockScenarios = [
-				{ _id: '1', prompt: 'test1', words: [] },
-				{ _id: '2', prompt: 'test2', words: [] },
+				{ _id: id1, prompt: 'test1', words: [] },
+				{ _id: id2, prompt: 'test2', words: [] },
 			];
 			
 			const toArrayMock = vi.fn().mockResolvedValue(mockScenarios);
@@ -147,7 +170,10 @@ describe('Scenario Logic', () => {
 			expect(clientMock.db).toHaveBeenCalledWith('iwords');
 			expect(dbMock.collection).toHaveBeenCalledWith('scenarios');
 			expect(findMock).toHaveBeenCalled();
-			expect(result).toEqual(mockScenarios);
+			expect(result).toEqual([
+				{ _id: id1.toHexString(), prompt: 'test1', words: [] },
+				{ _id: id2.toHexString(), prompt: 'test2', words: [] }
+			]);
 		});
 	});
 });

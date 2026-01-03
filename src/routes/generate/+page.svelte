@@ -17,7 +17,7 @@
 
       if (response.ok) {
         const result = await response.json();
-        const scenarioId = result.scenarioId;
+        const scenarioId = result._id;
         await goto(`/scenario/${scenarioId}`);
       } else {
         const errorData = await response.json();
