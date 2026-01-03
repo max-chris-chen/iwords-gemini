@@ -10,6 +10,7 @@ export interface Word {
     word: string;
     phonetics?: string;
     definition: string;
+    definition_cn?: string;
     examples: ExampleSentence[];
     audioUrl?: string;
 }

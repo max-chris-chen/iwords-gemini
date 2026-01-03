@@ -22,6 +22,7 @@ export function sanitizeScenarioData(wordData: Word): Word {
         word: clean(wordData.word),
         phonetics: wordData.phonetics ? clean(wordData.phonetics) : undefined,
         definition: clean(wordData.definition),
+        definition_cn: wordData.definition_cn ? clean(wordData.definition_cn) : undefined,
         examples: wordData.examples.map(ex => ({
             en: clean(ex.en),
             cn: ex.cn ? clean(ex.cn) : undefined,

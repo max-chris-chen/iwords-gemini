@@ -46,6 +46,7 @@ Output strictly valid JSON with the following structure:
       "word": "english word",
       "phonetics": "IPA",
       "definition": "english definition",
+      "definition_cn": "中文意思",
       "examples": [
         { "en": "example sentence 1", "cn": "chinese translation" }
       ]
@@ -71,6 +72,7 @@ Provide at least 5 words. Each word should have 5 examples.
 				word: w.word,
 				phonetics: w.phonetics,
 				definition: w.definition,
+				definition_cn: w.definition_cn,
 				examples: w.examples || [],
 				audioUrl: w.audioUrl
 			})

@@ -3,12 +3,14 @@
   import type { Node, Edge } from '@xyflow/svelte';
   import '@xyflow/svelte/dist/style.css';
   import WordNode from './WordNode.svelte';
+  import ExampleNode from './ExampleNode.svelte';
 
   export let nodes: Node[] = [];
   export let edges: Edge[] = [];
 
   const nodeTypes = {
     word: WordNode,
+    example: ExampleNode,
   };
 </script>
 

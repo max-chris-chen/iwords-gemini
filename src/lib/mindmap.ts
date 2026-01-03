@@ -19,8 +19,8 @@ export function transformScenarioToFlowData(scenario: Scenario): { nodes: Node[]
         nodes.push({
             id: wordId,
             type: 'word', // Use the custom word node type
-            data: { label: `${word.word} (${word.phonetics})`, word: word },
-            position: { x: 150 + wordIndex * 250, y: 200 }
+            data: { word: word },
+            position: { x: 150 + wordIndex * 350, y: 200 }
         });
         edges.push({
             id: `e-scenario-${wordId}`,
@@ -32,8 +32,9 @@ export function transformScenarioToFlowData(scenario: Scenario): { nodes: Node[]
             const exampleId = `example-${word.word}-${exampleIndex}`;
             nodes.push({
                 id: exampleId,
-                data: { label: example.en },
-                position: { x: 100 + wordIndex * 250 + exampleIndex * 50, y: 350 + exampleIndex * 70 }
+                type: 'example', // Use the custom example node type
+                data: { example: example },
+                position: { x: 100 + wordIndex * 350 + (exampleIndex % 2 === 0 ? -50 : 50), y: 400 + exampleIndex * 100 }
             });
             edges.push({
                 id: `e-${wordId}-${exampleId}`,
