@@ -53,7 +53,7 @@ Output strictly valid JSON with the following structure:
     }
   ]
 }
-Provide at least 5 words. Each word should have 5 examples.
+Provide at least 5 words. Each word should have 2 examples.
 `;
 
 	const content = await generateContent(aiPrompt);
