@@ -123,17 +123,37 @@ async function getById(id: string): Promise<Scenario | null> {
 	return toScenario(doc);
 }
 
+async function deleteById(id: string): Promise<boolean> {
+	const client = await clientPromise;
+	const db = client.db('iwords');
+	const collection = db.collection<ScenarioDocument>('scenarios');
+	
+    if (!ObjectId.isValid(id)) {
+        return false;
+    }
+
+	const result = await collection.deleteOne({ _id: new ObjectId(id) });
+	return result.deletedCount === 1;
+}
+
 async function getAll(): Promise<Scenario[]> {
 	const client = await clientPromise;
 	const db = client.db('iwords');
 	const collection = db.collection<ScenarioDocument>('scenarios');
-	const docs = await collection.find().toArray();
+	const docs = await collection.find().sort({ createdAt: -1 }).toArray();
 	return docs.map(toScenario);
 }
 
 export const scenarioService = {
+
 	generate: generate,
+
 	save: save,
+
 	getById: getById,
-	getAll: getAll
+
+	getAll: getAll,
+
+	deleteById: deleteById
+
 };

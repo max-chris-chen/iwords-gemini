@@ -155,7 +155,8 @@ describe('Scenario Logic', () => {
 			];
 			
 			const toArrayMock = vi.fn().mockResolvedValue(mockScenarios);
-			const findMock = vi.fn().mockReturnValue({ toArray: toArrayMock });
+			const sortMock = vi.fn().mockReturnValue({ toArray: toArrayMock });
+			const findMock = vi.fn().mockReturnValue({ sort: sortMock });
 			const collectionMock = { find: findMock };
 			const dbMock = { collection: vi.fn().mockReturnValue(collectionMock) };
 			const clientMock = { db: vi.fn().mockReturnValue(dbMock) };

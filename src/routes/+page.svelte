@@ -1,44 +1,62 @@
-<!-- src/routes/+page.svelte -->
 <script lang="ts">
-    export let data;
+    import ScenarioCard from '$lib/components/ScenarioCard.svelte';
+    import ScenarioInput from '$lib/components/ScenarioInput.svelte';
+    import { invalidateAll } from '$app/navigation';
 
-    const { scenarios } = data;
+    let { data } = $props();
+    let scenarios = $derived(data.scenarios);
+
+    async function handleDelete(id: string) {
+        const response = await fetch(`/api/scenario/${id}`, {
+            method: 'DELETE'
+        });
+
+        if (response.ok) {
+            await invalidateAll();
+        } else {
+            alert('Failed to delete scenario');
+        }
+    }
 </script>
 
-<h1>iWords Scenarios</h1>
+<div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
+    <header class="text-center mb-16">
+        <h1 class="text-5xl font-black text-gray-900 mb-4 tracking-tight">
+            Master Your <span class="text-transparent bg-clip-text bg-gradient-to-r from-indigo-600 to-purple-600">Vocabulary</span>
+        </h1>
+        <p class="text-xl text-gray-600 max-w-2xl mx-auto">
+            Generate immersive language learning scenarios powered by AI. Explore, learn, and grow your English skills.
+        </p>
+    </header>
 
-{#if scenarios.length > 0}
-    <ul>
-        {#each scenarios as scenario}
-            <li>
-                <a href="/scenario/{scenario._id}">{scenario.prompt}</a>
-                <span>({new Date(scenario.createdAt).toLocaleString()})</span>
-            </li>
-        {/each}
-    </ul>
-{:else}
-    <p>No scenarios found. Generate one!</p>
-{/if}
+    <section class="mb-16 bg-white p-8 rounded-3xl shadow-xl border border-gray-100">
+        <h2 class="text-2xl font-bold text-gray-800 mb-6 flex items-center">
+            <span class="bg-indigo-100 p-2 rounded-lg mr-3">✨</span>
+            Create New Scenario
+        </h2>
+        <ScenarioInput />
+    </section>
 
-<style>
-    ul {
-        list-style: none;
-        padding: 0;
-    }
-    li {
-        margin-bottom: 1rem;
-    }
-    a {
-        font-size: 1.2rem;
-        text-decoration: none;
-        color: #333;
-    }
-    a:hover {
-        text-decoration: underline;
-    }
-    span {
-        margin-left: 1rem;
-        font-size: 0.9rem;
-        color: #666;
-    }
-</style>
+    <section>
+        <div class="flex justify-between items-center mb-8">
+            <h2 class="text-3xl font-black text-gray-900">Your Scenarios</h2>
+            <div class="text-sm font-medium text-gray-500 bg-gray-100 px-4 py-2 rounded-full">
+                {scenarios.length} Total
+            </div>
+        </div>
+
+        {#if scenarios.length > 0}
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+                {#each scenarios as scenario (scenario._id)}
+                    <ScenarioCard {scenario} ondelete={() => handleDelete(scenario._id)} />
+                {/each}
+            </div>
+        {:else}
+            <div class="text-center py-20 bg-gray-50 rounded-3xl border-2 border-dashed border-gray-200">
+                <span class="text-6xl mb-4 block">🏝️</span>
+                <h3 class="text-xl font-bold text-gray-800 mb-2">No scenarios yet</h3>
+                <p class="text-gray-500">Enter a prompt above to start your journey!</p>
+            </div>
+        {/if}
+    </section>
+</div>

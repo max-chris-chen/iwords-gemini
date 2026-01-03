@@ -6,19 +6,20 @@ describe('/+page.svelte', () => {
     it('should render a list of scenarios', () => {
         const mockData = {
             scenarios: [
-                { _id: '1', prompt: 'Scenario 1', createdAt: new Date() },
-                { _id: '2', prompt: 'Scenario 2', createdAt: new Date() },
+                { _id: '1', prompt: 'Scenario 1', createdAt: new Date(), words: [] },
+                { _id: '2', prompt: 'Scenario 2', createdAt: new Date(), words: [] },
             ],
         };
 
         const { container } = render(Page, { props: { data: mockData } });
 
-        const links = container.querySelectorAll('a');
-        expect(links).toHaveLength(2);
-        expect(links[0].textContent).toBe('Scenario 1');
-        expect(links[0].getAttribute('href')).toBe('/scenario/1');
-        expect(links[1].textContent).toBe('Scenario 2');
-        expect(links[1].getAttribute('href')).toBe('/scenario/2');
+        const cards = container.querySelectorAll('[data-testid="open-scenario"]');
+        expect(cards).toHaveLength(2);
+        expect(cards[0].getAttribute('href')).toBe('/scenario/1');
+        expect(cards[1].getAttribute('href')).toBe('/scenario/2');
+        
+        expect(container.textContent).toContain('Scenario 1');
+        expect(container.textContent).toContain('Scenario 2');
     });
 
     it('should render a message if no scenarios are found', () => {
@@ -28,6 +29,6 @@ describe('/+page.svelte', () => {
 
         const { container } = render(Page, { props: { data: mockData } });
 
-        expect(container.querySelector('p')?.textContent).toBe('No scenarios found. Generate one!');
+        expect(container.textContent).toContain('No scenarios yet');
     });
 });
