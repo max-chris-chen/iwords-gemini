@@ -1,11 +1,13 @@
-<nav class="bg-gray-800 p-4 text-white flex justify-between items-center">
-    <a href="/" class="text-2xl font-bold">iWords</a>
-    <ul class="flex space-x-4">
+<nav class="bg-gradient-to-r from-indigo-600 via-purple-600 to-pink-500 p-6 text-white flex justify-between items-center shadow-xl mb-8">
+    <a href="/" class="text-3xl font-black tracking-tighter hover:scale-105 transition-transform duration-200">
+        iWords
+    </a>
+    <ul class="flex space-x-6 text-lg font-bold">
         <li>
-            <a href="/" data-testid="home-link" class="hover:text-gray-300">Home</a>
+            <a href="/" data-testid="home-link" class="hover:text-yellow-300 transition-colors duration-200">Home</a>
         </li>
         <li>
-            <a href="/generate" data-testid="generate-link" class="hover:text-gray-300">Generate</a>
+            <a href="/generate" data-testid="generate-link" class="hover:text-yellow-300 transition-colors duration-200">Generate</a>
         </li>
     </ul>
 </nav>
