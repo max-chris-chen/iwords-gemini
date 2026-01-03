@@ -19,10 +19,10 @@
 
 ## Phase 3: Home Page Layout & Sorting
 
-- [ ] Task: Update Home Page to use ScenarioCard and sort by newest first
-    - [ ] Sub-task: Update `src/routes/+page.svelte` to use a grid layout for cards
-    - [ ] Sub-task: Ensure scenarios are sorted by `createdAt` in descending order (server-side)
-    - [ ] Sub-task: Add "Delete" functionality to the home page (wiring up the card action)
+- [x] Task: Update Home Page to use ScenarioCard and sort by newest first 2440f46
+    - [x] Sub-task: Update `src/routes/+page.svelte` to use a grid layout for cards
+    - [x] Sub-task: Ensure scenarios are sorted by `createdAt` in descending order (server-side)
+    - [x] Sub-task: Add "Delete" functionality to the home page (wiring up the card action)
 - [ ] Task: Conductor - User Manual Verification 'Home Page Layout & Sorting' (Protocol in workflow.md)
 
 ## Phase 4: Pagination (Load More)
