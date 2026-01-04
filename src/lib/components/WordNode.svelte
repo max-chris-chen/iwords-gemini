@@ -1,44 +1,15 @@
 <script lang="ts">
-  import { Handle, Position, type NodeProps, useSvelteFlow } from '@xyflow/svelte';
+  import { Handle, Position, type NodeProps } from '@xyflow/svelte';
   import { audioManager } from '$lib/audio';
 
-  const { data, id }: NodeProps = $props();
-  const { setNodes, setEdges } = useSvelteFlow();
+  const { data }: NodeProps = $props();
 
   function handlePlayAudio(event: MouseEvent) {
-    // 必须同步调用，不能有 await
     event.stopPropagation();
     
     if (data?.word?.word) {
         audioManager.speak(data.word.word);
     }
-  }
-
-  function handleToggleExamples(event: MouseEvent) {
-    event.stopPropagation();
-    
-    const wordId = id;
-    const wordKey = wordId.replace('word-', '');
-
-    // Toggle edges
-    setEdges((eds) => 
-      eds.map((e) => {
-        if (e.source === wordId) {
-          return { ...e, hidden: !e.hidden };
-        }
-        return e;
-      })
-    );
-
-    // Toggle nodes
-    setNodes((nds) => 
-      nds.map((n) => {
-        if (n.type === 'example' && n.id.startsWith(`example-${wordKey}-`)) {
-          return { ...n, hidden: !n.hidden };
-        }
-        return n;
-      })
-    );
   }
 </script>
 
@@ -66,14 +37,14 @@
       <span class="text-lg">🔊</span>
     </button>
 
-    <button
-      type="button" 
-      class="toggle-examples-btn p-1.5 bg-indigo-50 hover:bg-indigo-100 text-indigo-400 hover:text-indigo-600 rounded-md transition-colors cursor-pointer z-50 ml-auto"
+    <div
+      role="button"
+      tabindex="0"
+      class="toggle-examples-btn p-1.5 bg-indigo-50 hover:bg-indigo-100 text-indigo-400 hover:text-indigo-600 rounded-md transition-colors cursor-pointer z-50 ml-auto flex items-center justify-center"
       aria-label="toggle examples"
-      onclick={handleToggleExamples}
     >
-      <span class="text-xs font-bold tracking-tighter">>></span>
-    </button>
+      <span class="text-xs font-bold tracking-tighter pointer-events-none">>></span>
+    </div>
   </div>
 
   <Handle type="source" position={Position.Bottom} class="!w-3 !h-3 !bg-indigo-400 !border-none" />

@@ -1,0 +1,8 @@
+{
+  "track_id": "mindmap_ui_revamp_20260104",
+  "type": "feature",
+  "status": "new",
+  "created_at": "2026-01-04T21:04:00Z",
+  "updated_at": "2026-01-04T21:04:00Z",
+  "description": "mindmap 页面优化 现在mindmap是一个白色的页面要求美化 minmap 要求 初始词节点 为圆形，mind map 节点续具备高级的玻璃质感，例句默认隐藏 单词节点点击的时候可以展开或收回"
+}

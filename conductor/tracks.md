@@ -34,3 +34,8 @@ This file tracks all major tracks for the project. Each track has its own detail
 
 
 
+
+---
+
+## [x] Track: Mind Map UI/UX Optimization (Glassmorphism, Interactive Toggle)
+*Link: [./conductor/tracks/mindmap_ui_revamp_20260104/](./conductor/tracks/mindmap_ui_revamp_20260104/)*
