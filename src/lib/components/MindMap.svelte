@@ -18,6 +18,12 @@
     scenario: ScenarioNode,
   };
 
+  const defaultEdgeOptions = {
+    type: 'smoothstep',
+    animated: true,
+    style: 'stroke: #94a3b8; stroke-width: 2; stroke-dasharray: 5 5;',
+  };
+
   function onNodeClick(event: CustomEvent<{ event: MouseEvent | TouchEvent, node: Node }>) {
     const clickedNode = event.detail.node;
     const originalEvent = event.detail.event;
@@ -75,9 +81,20 @@
   }
 </script>
 
-<div style="height: 100%; width: 100%;">
-  <SvelteFlow nodes={$nodes} edges={$edges} {nodeTypes} on:nodeclick={onNodeClick}>
-    <Background />
+<div class="mindmap-container h-full w-full bg-linear-to-br from-slate-50 to-blue-100/50">
+  <SvelteFlow 
+    nodes={$nodes} 
+    edges={$edges} 
+    {nodeTypes} 
+    {defaultEdgeOptions}
+    on:nodeclick={onNodeClick}
+  >
     <Controls />
   </SvelteFlow>
 </div>
+
+<style>
+  .mindmap-container {
+    background-attachment: fixed;
+  }
+</style>
