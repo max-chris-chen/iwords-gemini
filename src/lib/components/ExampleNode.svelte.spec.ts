@@ -18,7 +18,11 @@ vi.mock('@xyflow/svelte', () => ({
     Bottom: 'bottom',
     Left: 'left',
     Right: 'right'
-  }
+  },
+  useSvelteFlow: () => ({
+    setNodes: vi.fn(),
+    setEdges: vi.fn()
+  })
 }));
 
 describe('ExampleNode component', () => {
