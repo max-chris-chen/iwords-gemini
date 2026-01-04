@@ -46,5 +46,12 @@ describe('Mind map data transformation', () => {
         expect(edges.find(e => e.source === 'word-word1' && e.target === 'example-word1-0')).toBeDefined();
         expect(edges.find(e => e.source === 'word-word1' && e.target === 'example-word1-1')).toBeDefined();
         expect(edges.find(e => e.source === 'word-word2' && e.target === 'example-word2-0')).toBeDefined();
+
+        // Check hidden state
+        const exampleNode = nodes.find(n => n.id === 'example-word1-0');
+        expect(exampleNode?.hidden).toBe(true);
+
+        const exampleEdge = edges.find(e => e.source === 'word-word1' && e.target === 'example-word1-0');
+        expect(exampleEdge?.hidden).toBe(true);
     });
 });

@@ -5,22 +5,31 @@ export function transformScenarioToFlowData(scenario: Scenario): { nodes: Node[]
     const nodes: Node[] = [];
     const edges: Edge[] = [];
 
-    // Scenario node (root)
+    const totalWords = scenario.words.length;
+    const wordSpacing = 350;
+    // Calculate total width of the word row to find the center
+    const totalWidth = (totalWords - 1) * wordSpacing; 
+    const startX = 150; 
+    const centerX = startX + totalWidth / 2;
+
+    // Scenario node (root) - Centered horizontally
     nodes.push({
         id: 'scenario',
-        type: 'input',
+        type: 'scenario',
         data: { label: scenario.prompt },
-        position: { x: 400, y: 50 }
+        position: { x: centerX - 64, y: 50 } // x minus half node width (128/2)
     });
 
     // Word and Example nodes
     scenario.words.forEach((word, wordIndex) => {
         const wordId = `word-${word.word}`;
+        const wordX = startX + wordIndex * wordSpacing;
+        
         nodes.push({
             id: wordId,
-            type: 'word', // Use the custom word node type
+            type: 'word', 
             data: { word: word },
-            position: { x: 150 + wordIndex * 350, y: 200 }
+            position: { x: wordX, y: 300 }
         });
         edges.push({
             id: `e-scenario-${wordId}`,
@@ -32,14 +41,16 @@ export function transformScenarioToFlowData(scenario: Scenario): { nodes: Node[]
             const exampleId = `example-${word.word}-${exampleIndex}`;
             nodes.push({
                 id: exampleId,
-                type: 'example', // Use the custom example node type
+                type: 'example', 
                 data: { example: example },
-                position: { x: 100 + wordIndex * 350 + (exampleIndex % 2 === 0 ? -50 : 50), y: 400 + exampleIndex * 100 }
+                position: { x: wordX + (exampleIndex % 2 === 0 ? -50 : 50), y: 550 + exampleIndex * 150 },
+                hidden: true
             });
             edges.push({
                 id: `e-${wordId}-${exampleId}`,
                 source: wordId,
-                target: exampleId
+                target: exampleId,
+                hidden: true
             });
         });
     });
