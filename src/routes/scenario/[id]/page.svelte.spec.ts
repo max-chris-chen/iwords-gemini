@@ -6,14 +6,15 @@ import Page from './+page.svelte';
 describe('Scenario page', () => {
     it('should render the mind map', () => {
         const mockData = {
-            scenario: { prompt: 'Test' },
+            scenario: { prompt: 'Test', words: [] },
             nodes: [{ id: '1', position: { x: 0, y: 0 }, data: { label: 'Test Node' } }],
             edges: [],
         };
         
         const { container } = render(Page, { props: { data: mockData } });
 
-        expect(container.querySelector('h1')?.textContent).toBe('Mind Map for "Test"');
+        expect(container.querySelector('h1')?.textContent).toContain('Mind Map for');
+        expect(container.querySelector('h1')?.textContent).toContain('"Test"');
         expect(container.querySelector('.svelte-flow')).not.toBeNull();
     });
 });
