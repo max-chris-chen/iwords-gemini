@@ -18,9 +18,17 @@
     scenario: ScenarioNode,
   };
 
-  function onNodeClick(event: CustomEvent<{ node: Node }>) {
+  function onNodeClick(event: CustomEvent<{ event: MouseEvent | TouchEvent, node: Node }>) {
     const clickedNode = event.detail.node;
+    const originalEvent = event.detail.event;
+
     if (clickedNode.type !== 'word') return;
+
+    // Check if the click originated from the toggle button
+    const target = originalEvent.target as HTMLElement;
+    const toggleBtn = target.closest('.toggle-examples-btn');
+
+    if (!toggleBtn) return; // Ignore clicks elsewhere on the node
 
     // Toggle logic
     const wordId = clickedNode.id;

@@ -14,7 +14,7 @@
   }
 </script>
 
-<div class="p-4 bg-indigo-50/80 backdrop-blur-md rounded-xl shadow-lg border border-indigo-200/50 min-w-[180px] text-center transition-all hover:shadow-xl hover:bg-indigo-50/90">
+<div class="p-4 bg-indigo-50/80 backdrop-blur-md rounded-xl shadow-lg border border-indigo-200/50 min-w-[180px] max-w-[300px] text-center transition-all hover:shadow-xl hover:bg-indigo-50/90">
   <Handle type="target" position={Position.Top} class="!w-3 !h-3 !bg-indigo-400 !border-none" />
   
   <div class="flex flex-col gap-1 mb-3">
@@ -28,14 +28,24 @@
     <div class="text-xs text-slate-600 italic mt-1 px-2">{data.word.definition}</div>
   </div>
   
-  <button 
-    type="button"
-    class="p-2 bg-indigo-100/80 hover:bg-indigo-200 text-indigo-600 rounded-full transition-colors cursor-pointer inline-flex items-center justify-center z-50 shadow-sm backdrop-blur-sm"
-    aria-label="play audio" 
-    onclick={handlePlayAudio}
-  >
-    <span class="text-lg">🔊</span>
-  </button>
+  <div class="flex justify-between items-center mt-2">
+    <button 
+      type="button"
+      class="p-2 bg-indigo-100/80 hover:bg-indigo-200 text-indigo-600 rounded-full transition-colors cursor-pointer inline-flex items-center justify-center z-50 shadow-sm backdrop-blur-sm"
+      aria-label="play audio" 
+      onclick={handlePlayAudio}
+    >
+      <span class="text-lg">🔊</span>
+    </button>
+
+    <button
+      type="button" 
+      class="toggle-examples-btn p-1.5 bg-indigo-50 hover:bg-indigo-100 text-indigo-400 hover:text-indigo-600 rounded-md transition-colors cursor-pointer z-50 ml-auto"
+      aria-label="toggle examples"
+    >
+      <span class="text-xs font-bold tracking-tighter">>></span>
+    </button>
+  </div>
 
   <Handle type="source" position={Position.Bottom} class="!w-3 !h-3 !bg-indigo-400 !border-none" />
 </div>
