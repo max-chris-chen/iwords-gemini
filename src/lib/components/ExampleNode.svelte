@@ -14,7 +14,7 @@
   }
 </script>
 
-<div class="p-4 bg-white/60 backdrop-blur-md rounded-xl shadow-sm border border-white/50 max-w-[280px] text-left hover:shadow-md transition-shadow">
+<div class="p-4 bg-white/80 backdrop-blur-md rounded-xl shadow-sm border border-white/50 max-w-[280px] text-left hover:shadow-md transition-shadow">
   <Handle type="target" position={Position.Top} class="!w-2 !h-2 !bg-slate-400 !border-none" />
   
   <div class="mb-3 space-y-1">
@@ -34,6 +34,4 @@
       <span class="text-sm">🔊</span>
     </button>
   </div>
-
-  <Handle type="source" position={Position.Bottom} class="!w-2 !h-2 !bg-slate-400 !border-none" />
 </div>

@@ -29,7 +29,7 @@ export function transformScenarioToFlowData(scenario: Scenario): { nodes: Node[]
             id: wordId,
             type: 'word', 
             data: { word: word },
-            position: { x: wordX, y: 300 }
+            position: { x: wordX, y: 400 } // Pushed down from 300
         });
         edges.push({
             id: `e-scenario-${wordId}`,
@@ -43,7 +43,10 @@ export function transformScenarioToFlowData(scenario: Scenario): { nodes: Node[]
                 id: exampleId,
                 type: 'example', 
                 data: { example: example },
-                position: { x: wordX + (exampleIndex % 2 === 0 ? -50 : 50), y: 550 + exampleIndex * 150 },
+                position: { 
+                    x: wordX + (exampleIndex % 2 === 0 ? -80 : 80), // Wider horizontal spread
+                    y: 750 + exampleIndex * 180 // Pushed down from 550, larger gap (180)
+                },
                 hidden: true
             });
             edges.push({
