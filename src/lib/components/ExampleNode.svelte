@@ -14,20 +14,20 @@
   }
 </script>
 
-<div class="p-3 bg-gray-50 rounded shadow border border-gray-100 max-w-[250px] text-left">
-  <Handle type="target" position={Position.Top} class="w-2 h-2" />
+<div class="p-4 bg-white/60 backdrop-blur-md rounded-xl shadow-sm border border-white/50 max-w-[280px] text-left hover:shadow-md transition-shadow">
+  <Handle type="target" position={Position.Top} class="!w-2 !h-2 !bg-slate-400 !border-none" />
   
-  <div class="mb-2">
-    <div class="text-sm text-gray-800 leading-tight mb-1">{data.example.en}</div>
+  <div class="mb-3 space-y-1">
+    <div class="text-sm text-slate-800 leading-snug font-medium">{data.example.en}</div>
     {#if data.example.cn}
-      <div class="text-xs text-gray-500">{data.example.cn}</div>
+      <div class="text-xs text-slate-500 font-normal">{data.example.cn}</div>
     {/if}
   </div>
   
   <div class="flex justify-end">
     <button 
       type="button"
-      class="p-1.5 bg-white hover:bg-gray-100 text-gray-600 rounded-full border border-gray-200 transition-colors cursor-pointer inline-flex items-center justify-center z-50"
+      class="p-1.5 bg-white/80 hover:bg-white text-slate-600 rounded-full border border-slate-200 transition-colors cursor-pointer inline-flex items-center justify-center z-50 shadow-sm"
       aria-label="play audio" 
       onclick={handlePlayAudio}
     >
@@ -35,5 +35,5 @@
     </button>
   </div>
 
-  <Handle type="source" position={Position.Bottom} class="w-2 h-2" />
+  <Handle type="source" position={Position.Bottom} class="!w-2 !h-2 !bg-slate-400 !border-none" />
 </div>

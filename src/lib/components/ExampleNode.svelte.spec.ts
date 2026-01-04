@@ -1,7 +1,6 @@
-
 import { render, cleanup } from '@testing-library/svelte';
 import { describe, it, expect, afterEach, vi } from 'vitest';
-import WordNode from './WordNode.svelte';
+import ExampleNode from './ExampleNode.svelte';
 
 // Mock @xyflow/svelte
 vi.mock('@xyflow/svelte', () => ({
@@ -14,42 +13,39 @@ vi.mock('@xyflow/svelte', () => ({
   }
 }));
 
-describe('WordNode component', () => {
+describe('ExampleNode component', () => {
   afterEach(() => {
     cleanup();
   });
 
-  it('should render the word and an audio button', () => {
+  it('should render the example text', () => {
     const nodeData = {
       data: {
-        label: 'Test Word',
-        word: {
-          word: 'Test Word',
+        example: {
+          en: 'This is an example.',
+          cn: '这是一个例子。'
         },
       },
     };
 
-    const { getByText, getByRole } = render(WordNode, { props: { data: nodeData.data } });
+    const { getByText } = render(ExampleNode, { props: { data: nodeData.data } });
 
-    expect(getByText('Test Word')).toBeInTheDocument();
-    const button = getByRole('button', { name: /play audio/i });
-    expect(button).toBeInTheDocument();
+    expect(getByText('This is an example.')).toBeInTheDocument();
+    expect(getByText('这是一个例子。')).toBeInTheDocument();
   });
 
   it('should have glassmorphism styling', () => {
     const nodeData = {
       data: {
-        label: 'Test Word',
-        word: {
-          word: 'Test Word',
+        example: {
+          en: 'This is an example.',
         },
       },
     };
 
-    const { container } = render(WordNode, { props: { data: nodeData.data } });
+    const { container } = render(ExampleNode, { props: { data: nodeData.data } });
     
     // Check for glassmorphism classes
-    // We expect the main container to have these classes
     const nodeDiv = container.querySelector('div.backdrop-blur-md');
     expect(nodeDiv).toBeInTheDocument();
   });
