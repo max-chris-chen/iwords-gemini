@@ -1,7 +1,15 @@
 
-import { render, cleanup } from '@testing-library/svelte';
+import { render, cleanup, fireEvent } from '@testing-library/svelte';
 import { describe, it, expect, afterEach, vi } from 'vitest';
 import WordNode from './WordNode.svelte';
+import { audioManager } from '$lib/audio';
+
+// Mock audioManager
+vi.mock('$lib/audio', () => ({
+  audioManager: {
+    speak: vi.fn()
+  }
+}));
 
 // Mock @xyflow/svelte
 vi.mock('@xyflow/svelte', () => ({
@@ -17,6 +25,7 @@ vi.mock('@xyflow/svelte', () => ({
 describe('WordNode component', () => {
   afterEach(() => {
     cleanup();
+    vi.clearAllMocks();
   });
 
   it('should render the word and an audio button', () => {
@@ -34,6 +43,22 @@ describe('WordNode component', () => {
     expect(getByText('Test Word')).toBeInTheDocument();
     const button = getByRole('button', { name: /play audio/i });
     expect(button).toBeInTheDocument();
+  });
+
+  it('should call speak when audio button is clicked', async () => {
+    const nodeData = {
+      data: {
+        word: {
+          word: 'hello',
+        },
+      },
+    };
+
+    const { getByRole } = render(WordNode, { props: { data: nodeData.data } });
+    const button = getByRole('button', { name: /play audio/i });
+    
+    await fireEvent.click(button);
+    expect(audioManager.speak).toHaveBeenCalledWith('hello');
   });
 
   it('should have glassmorphism styling', () => {
