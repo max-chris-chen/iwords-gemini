@@ -4,12 +4,14 @@
   import '@xyflow/svelte/dist/style.css';
   import WordNode from './WordNode.svelte';
   import ExampleNode from './ExampleNode.svelte';
+  import ScenarioNode from './ScenarioNode.svelte';
 
   const { nodes, edges }: { nodes: Node[], edges: Edge[] } = $props();
 
   const nodeTypes = {
     word: WordNode,
     example: ExampleNode,
+    scenario: ScenarioNode,
   };
 </script>
 
