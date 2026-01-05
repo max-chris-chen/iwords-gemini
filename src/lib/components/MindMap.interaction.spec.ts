@@ -15,12 +15,48 @@ describe('MindMap Interaction', () => {
 
         const { container } = render(MindMap, { props: { nodes, edges } });
         
-        expect(container.textContent).toContain('W1');
-        // Example node is hidden in the store, so it shouldn't be rendered or visible
-        expect(container.textContent).not.toContain('E1');
-    });
-
-    // Note: Testing the actual click and state change in Svelte Flow via unit tests 
-    // is extremely difficult because Svelte Flow is a complex third-party component.
-    // However, we've verified the logic in the code.
-});
+                expect(container.textContent).toContain('W1');
+        
+                // Example node is hidden in the store, so it shouldn't be rendered or visible
+        
+                expect(container.textContent).not.toContain('E1');
+        
+            });
+        
+        
+        
+            it('should initialize scenario node with onExpand handler', async () => {
+        
+                const nodes = [
+        
+                    { id: 'scenario', type: 'scenario', data: { label: 'S' }, position: { x: 0, y: 0 } }
+        
+                ];
+        
+                const edges: any[] = [];
+        
+        
+        
+                        const { component, container } = render(MindMap, { props: { nodes, edges, scenarioId: '123' } });
+        
+        
+        
+                        
+        
+        
+        
+                        expect(container.textContent).toContain('S');
+        
+        
+        
+                    });
+        
+        
+        
+                });
+        
+        
+        
+                
+        
+        

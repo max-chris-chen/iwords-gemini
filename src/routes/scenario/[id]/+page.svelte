@@ -35,6 +35,6 @@
     </div>
 
     <div class="bg-white/40 backdrop-blur-md rounded-3xl border border-white/60 shadow-xl overflow-hidden relative" style="height: 75vh; width: 100%;">
-        <MindMap {nodes} {edges} />
+        <MindMap {nodes} {edges} scenarioId={data.scenario._id} />
     </div>
 </div>
