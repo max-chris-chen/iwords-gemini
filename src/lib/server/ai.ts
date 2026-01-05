@@ -41,3 +41,27 @@ export async function generateContent(prompt: string): Promise<string> {
         throw new Error(`AI API Error: ${message}`);
     }
 }
+
+export async function generateExpansion(prompt: string, existingWords: string[]): Promise<string> {
+    const aiPrompt = `
+Generate exactly 2 new English words related to the scenario: "${prompt}".
+These words MUST NOT be any of the following: ${existingWords.join(', ')}.
+Output strictly valid JSON with the following structure:
+{
+  "words": [
+    {
+      "word": "english word",
+      "phonetics": "IPA",
+      "definition": "english definition",
+      "definition_cn": "中文意思",
+      "examples": [
+        { "en": "example sentence 1", "cn": "chinese translation" },
+        { "en": "example sentence 2", "cn": "chinese translation" }
+      ]
+    }
+  ]
+}
+Each word should have exactly 2 examples.
+`;
+    return generateContent(aiPrompt);
+}

@@ -71,4 +71,27 @@ describe('AI Service', () => {
         const { generateContent } = await import('./ai');
         await expect(generateContent('test')).rejects.toThrow('Invalid/Missing environment variable: "DEEPSEEK_API_KEY"');
     });
+
+    describe('generateExpansion', () => {
+        it('should format expansion prompt correctly with existing words', async () => {
+            const { generateExpansion } = await import('./ai');
+            const mockResponse = {
+                choices: [{ message: { content: '{"words":[]}' } }]
+            };
+            (global.fetch as any).mockResolvedValue({
+                ok: true,
+                json: async () => mockResponse
+            });
+
+            await generateExpansion('travel', ['passport', 'airport']);
+
+            const fetchCall = vi.mocked(global.fetch).mock.calls[0];
+            const body = JSON.parse(fetchCall[1]?.body as string);
+            const content = body.messages[0].content;
+
+            expect(content).toContain('travel');
+            expect(content).toContain('passport, airport');
+            expect(content).toContain('exactly 2 new');
+        });
+    });
 });
