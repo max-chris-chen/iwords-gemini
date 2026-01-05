@@ -1,0 +1,31 @@
+# Plan: Root Node Expansion (Scenario Extension)
+
+## Phase 1: Backend Support & AI Logic
+- [x] Task: Update `ai.ts` to support expansion generation. 066e2df
+    - [x] Sub-task: Add `existingWords` parameter to generation prompt logic.
+    - [x] Sub-task: Implement logic to request exactly 2 words with 2 example sentences each.
+- [ ] Task: Update `scenario.ts` service to handle adding new words to an existing scenario.
+    - [ ] Sub-task: Write unit tests for `addWordsToScenario` in `scenario.server.spec.ts`.
+    - [ ] Sub-task: Implement `addWordsToScenario` logic to update the database.
+- [ ] Task: Create or update API route `POST /api/scenario/[id]/expand`.
+    - [ ] Sub-task: Write integration tests in `server.spec.ts` for the expansion endpoint.
+    - [ ] Sub-task: Implement the endpoint handler calling the AI and Service layers.
+- [ ] Task: Conductor - User Manual Verification 'Backend Support & AI Logic' (Protocol in workflow.md)
+
+## Phase 2: Frontend UI & Interaction
+- [ ] Task: Enhance `ScenarioNode.svelte` with expansion UI.
+    - [ ] Sub-task: Add the "+" button at the bottom-right.
+    - [ ] Sub-task: Implement internal loading state visual for the node.
+    - [ ] Sub-task: Write component tests in `ScenarioNode.svelte.spec.ts` for UI states.
+- [ ] Task: Implement expansion logic in `MindMap.svelte`.
+    - [ ] Sub-task: Create a function to call the expansion API.
+    - [ ] Sub-task: Update the mind map state dynamically when new words arrive.
+    - [ ] Sub-task: Write interaction tests in `MindMap.interaction.spec.ts`.
+- [ ] Task: Conductor - User Manual Verification 'Frontend UI & Interaction' (Protocol in workflow.md)
+
+## Phase 3: Animation & Polishing
+- [ ] Task: Implement "growth" animation for new nodes.
+    - [ ] Sub-task: Use Svelte transitions or Svelte Flow specific animation properties for new nodes.
+- [ ] Task: Final end-to-end verification.
+    - [ ] Sub-task: Write E2E test in `tests/e2e/scenario.spec.ts` covering the full expansion flow.
+- [ ] Task: Conductor - User Manual Verification 'Animation & Polishing' (Protocol in workflow.md)
