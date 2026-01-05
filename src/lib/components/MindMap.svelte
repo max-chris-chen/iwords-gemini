@@ -7,7 +7,17 @@
   import ScenarioNode from './ScenarioNode.svelte';
   import { transformScenarioToFlowData } from '$lib/mindmap';
 
-  const { nodes: initialNodes, edges: initialEdges, scenarioId }: { nodes: Node[], edges: Edge[], scenarioId?: string } = $props();
+  const { 
+    nodes: initialNodes, 
+    edges: initialEdges, 
+    scenarioId,
+    onWordsUpdated 
+  }: { 
+    nodes: Node[], 
+    edges: Edge[], 
+    scenarioId?: string,
+    onWordsUpdated?: (count: number) => void
+  } = $props();
 
   let nodes = $state(initialNodes.map(n => {
     if (n.id === 'scenario') {
@@ -48,6 +58,10 @@
         return n;
       });
       edges = newEdges;
+
+      if (onWordsUpdated) {
+        onWordsUpdated(updatedScenario.words.length);
+      }
     } catch (error) {
       console.error('Expansion error:', error);
       alert('Failed to expand scenario. Please try again.');

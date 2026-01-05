@@ -27,7 +27,8 @@
 
   <button
     onclick={handleExpand}
-    class="absolute -bottom-1 -right-1 w-8 h-8 bg-amber-400 text-white rounded-full flex items-center justify-center shadow-md hover:bg-amber-500 transition-colors z-20"
+    disabled={data.isExpanding}
+    class="absolute -bottom-1 -right-1 w-8 h-8 bg-amber-400 text-white rounded-full flex items-center justify-center shadow-md hover:bg-amber-500 transition-colors z-20 disabled:opacity-50 disabled:cursor-not-allowed"
     aria-label="Expand scenario"
   >
     <svg xmlns="http://www.w3.org/2000/svg" class="w-5 h-5" viewBox="0 0 20 20" fill="currentColor">
