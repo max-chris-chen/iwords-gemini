@@ -7,9 +7,9 @@
 - [x] Task: Update `scenario.ts` service to handle adding new words to an existing scenario. 6c29538
     - [x] Sub-task: Write unit tests for `addWordsToScenario` in `scenario.server.spec.ts`.
     - [x] Sub-task: Implement `addWordsToScenario` logic to update the database.
-- [ ] Task: Create or update API route `POST /api/scenario/[id]/expand`.
-    - [ ] Sub-task: Write integration tests in `server.spec.ts` for the expansion endpoint.
-    - [ ] Sub-task: Implement the endpoint handler calling the AI and Service layers.
+- [x] Task: Create or update API route `POST /api/scenario/[id]/expand`. c3081fb
+    - [x] Sub-task: Write integration tests in `server.spec.ts` for the expansion endpoint.
+    - [x] Sub-task: Implement the endpoint handler calling the AI and Service layers.
 - [ ] Task: Conductor - User Manual Verification 'Backend Support & AI Logic' (Protocol in workflow.md)
 
 ## Phase 2: Frontend UI & Interaction
