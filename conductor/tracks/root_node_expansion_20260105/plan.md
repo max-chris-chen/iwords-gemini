@@ -1,6 +1,6 @@
 # Plan: Root Node Expansion (Scenario Extension)
 
-## Phase 1: Backend Support & AI Logic
+## Phase 1: Backend Support & AI Logic [checkpoint: 7052041]
 - [x] Task: Update `ai.ts` to support expansion generation. 066e2df
     - [x] Sub-task: Add `existingWords` parameter to generation prompt logic.
     - [x] Sub-task: Implement logic to request exactly 2 words with 2 example sentences each.
