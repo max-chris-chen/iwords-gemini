@@ -1,7 +1,7 @@
 // src/lib/server/scenario.ts
 import { ObjectId } from 'mongodb';
 import type { Scenario, Word } from '../models/types';
-import { generateContent } from './ai';
+import { generateContent, generateExpansion } from './ai';
 import { validatePrompt, sanitizeScenarioData } from './security';
 import clientPromise from './db';
 
@@ -145,6 +145,67 @@ async function getAll(): Promise<Scenario[]> {
 	return docs.map(toScenario);
 }
 
+async function addWordsToScenario(id: string, newWords: Word[]): Promise<Scenario | null> {
+	const client = await clientPromise;
+	const db = client.db('iwords');
+	const collection = db.collection<ScenarioDocument>('scenarios');
+
+	if (!ObjectId.isValid(id)) {
+		return null;
+	}
+
+	const result = await collection.updateOne(
+		{ _id: new ObjectId(id) },
+		{ $push: { words: { $each: newWords } } }
+	);
+
+	if (result.modifiedCount === 0) {
+		return null;
+	}
+
+	return getById(id);
+}
+
+async function expand(id: string): Promise<Scenario> {
+	const scenario = await getById(id);
+	if (!scenario) {
+		throw new Error(`Scenario not found: ${id}`);
+	}
+
+	const existingWords = scenario.words.map((w) => w.word);
+	const content = await generateExpansion(scenario.prompt, existingWords);
+
+	try {
+		const cleanedContent = content.replace(/```json/g, '').replace(/```/g, '').trim();
+		const parsed = JSON.parse(cleanedContent);
+
+		if (!parsed.words || !Array.isArray(parsed.words)) {
+			throw new Error('Invalid JSON structure: missing words array');
+		}
+
+		const newWords: Word[] = parsed.words.map((w: any) =>
+			sanitizeScenarioData({
+				word: w.word,
+				phonetics: w.phonetics,
+				definition: w.definition,
+				definition_cn: w.definition_cn,
+				examples: w.examples || [],
+				audioUrl: w.audioUrl
+			})
+		);
+
+		const updatedScenario = await addWordsToScenario(id, newWords);
+		if (!updatedScenario) {
+			throw new Error('Failed to update scenario with new words');
+		}
+
+		return updatedScenario;
+	} catch (error) {
+		console.error('Failed to parse expansion AI response:', content);
+		throw new Error('Failed to parse AI response: ' + (error as Error).message);
+	}
+}
+
 export const scenarioService = {
 
 	generate: generate,
@@ -155,6 +216,10 @@ export const scenarioService = {
 
 	getAll: getAll,
 
-	deleteById: deleteById
+	deleteById: deleteById,
+
+	expand: expand,
+
+	addWordsToScenario: addWordsToScenario
 
 };

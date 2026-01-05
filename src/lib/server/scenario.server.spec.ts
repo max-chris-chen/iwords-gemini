@@ -180,6 +180,137 @@ describe('Scenario Logic', () => {
 			]);
 		});
 	});
+
+	describe('deleteById', () => {
+		it('should delete a scenario by ID', async () => {
+			const scenarioId = new ObjectId();
+			const deleteOneMock = vi.fn().mockResolvedValue({ deletedCount: 1 });
+			const collectionMock = { deleteOne: deleteOneMock };
+			const dbMock = { collection: vi.fn().mockReturnValue(collectionMock) };
+			const clientMock = { db: vi.fn().mockReturnValue(dbMock) };
+
+			vi.doMock('./db', () => ({
+				default: Promise.resolve(clientMock)
+			}));
+
+			const { scenarioService: mockedService } = await import('./scenario');
+			const result = await mockedService.deleteById(scenarioId.toHexString());
+
+			expect(deleteOneMock).toHaveBeenCalledWith({ _id: scenarioId });
+			expect(result).toBe(true);
+		});
+
+		it('should return false if ID is invalid', async () => {
+			const { scenarioService } = await import('./scenario');
+			const result = await scenarioService.deleteById('invalid-id');
+			expect(result).toBe(false);
+		});
+	});
+
+	describe('expand', () => {
+		it('should add new words to an existing scenario using AI', async () => {
+			const scenarioId = new ObjectId();
+			const mockDate = new Date();
+			const mockScenario = {
+				_id: scenarioId,
+				prompt: 'coding',
+				words: [{ word: 'variable', examples: [], phonetics: '', definition: '', definition_cn: '' }],
+				createdAt: mockDate
+			};
+
+			const findOneMock = vi.fn()
+				.mockResolvedValueOnce(mockScenario)
+				.mockResolvedValueOnce({
+					...mockScenario,
+					words: [...mockScenario.words,
+						{ word: 'function', examples: [], phonetics: '', definition: '', definition_cn: '' },
+						{ word: 'class', examples: [], phonetics: '', definition: '', definition_cn: '' }
+					]
+				});
+			const updateOneMock = vi.fn().mockResolvedValue({ modifiedCount: 1 });
+			const collectionMock = { findOne: findOneMock, updateOne: updateOneMock };
+			const dbMock = { collection: vi.fn().mockReturnValue(collectionMock) };
+			const clientMock = { db: vi.fn().mockReturnValue(dbMock) };
+
+			vi.doMock('./db', () => ({
+				default: Promise.resolve(clientMock)
+			}));
+
+			const mockAiResponse = JSON.stringify({
+				words: [
+					{ word: 'function', examples: [], phonetics: '', definition: '', definition_cn: '' },
+					{ word: 'class', examples: [], phonetics: '', definition: '', definition_cn: '' }
+				]
+			});
+			(ai.generateExpansion as any).mockResolvedValue(mockAiResponse);
+
+			const { scenarioService: mockedService } = await import('./scenario');
+			const result = await mockedService.expand(scenarioId.toHexString());
+
+			expect(findOneMock).toHaveBeenCalled();
+			expect(ai.generateExpansion).toHaveBeenCalledWith('coding', ['variable']);
+			expect(updateOneMock).toHaveBeenCalled();
+			expect(result.words).toHaveLength(3);
+		});
+
+		it('should throw error if scenario not found', async () => {
+			const scenarioId = new ObjectId().toHexString();
+			const findOneMock = vi.fn().mockResolvedValue(null);
+			const collectionMock = { findOne: findOneMock };
+			const dbMock = { collection: vi.fn().mockReturnValue(collectionMock) };
+			const clientMock = { db: vi.fn().mockReturnValue(dbMock) };
+
+			vi.doMock('./db', () => ({
+				default: Promise.resolve(clientMock)
+			}));
+
+			const { scenarioService: mockedService } = await import('./scenario');
+			await expect(mockedService.expand(scenarioId)).rejects.toThrow('Scenario not found');
+		});
+
+		it('should throw error if AI response is invalid', async () => {
+			const scenarioId = new ObjectId();
+			const mockScenario = { _id: scenarioId, prompt: 'test', words: [], createdAt: new Date() };
+			const findOneMock = vi.fn().mockResolvedValue(mockScenario);
+			const collectionMock = { findOne: findOneMock };
+			const dbMock = { collection: vi.fn().mockReturnValue(collectionMock) };
+			const clientMock = { db: vi.fn().mockReturnValue(dbMock) };
+
+			vi.doMock('./db', () => ({
+				default: Promise.resolve(clientMock)
+			}));
+
+			(ai.generateExpansion as any).mockResolvedValue('invalid json');
+
+			const { scenarioService: mockedService } = await import('./scenario');
+			await expect(mockedService.expand(scenarioId.toHexString())).rejects.toThrow('Failed to parse AI response');
+		});
+	});
+
+	describe('addWordsToScenario', () => {
+		it('should append words to a scenario in the database', async () => {
+			const scenarioId = new ObjectId();
+			const updateOneMock = vi.fn().mockResolvedValue({ modifiedCount: 1 });
+			const findOneMock = vi.fn().mockResolvedValue({ _id: scenarioId, prompt: 'test', words: [], createdAt: new Date() });
+			const collectionMock = { updateOne: updateOneMock, findOne: findOneMock };
+			const dbMock = { collection: vi.fn().mockReturnValue(collectionMock) };
+			const clientMock = { db: vi.fn().mockReturnValue(dbMock) };
+
+			vi.doMock('./db', () => ({
+				default: Promise.resolve(clientMock)
+			}));
+
+			const { scenarioService: mockedService } = await import('./scenario');
+
+			const newWords = [{ word: 'new', examples: [], phonetics: '', definition: '', definition_cn: '' }];
+			await mockedService.addWordsToScenario(scenarioId.toHexString(), newWords);
+
+			expect(updateOneMock).toHaveBeenCalledWith(
+				{ _id: scenarioId },
+				{ $push: { words: { $each: newWords } } }
+			);
+		});
+	});
 });
 
 
