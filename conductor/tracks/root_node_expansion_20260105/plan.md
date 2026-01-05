@@ -4,9 +4,9 @@
 - [x] Task: Update `ai.ts` to support expansion generation. 066e2df
     - [x] Sub-task: Add `existingWords` parameter to generation prompt logic.
     - [x] Sub-task: Implement logic to request exactly 2 words with 2 example sentences each.
-- [ ] Task: Update `scenario.ts` service to handle adding new words to an existing scenario.
-    - [ ] Sub-task: Write unit tests for `addWordsToScenario` in `scenario.server.spec.ts`.
-    - [ ] Sub-task: Implement `addWordsToScenario` logic to update the database.
+- [x] Task: Update `scenario.ts` service to handle adding new words to an existing scenario. 6c29538
+    - [x] Sub-task: Write unit tests for `addWordsToScenario` in `scenario.server.spec.ts`.
+    - [x] Sub-task: Implement `addWordsToScenario` logic to update the database.
 - [ ] Task: Create or update API route `POST /api/scenario/[id]/expand`.
     - [ ] Sub-task: Write integration tests in `server.spec.ts` for the expansion endpoint.
     - [ ] Sub-task: Implement the endpoint handler calling the AI and Service layers.
