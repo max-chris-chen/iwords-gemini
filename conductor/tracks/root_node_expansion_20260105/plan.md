@@ -17,10 +17,10 @@
     - [x] Sub-task: Add the "+" button at the bottom-right.
     - [x] Sub-task: Implement internal loading state visual for the node.
     - [x] Sub-task: Write component tests in `ScenarioNode.svelte.spec.ts` for UI states.
-- [ ] Task: Implement expansion logic in `MindMap.svelte`.
-    - [ ] Sub-task: Create a function to call the expansion API.
-    - [ ] Sub-task: Update the mind map state dynamically when new words arrive.
-    - [ ] Sub-task: Write interaction tests in `MindMap.interaction.spec.ts`.
+- [x] Task: Implement expansion logic in `MindMap.svelte`. 1236bc3
+    - [x] Sub-task: Create a function to call the expansion API.
+    - [x] Sub-task: Update the mind map state dynamically when new words arrive.
+    - [x] Sub-task: Write interaction tests in `MindMap.interaction.spec.ts`.
 - [ ] Task: Conductor - User Manual Verification 'Frontend UI & Interaction' (Protocol in workflow.md)
 
 ## Phase 3: Animation & Polishing
