@@ -51,4 +51,29 @@ describe('ScenarioNode component', () => {
     expect(nodeDiv).toHaveClass('bg-amber-100/30'); // Example distinct color
     expect(nodeDiv).toHaveClass('border-amber-200/50');
   });
+
+  it('should render the expansion button and handle click', async () => {
+    const onExpand = vi.fn();
+    const { getByRole } = render(ScenarioNode, { 
+      props: { 
+        data: { label: 'Test', onExpand } 
+      } 
+    });
+
+    const button = getByRole('button');
+    expect(button).toBeInTheDocument();
+    
+    await button.click();
+    expect(onExpand).toHaveBeenCalled();
+  });
+
+  it('should show loading indicator when expanding', () => {
+    const { getByTestId } = render(ScenarioNode, { 
+      props: { 
+        data: { label: 'Test', isExpanding: true } 
+      } 
+    });
+
+    expect(getByTestId('loading-indicator')).toBeInTheDocument();
+  });
 });
