@@ -1,6 +1,7 @@
 <script lang="ts">
   import { Handle, Position, type NodeProps } from '@xyflow/svelte';
   import { audioManager } from '$lib/audio';
+  import { fly } from 'svelte/transition';
 
   const { data }: NodeProps = $props();
 
@@ -13,7 +14,10 @@
   }
 </script>
 
-<div class="p-4 bg-indigo-50/80 backdrop-blur-md rounded-xl shadow-lg border border-indigo-200/50 min-w-[180px] max-w-[300px] text-center transition-all hover:shadow-xl hover:bg-indigo-50/90">
+<div 
+  in:fly={{ y: 20, duration: 400 }}
+  class="p-4 bg-indigo-50/80 backdrop-blur-md rounded-xl shadow-lg border border-indigo-200/50 min-w-[180px] max-w-[300px] text-center transition-all hover:shadow-xl hover:bg-indigo-50/90"
+>
   <Handle type="target" position={Position.Top} class="!w-3 !h-3 !bg-indigo-400 !border-none" />
   
   <div class="flex flex-col gap-1 mb-3">
