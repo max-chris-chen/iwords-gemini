@@ -1,16 +1,15 @@
 import { test, expect } from '@playwright/test';
 
 test('should generate a scenario and display its mind map', async ({ page }) => {
-  await page.goto('/generate');
+  await page.goto('/');
 
-  // Fill the scenario prompt
-  await page.locator('textarea[placeholder="Enter your scenario here (e.g., \'a day at the beach\')"]').fill('a trip to the mountains');
+  // Fill the scenario prompt - using the actual placeholder from ScenarioInput.svelte
+  await page.locator('textarea[placeholder*="e.g., A job interview"]').fill('a trip to the mountains');
 
   // Click the generate button
   await page.getByRole('button', { name: 'Generate Scenario' }).click();
 
   // Assert that the URL has changed to the scenario page
-  // Increased timeout to 60s because AI generation can be slow
   await expect(page).toHaveURL(/.*\/scenario\/[a-f0-9]+$/, { timeout: 60000 });
 
   // Assert that the scenario prompt is displayed on the page as a heading
@@ -18,4 +17,33 @@ test('should generate a scenario and display its mind map', async ({ page }) => 
 
   // Assert that the Mind Map container is visible
   await expect(page.locator('.svelte-flow')).toBeVisible();
+});
+
+test('should expand an existing scenario with more words', async ({ page }) => {
+  // 1. Generate a fresh scenario first to ensure we have data
+  await page.goto('/');
+  await page.locator('textarea[placeholder*="e.g., A job interview"]').fill('coffee shop');
+  await page.getByRole('button', { name: 'Generate Scenario' }).click();
+  
+  // Wait for mind map to load
+  await expect(page).toHaveURL(/.*\/scenario\/[a-f0-9]+$/, { timeout: 60000 });
+  await expect(page.locator('.svelte-flow')).toBeVisible();
+  
+  // 2. Get initial word count
+  const wordCountBadge = page.locator('div:has-text("Words")').first();
+  await expect(wordCountBadge).toBeVisible();
+  const initialText = await wordCountBadge.innerText();
+  const initialCount = parseInt(initialText.split(' ')[0]);
+
+  // 3. Find the "+" button on the root node and click it
+  const expandButton = page.locator('button[aria-label="Expand scenario"]');
+  await expect(expandButton).toBeVisible();
+  await expandButton.click();
+
+  // 4. Assert that the word count has increased by 2
+  await expect(async () => {
+    const newText = await wordCountBadge.innerText();
+    const newCount = parseInt(newText.split(' ')[0]);
+    expect(newCount).toBe(initialCount + 2);
+  }).toPass({ timeout: 60000 });
 });
