@@ -39,3 +39,8 @@ This file tracks all major tracks for the project. Each track has its own detail
 
 ## [x] Track: Mind Map UI/UX Optimization (Glassmorphism, Interactive Toggle)
 *Link: [./conductor/tracks/mindmap_ui_revamp_20260104/](./conductor/tracks/mindmap_ui_revamp_20260104/)*
+
+---
+
+## [~] Track: scenario 页面根节点内有一个加号 可以拓展添加新的单词 每次多2个 已经生成的单词不用重复添加
+*Link: [./conductor/tracks/root_node_expansion_20260105/](./conductor/tracks/root_node_expansion_20260105/)*
