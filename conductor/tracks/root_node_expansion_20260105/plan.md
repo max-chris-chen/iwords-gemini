@@ -26,6 +26,6 @@
 ## Phase 3: Animation & Polishing
 - [x] Task: Implement "growth" animation for new nodes. ae3c9fa
     - [x] Sub-task: Use Svelte transitions or Svelte Flow specific animation properties for new nodes.
-- [ ] Task: Final end-to-end verification.
-    - [ ] Sub-task: Write E2E test in `tests/e2e/scenario.spec.ts` covering the full expansion flow.
+- [x] Task: Final end-to-end verification. 516b511
+    - [x] Sub-task: Write E2E test in `tests/e2e/scenario.spec.ts` covering the full expansion flow.
 - [ ] Task: Conductor - User Manual Verification 'Animation & Polishing' (Protocol in workflow.md)
