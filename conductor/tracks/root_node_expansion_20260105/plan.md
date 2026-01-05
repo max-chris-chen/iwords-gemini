@@ -23,7 +23,7 @@
     - [x] Sub-task: Write interaction tests in `MindMap.interaction.spec.ts`.
 - [ ] Task: Conductor - User Manual Verification 'Frontend UI & Interaction' (Protocol in workflow.md)
 
-## Phase 3: Animation & Polishing
+## Phase 3: Animation & Polishing [checkpoint: 30aab50]
 - [x] Task: Implement "growth" animation for new nodes. ae3c9fa
     - [x] Sub-task: Use Svelte transitions or Svelte Flow specific animation properties for new nodes.
 - [x] Task: Final end-to-end verification. 516b511
