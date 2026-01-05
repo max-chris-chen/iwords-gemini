@@ -13,10 +13,10 @@
 - [ ] Task: Conductor - User Manual Verification 'Backend Support & AI Logic' (Protocol in workflow.md)
 
 ## Phase 2: Frontend UI & Interaction
-- [ ] Task: Enhance `ScenarioNode.svelte` with expansion UI.
-    - [ ] Sub-task: Add the "+" button at the bottom-right.
-    - [ ] Sub-task: Implement internal loading state visual for the node.
-    - [ ] Sub-task: Write component tests in `ScenarioNode.svelte.spec.ts` for UI states.
+- [x] Task: Enhance `ScenarioNode.svelte` with expansion UI. 31f73cf
+    - [x] Sub-task: Add the "+" button at the bottom-right.
+    - [x] Sub-task: Implement internal loading state visual for the node.
+    - [x] Sub-task: Write component tests in `ScenarioNode.svelte.spec.ts` for UI states.
 - [ ] Task: Implement expansion logic in `MindMap.svelte`.
     - [ ] Sub-task: Create a function to call the expansion API.
     - [ ] Sub-task: Update the mind map state dynamically when new words arrive.
