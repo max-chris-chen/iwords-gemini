@@ -12,7 +12,7 @@
     - [x] Sub-task: Implement the endpoint handler calling the AI and Service layers.
 - [ ] Task: Conductor - User Manual Verification 'Backend Support & AI Logic' (Protocol in workflow.md)
 
-## Phase 2: Frontend UI & Interaction
+## Phase 2: Frontend UI & Interaction [checkpoint: 806bef6]
 - [x] Task: Enhance `ScenarioNode.svelte` with expansion UI. 31f73cf
     - [x] Sub-task: Add the "+" button at the bottom-right.
     - [x] Sub-task: Implement internal loading state visual for the node.
