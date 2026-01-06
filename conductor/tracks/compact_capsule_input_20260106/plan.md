@@ -6,7 +6,7 @@
     - [ ] Create `src/lib/components/CapsuleInput.svelte` and `src/lib/components/CapsuleInput.svelte.spec.ts`.
     - [ ] Write tests for initial render: check for compact state, placeholder text, and icon presence.
     - [ ] Implement basic structure: HTML input with container, "Plus" icon.
-- [ ] Task: Implement Expansion Logic (TDD)
+- [x] Task: Implement Expansion Logic (TDD) 57927a5
     - [ ] Write tests for interaction: click/focus expands width, blur collapses width (if empty).
     - [ ] Implement CSS transitions for `width` property.
     - [ ] Implement event handlers for `focus` and `blur`.
