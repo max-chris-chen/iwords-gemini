@@ -2,7 +2,7 @@
 
 ## Phase 1: Component Development - Capsule Input
 
-- [ ] Task: Create UI Component Structure (TDD)
+- [x] Task: Create UI Component Structure (TDD) 06e7bc9
     - [ ] Create `src/lib/components/CapsuleInput.svelte` and `src/lib/components/CapsuleInput.svelte.spec.ts`.
     - [ ] Write tests for initial render: check for compact state, placeholder text, and icon presence.
     - [ ] Implement basic structure: HTML input with container, "Plus" icon.
