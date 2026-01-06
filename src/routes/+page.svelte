@@ -1,43 +1,9 @@
 <script lang="ts">
     import ScenarioCard from '$lib/components/ScenarioCard.svelte';
-    import ScenarioInput from '$lib/components/ScenarioInput.svelte';
-    import { invalidateAll, goto } from '$app/navigation';
+    import { invalidateAll } from '$app/navigation';
 
     let { data } = $props();
     let scenarios = $derived(data.scenarios);
-    let isLoading = $state(false);
-
-    async function handleGenerate(event: CustomEvent<string>) {
-        const prompt = event.detail;
-        if (!prompt) return;
-
-        isLoading = true;
-
-        try {
-            const response = await fetch('/api/generate', {
-                method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json',
-                },
-                body: JSON.stringify({ prompt }),
-            });
-
-            if (response.ok) {
-                const result = await response.json();
-                const scenarioId = result._id;
-                await goto(`/scenario/${scenarioId}`);
-            } else {
-                const errorData = await response.json();
-                console.error('Failed to generate scenario:', errorData);
-                alert(`Error: ${errorData.message || 'Unknown error'}`);
-            }
-        } catch (error) {
-            console.error('Network or unexpected error:', error);
-            alert('An unexpected error occurred.');
-        } finally {
-            isLoading = false;
-        }
-    }
 
     async function handleDelete(id: string) {
         const response = await fetch(`/api/scenario/${id}`, {
@@ -62,14 +28,6 @@
         </p>
     </header>
 
-    <section class="mb-16 bg-white p-8 rounded-3xl shadow-xl border border-gray-100">
-        <h2 class="text-2xl font-bold text-gray-800 mb-6 flex items-center">
-            <span class="bg-indigo-100 p-2 rounded-lg mr-3">✨</span>
-            Create New Scenario
-        </h2>
-        <ScenarioInput on:generate={handleGenerate} {isLoading} />
-    </section>
-
     <section>
         <div class="flex justify-between items-center mb-8">
             <h2 class="text-3xl font-black text-gray-900">Your Scenarios</h2>
@@ -88,7 +46,7 @@
             <div class="text-center py-20 bg-gray-50 rounded-3xl border-2 border-dashed border-gray-200">
                 <span class="text-6xl mb-4 block">🏝️</span>
                 <h3 class="text-xl font-bold text-gray-800 mb-2">No scenarios yet</h3>
-                <p class="text-gray-500">Enter a prompt above to start your journey!</p>
+                <p class="text-gray-500">Enter a prompt in the header to start your journey!</p>
             </div>
         {/if}
     </section>
