@@ -10,7 +10,7 @@
     - [ ] Write tests for interaction: click/focus expands width, blur collapses width (if empty).
     - [ ] Implement CSS transitions for `width` property.
     - [ ] Implement event handlers for `focus` and `blur`.
-- [ ] Task: Implement Submission Logic (TDD)
+- [x] Task: Implement Submission Logic (TDD) fb2c08e
     - [ ] Write tests for submission: `Enter` key triggers event, Icon click triggers event.
     - [ ] Implement `dispatch` event on submission with the input value.
     - [ ] Ensure input clears and collapses after successful submission.
