@@ -31,15 +31,15 @@ describe('CapsuleInput component', () => {
     const input = screen.getByRole('textbox'); // Use getByRole for input type="text"
 
     // Initial state: compact
-    expect(wrapper).toHaveClass('w-32');
+    expect(wrapper).toHaveClass('w-48');
 
     // Focus: expand
     await input.focus();
-    expect(wrapper).toHaveClass('w-64'); // Assuming w-64 for expanded state
+    expect(wrapper).toHaveClass('w-80'); // Assuming w-64 for expanded state
 
     // Blur (empty): collapse
     await input.blur();
-    expect(wrapper).toHaveClass('w-32');
+    expect(wrapper).toHaveClass('w-48');
   });
 
   it('should remain expanded on blur if not empty', async () => {
@@ -57,7 +57,7 @@ describe('CapsuleInput component', () => {
     const input = screen.getByRole('textbox');
 
     await input.focus();
-    expect(wrapper).toHaveClass('w-64');
+    expect(wrapper).toHaveClass('w-80');
 
     // Type something
     input.value = 'My Scenario'; 
@@ -73,7 +73,7 @@ describe('CapsuleInput component', () => {
     await input.blur();
     // It should stay expanded? 
     // Based on "If the input is empty, animate back", the converse is "If not empty, do not animate back".
-    expect(wrapper).toHaveClass('w-64');
+    expect(wrapper).toHaveClass('w-80');
   });
 
   it('should trigger onsubmit and clear input on Enter key', async () => {
