@@ -31,7 +31,7 @@
 - [x] Task: Remove Legacy Input 547af44
     - [ ] Locate and remove the old "Create New Scenario" section from the homepage (`+page.svelte`).
     - [ ] Clean up any unused styles or functions related to the old input.
-- [ ] Task: Conductor - User Manual Verification 'Phase 2: Integration & Homepage Refactor' (Protocol in workflow.md)
+- [x] Task: Conductor - User Manual Verification 'Phase 2: Integration & Homepage Refactor' (Protocol in workflow.md) 56deb1e
 
 ## Phase 3: Final Polish & Verification
 
