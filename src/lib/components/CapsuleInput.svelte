@@ -22,7 +22,7 @@
 </script>
 
 <div 
-  class="flex items-center bg-white rounded-full px-4 py-2 shadow-sm transition-all duration-300 border border-gray-200 box-content focus-within:ring-2 focus-within:ring-blue-400 focus-within:border-transparent"
+  class="flex items-center bg-white rounded-full px-4 py-2 shadow-sm transition-all duration-300 border border-gray-200 box-content focus-within:ring-2 focus-within:ring-blue-400 focus-within:border-transparent max-w-full"
   class:w-32={!isExpanded}
   class:w-64={isExpanded}
 >
