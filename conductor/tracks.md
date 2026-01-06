@@ -44,3 +44,8 @@ This file tracks all major tracks for the project. Each track has its own detail
 
 ## [x] Track: scenario 页面根节点内有一个加号 可以拓展添加新的单词 每次多2个 已经生成的单词不用重复添加
 *Link: [./conductor/tracks/root_node_expansion_20260105/](./conductor/tracks/root_node_expansion_20260105/)*
+
+---
+
+## [~] Track: 首页的Create New Scenario 部分 占的地方太大 弄小一些 类似胶囊的 动态输入框
+*Link: [./conductor/tracks/compact_capsule_input_20260106/](./conductor/tracks/compact_capsule_input_20260106/)*

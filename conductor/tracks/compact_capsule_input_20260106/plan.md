@@ -17,7 +17,7 @@
 - [x] Task: Styling & Responsiveness e31da96
     - [ ] Apply Tailwind CSS classes for pill shape (`rounded-full`), colors, and shadows.
     - [ ] Ensure responsive widths (e.g., `w-32` expanding to `w-64` or percentage based).
-- [ ] Task: Conductor - User Manual Verification 'Phase 1: Component Development - Capsule Input' (Protocol in workflow.md)
+- [~] Task: Conductor - User Manual Verification 'Phase 1: Component Development - Capsule Input' (Protocol in workflow.md)
 
 ## Phase 2: Integration & Homepage Refactor
 
