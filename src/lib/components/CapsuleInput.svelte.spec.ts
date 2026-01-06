@@ -110,4 +110,11 @@ describe('CapsuleInput component', () => {
     expect(onsubmit).toHaveBeenCalledWith('Click Scenario');
     expect(input).toHaveValue('');
   });
+
+  it('should show spinner when isLoading is true', () => {
+    render(CapsuleInput, { props: { isLoading: true } });
+    const button = screen.getByRole('button', { name: /generating/i });
+    expect(button).toBeInTheDocument();
+    expect(button).toBeDisabled();
+  });
 });

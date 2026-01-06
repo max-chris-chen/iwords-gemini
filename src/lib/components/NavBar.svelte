@@ -2,8 +2,12 @@
     import CapsuleInput from './CapsuleInput.svelte';
     import { goto } from '$app/navigation';
 
+    let isLoading = $state(false);
+
     async function handleGenerate(prompt: string) {
         if (!prompt) return;
+
+        isLoading = true;
 
         try {
             const response = await fetch('/api/generate', {
@@ -26,6 +30,8 @@
         } catch (error) {
             console.error('Network or unexpected error:', error);
             alert('An unexpected error occurred.');
+        } finally {
+            isLoading = false;
         }
     }
 </script>
@@ -36,7 +42,7 @@
     </a>
     
     <div class="flex-grow flex justify-center max-w-xl mx-4">
-        <CapsuleInput onsubmit={handleGenerate} />
+        <CapsuleInput onsubmit={handleGenerate} {isLoading} />
     </div>
 
     <ul class="flex space-x-6 text-lg font-bold shrink-0">
