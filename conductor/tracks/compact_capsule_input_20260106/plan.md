@@ -35,7 +35,7 @@
 
 ## Phase 3: Final Polish & Verification
 
-- [ ] Task: End-to-End Testing
+- [x] Task: End-to-End Testing 72d357c
     - [ ] Update or create an E2E test (`tests/e2e/scenario.spec.ts`) to verify the new flow:
         - [ ] User sees capsule in header.
         - [ ] User clicks -> expands.
