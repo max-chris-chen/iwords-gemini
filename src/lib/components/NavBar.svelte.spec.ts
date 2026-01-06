@@ -26,4 +26,11 @@ describe('NavBar component', () => {
         expect(homeLink?.getAttribute('href')).toBe('/');
         unmount();
     });
+
+    it('should render the capsule input', () => {
+        const { container, unmount } = render(NavBar);
+        const input = container.querySelector('input[placeholder="Create new scenario..."]');
+        expect(input).toBeInTheDocument();
+        unmount();
+    });
 });
