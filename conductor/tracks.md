@@ -47,5 +47,5 @@ This file tracks all major tracks for the project. Each track has its own detail
 
 ---
 
-## [~] Track: 首页的Create New Scenario 部分 占的地方太大 弄小一些 类似胶囊的 动态输入框
+## [x] Track: 首页的Create New Scenario 部分 占的地方太大 弄小一些 类似胶囊的 动态输入框
 *Link: [./conductor/tracks/compact_capsule_input_20260106/](./conductor/tracks/compact_capsule_input_20260106/)*
