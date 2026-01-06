@@ -1,5 +1,33 @@
 <script lang="ts">
     import CapsuleInput from './CapsuleInput.svelte';
+    import { goto } from '$app/navigation';
+
+    async function handleGenerate(prompt: string) {
+        if (!prompt) return;
+
+        try {
+            const response = await fetch('/api/generate', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify({ prompt }),
+            });
+
+            if (response.ok) {
+                const result = await response.json();
+                const scenarioId = result._id;
+                await goto(`/scenario/${scenarioId}`);
+            } else {
+                const errorData = await response.json();
+                console.error('Failed to generate scenario:', errorData);
+                alert(`Error: ${errorData.message || 'Unknown error'}`);
+            }
+        } catch (error) {
+            console.error('Network or unexpected error:', error);
+            alert('An unexpected error occurred.');
+        }
+    }
 </script>
 
 <nav class="bg-gradient-to-r from-indigo-600 via-purple-600 to-pink-500 p-6 text-white flex justify-between items-center shadow-xl mb-8 gap-4">
@@ -8,7 +36,7 @@
     </a>
     
     <div class="flex-grow flex justify-center max-w-xl mx-4">
-        <CapsuleInput />
+        <CapsuleInput onsubmit={handleGenerate} />
     </div>
 
     <ul class="flex space-x-6 text-lg font-bold shrink-0">
