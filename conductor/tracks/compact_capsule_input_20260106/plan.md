@@ -25,7 +25,7 @@
     - [ ] Identify the header component (likely `NavBar.svelte` or `+layout.svelte`).
     - [ ] Write tests ensuring `CapsuleInput` is rendered in the header.
     - [ ] Place `CapsuleInput` in the header.
-- [ ] Task: Connect to Backend Action
+- [x] Task: Connect to Backend Action b0357ef
     - [ ] Wire up the submission event from `CapsuleInput` to the existing scenario creation logic (API call or form action).
     - [ ] Ensure the redirection to the new scenario page works as before.
 - [ ] Task: Remove Legacy Input
