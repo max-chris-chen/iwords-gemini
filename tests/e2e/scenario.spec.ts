@@ -3,11 +3,16 @@ import { test, expect } from '@playwright/test';
 test('should generate a scenario and display its mind map', async ({ page }) => {
   await page.goto('/');
 
-  // Fill the scenario prompt - using the actual placeholder from ScenarioInput.svelte
-  await page.locator('textarea[placeholder*="e.g., A job interview"]').fill('a trip to the mountains');
-
-  // Click the generate button
-  await page.getByRole('button', { name: 'Generate Scenario' }).click();
+  // Fill the scenario prompt - using the new CapsuleInput placeholder
+  const input = page.locator('input[placeholder="Create new scenario..."]');
+  await expect(input).toBeVisible();
+  
+  // Click to focus/expand (optional but mimics user)
+  await input.click();
+  await input.fill('a trip to the mountains');
+  
+  // Press Enter to submit
+  await input.press('Enter');
 
   // Assert that the URL has changed to the scenario page
   await expect(page).toHaveURL(/.*\/scenario\/[a-f0-9]+$/, { timeout: 60000 });
@@ -22,8 +27,10 @@ test('should generate a scenario and display its mind map', async ({ page }) => 
 test('should expand an existing scenario with more words', async ({ page }) => {
   // 1. Generate a fresh scenario first to ensure we have data
   await page.goto('/');
-  await page.locator('textarea[placeholder*="e.g., A job interview"]').fill('coffee shop');
-  await page.getByRole('button', { name: 'Generate Scenario' }).click();
+  const input = page.locator('input[placeholder="Create new scenario..."]');
+  await input.click();
+  await input.fill('coffee shop');
+  await input.press('Enter');
   
   // Wait for mind map to load
   await expect(page).toHaveURL(/.*\/scenario\/[a-f0-9]+$/, { timeout: 60000 });
