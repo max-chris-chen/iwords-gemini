@@ -28,7 +28,7 @@
 - [x] Task: Connect to Backend Action b0357ef
     - [ ] Wire up the submission event from `CapsuleInput` to the existing scenario creation logic (API call or form action).
     - [ ] Ensure the redirection to the new scenario page works as before.
-- [ ] Task: Remove Legacy Input
+- [x] Task: Remove Legacy Input 547af44
     - [ ] Locate and remove the old "Create New Scenario" section from the homepage (`+page.svelte`).
     - [ ] Clean up any unused styles or functions related to the old input.
 - [ ] Task: Conductor - User Manual Verification 'Phase 2: Integration & Homepage Refactor' (Protocol in workflow.md)
