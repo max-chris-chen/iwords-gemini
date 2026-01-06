@@ -75,4 +75,39 @@ describe('CapsuleInput component', () => {
     // Based on "If the input is empty, animate back", the converse is "If not empty, do not animate back".
     expect(wrapper).toHaveClass('w-64');
   });
+
+  it('should trigger onsubmit and clear input on Enter key', async () => {
+    const { fireEvent } = await import('@testing-library/svelte');
+    const { vi } = await import('vitest');
+    const onsubmit = vi.fn();
+    
+    render(CapsuleInput, { props: { onsubmit } });
+    const input = screen.getByRole('textbox');
+
+    await fireEvent.input(input, { target: { value: 'New Scenario' } });
+    await fireEvent.keyDown(input, { key: 'Enter' });
+
+    expect(onsubmit).toHaveBeenCalledWith('New Scenario');
+    expect(input).toHaveValue(''); // Should clear
+    
+    // Check if it collapses (optional, but good for UX verification)
+    // Note: To truly collapse, the component logic might need to blur the input.
+    // If we implemented blur, we can check activeElement or width.
+  });
+
+  it('should trigger onsubmit and clear input on button click', async () => {
+    const { fireEvent } = await import('@testing-library/svelte');
+    const { vi } = await import('vitest');
+    const onsubmit = vi.fn();
+    
+    render(CapsuleInput, { props: { onsubmit } });
+    const input = screen.getByRole('textbox');
+    const button = screen.getByRole('button', { name: /create scenario/i });
+
+    await fireEvent.input(input, { target: { value: 'Click Scenario' } });
+    await fireEvent.click(button);
+
+    expect(onsubmit).toHaveBeenCalledWith('Click Scenario');
+    expect(input).toHaveValue('');
+  });
 });
