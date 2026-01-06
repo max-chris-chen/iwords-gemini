@@ -21,7 +21,7 @@
 
 ## Phase 2: Integration & Homepage Refactor
 
-- [ ] Task: Integrate into Navigation/Header (TDD)
+- [x] Task: Integrate into Navigation/Header (TDD) 532e976
     - [ ] Identify the header component (likely `NavBar.svelte` or `+layout.svelte`).
     - [ ] Write tests ensuring `CapsuleInput` is rendered in the header.
     - [ ] Place `CapsuleInput` in the header.
