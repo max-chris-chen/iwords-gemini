@@ -1,16 +1,27 @@
 <script lang="ts">
   let { placeholder = "Create new scenario..." } = $props();
+  let value = $state("");
+  let isFocused = $state(false);
+
+  let isExpanded = $derived(isFocused || value.length > 0);
 </script>
 
-<div class="flex items-center bg-gray-100 rounded-full px-4 py-2 shadow-sm transition-all duration-300 w-32 border border-gray-200">
+<div 
+  class="flex items-center bg-gray-100 rounded-full px-4 py-2 shadow-sm transition-all duration-300 border border-gray-200 box-content"
+  class:w-32={!isExpanded}
+  class:w-64={isExpanded}
+>
   <input
     type="text"
     {placeholder}
-    class="bg-transparent border-none outline-none w-full text-sm text-gray-700 placeholder-gray-400"
+    bind:value
+    onfocus={() => isFocused = true}
+    onblur={() => isFocused = false}
+    class="bg-transparent border-none outline-none w-full text-sm text-gray-700 placeholder-gray-400 min-w-0"
   />
   <button
     aria-label="Create scenario"
-    class="ml-2 p-1 rounded-full hover:bg-gray-200 text-gray-500 hover:text-gray-700 transition-colors"
+    class="ml-2 p-1 rounded-full hover:bg-gray-200 text-gray-500 hover:text-gray-700 transition-colors shrink-0"
   >
     <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
       <line x1="12" y1="5" x2="12" y2="19"></line>
