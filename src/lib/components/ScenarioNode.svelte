@@ -27,7 +27,7 @@
 
   <button
     onclick={handleExpand}
-    disabled={data.isExpanding}
+    disabled={data.isExpanding || data.isLocked}
     class="absolute -bottom-1 -right-1 w-8 h-8 bg-amber-400 text-white rounded-full flex items-center justify-center shadow-md hover:bg-amber-500 transition-colors z-20 disabled:opacity-50 disabled:cursor-not-allowed"
     aria-label="Expand scenario"
   >

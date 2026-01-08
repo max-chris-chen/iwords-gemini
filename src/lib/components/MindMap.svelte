@@ -33,13 +33,15 @@
   async function handleWordExpand(wordText: string, nodeId: string) {
     if (!scenarioId) return;
 
-    // Set target node to expanding state
-    nodes = nodes.map(n => {
-      if (n.id === nodeId) {
-        return { ...n, data: { ...n.data, isExpanding: true } };
+    // Lock all nodes, set target to expanding
+    nodes = nodes.map(n => ({
+      ...n,
+      data: { 
+        ...n.data, 
+        isExpanding: n.id === nodeId,
+        isLocked: true 
       }
-      return n;
-    });
+    }));
 
     try {
       const response = await fetch(`/api/scenario/${scenarioId}/expand`, {
@@ -74,25 +76,30 @@
       console.error('Word expansion error:', error);
       alert('Failed to expand word. Please try again.');
     } finally {
-      nodes = nodes.map(n => {
-        if (n.id === nodeId) {
-          return { ...n, data: { ...n.data, isExpanding: false } };
+      // Unlock all nodes
+      nodes = nodes.map(n => ({
+        ...n,
+        data: { 
+          ...n.data, 
+          isExpanding: false,
+          isLocked: false 
         }
-        return n;
-      });
+      }));
     }
   }
 
   async function handleExpand() {
     if (!scenarioId) return;
 
-    // Set root node to expanding state
-    nodes = nodes.map(n => {
-      if (n.id === 'scenario') {
-        return { ...n, data: { ...n.data, isExpanding: true } };
+    // Lock all nodes, set root to expanding
+    nodes = nodes.map(n => ({
+      ...n,
+      data: { 
+        ...n.data, 
+        isExpanding: n.id === 'scenario',
+        isLocked: true 
       }
-      return n;
-    });
+    }));
 
     try {
       const response = await fetch(`/api/scenario/${scenarioId}/expand`, {
@@ -125,13 +132,15 @@
       console.error('Expansion error:', error);
       alert('Failed to expand scenario. Please try again.');
     } finally {
-      // Clear root node expanding state
-      nodes = nodes.map(n => {
-        if (n.id === 'scenario') {
-          return { ...n, data: { ...n.data, isExpanding: false } };
+      // Unlock all nodes
+      nodes = nodes.map(n => ({
+        ...n,
+        data: { 
+          ...n.data, 
+          isExpanding: false,
+          isLocked: false 
         }
-        return n;
-      });
+      }));
     }
   }
 

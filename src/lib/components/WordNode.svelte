@@ -53,7 +53,7 @@
       class="p-2 bg-indigo-100/80 hover:bg-indigo-200 text-indigo-600 rounded-full transition-colors cursor-pointer inline-flex items-center justify-center z-50 shadow-sm backdrop-blur-sm disabled:opacity-50 disabled:cursor-not-allowed"
       aria-label="expand word"
       onclick={handleExpand}
-      disabled={data.isExpanding}
+      disabled={data.isExpanding || data.isLocked}
     >
       {#if data.isExpanding}
         <div class="w-5 h-5 border-2 border-indigo-600 border-t-transparent rounded-full animate-spin"></div>
