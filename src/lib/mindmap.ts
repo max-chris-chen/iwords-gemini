@@ -57,8 +57,8 @@ export function transformScenarioToFlowData(scenario: Scenario): { nodes: Node[]
             }
 
             // Y Positioning
-            // Level 1: 400. Level 2: 1200. Level 3: 2000.
-            const y = 400 + (level - 1) * 900; 
+            // Level 1: 400. Level 2: 1050. Level 3: 1700.
+            const y = 400 + (level - 1) * 650; 
 
             nodes.push({
                 id: wordId,
