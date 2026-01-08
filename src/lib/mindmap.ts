@@ -21,78 +21,91 @@ export function transformScenarioToFlowData(scenario: Scenario): { nodes: Node[]
     });
 
     const processedWordIds = new Set<string>();
+    
+    // 1. Organize words by parentId to build a hierarchy map
+    const childrenMap = new Map<string, Word[]>();
+    const level1Words: Word[] = [];
 
-    // Word and Example nodes
-    scenario.words.forEach((word, wordIndex) => {
-        const wordId = `word-${word.word}`;
-        
-        if (processedWordIds.has(wordId)) {
-            return; // Skip duplicates
+    scenario.words.forEach(w => {
+        const pId = (!w.parentId || w.parentId === 'scenario') ? 'scenario' : w.parentId;
+        if (pId === 'scenario') {
+            level1Words.push(w);
+        } else {
+            if (!childrenMap.has(pId)) childrenMap.set(pId, []);
+            childrenMap.get(pId)?.push(w);
         }
-        processedWordIds.add(wordId);
-        
-        // Simple level detection
-        const getLevel = (w: Word): number => {
-            if (!w.parentId || w.parentId === 'scenario') return 1;
-            const parent = scenario.words.find(pw => pw.word === w.parentId);
-            if (!parent) return 1;
-            return 1 + getLevel(parent);
-        };
-
-        const level = getLevel(word);
-        
-        // For children, try to position them near parent
-        let wordX = startX + wordIndex * wordSpacing;
-        let wordY = 400 + (level - 1) * 450;
-
-        if (word.parentId && word.parentId !== 'scenario') {
-            const parentIndex = scenario.words.findIndex(pw => pw.word === word.parentId);
-            if (parentIndex !== -1) {
-                // Offset from parent
-                const siblings = scenario.words.filter(pw => pw.parentId === word.parentId);
-                const siblingIndex = siblings.findIndex(sw => sw.word === word.word);
-                const parentX = startX + parentIndex * wordSpacing;
-                wordX = parentX + (siblingIndex === 0 ? -100 : 100);
-            }
-        }
-        
-        nodes.push({
-            id: wordId,
-            type: 'word', 
-            data: { word: word },
-            position: { x: wordX, y: wordY }
-        });
-
-        const parentId = word.parentId && word.parentId !== 'scenario' 
-            ? `word-${word.parentId}` 
-            : 'scenario';
-
-        edges.push({
-            id: `e-${parentId}-${wordId}`,
-            source: parentId,
-            target: wordId
-        });
-
-        word.examples.forEach((example, exampleIndex) => {
-            const exampleId = `example-${word.word}-${exampleIndex}`;
-            nodes.push({
-                id: exampleId,
-                type: 'example', 
-                data: { example: example },
-                position: { 
-                    x: wordX + (exampleIndex % 2 === 0 ? -80 : 80), 
-                    y: wordY + 350 + exampleIndex * 180 
-                },
-                hidden: true
-            });
-            edges.push({
-                id: `e-${wordId}-${exampleId}`,
-                source: wordId,
-                target: exampleId,
-                hidden: true
-            });
-        });
     });
+
+    // 2. Recursive function to position nodes
+    const positionNodes = (words: Word[], level: number, startX: number, parentX?: number) => {
+        words.forEach((word, index) => {
+            const wordId = `word-${word.word}`;
+            if (processedWordIds.has(wordId)) return;
+            processedWordIds.add(wordId);
+
+            // X Positioning
+            let x: number;
+            if (level === 1) {
+                // Level 1: Linear distribution
+                x = startX + index * wordSpacing;
+            } else {
+                // Children: Centered under parent
+                const siblings = words;
+                // Distribute siblings: -100, +100, or wider if many
+                const offset = (index - (siblings.length - 1) / 2) * 200; 
+                x = (parentX || startX) + offset;
+            }
+
+            // Y Positioning
+            // Level 1: 400. Level 2: 1200. Level 3: 2000.
+            const y = 400 + (level - 1) * 900; 
+
+            nodes.push({
+                id: wordId,
+                type: 'word', 
+                data: { word: word },
+                position: { x, y }
+            });
+
+            // Edge
+            const parentId = (!word.parentId || word.parentId === 'scenario') ? 'scenario' : `word-${word.parentId}`;
+            edges.push({
+                id: `e-${parentId}-${wordId}`,
+                source: parentId,
+                target: wordId
+            });
+
+            // Examples
+            word.examples.forEach((example, exIndex) => {
+                const exampleId = `example-${word.word}-${exIndex}`;
+                nodes.push({
+                    id: exampleId,
+                    type: 'example', 
+                    data: { example: example },
+                    position: { 
+                        x: x + (exIndex % 2 === 0 ? -80 : 80), 
+                        y: y + 350 + exIndex * 180 
+                    },
+                    hidden: true
+                });
+                edges.push({
+                    id: `e-${wordId}-${exampleId}`,
+                    source: wordId,
+                    target: exampleId,
+                    hidden: true
+                });
+            });
+
+            // Recurse for children
+            const children = childrenMap.get(word.word);
+            if (children) {
+                positionNodes(children, level + 1, startX, x);
+            }
+        });
+    };
+
+    // Start positioning from Level 1
+    positionNodes(level1Words, 1, startX);
 
     return { nodes, edges };
 }
