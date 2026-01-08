@@ -18,7 +18,25 @@ describe('API Route: /api/scenario/[id]/expand', () => {
 
         expect(response.status).toBe(200);
         expect(body).toEqual(mockScenario);
-        expect(scenarioService.expand).toHaveBeenCalledWith('123');
+        expect(scenarioService.expand).toHaveBeenCalledWith('123', undefined);
+    });
+
+    it('should support recursive expansion with targetWord in body', async () => {
+        const mockScenario = { _id: '123', prompt: 'test', words: [] };
+        (scenarioService.expand as any).mockResolvedValue(mockScenario);
+
+        const request = new Request('http://localhost', {
+            method: 'POST',
+            body: JSON.stringify({ targetWord: 'apple' }),
+            headers: { 'Content-Type': 'application/json' },
+        });
+
+        const response = await POST({ params: { id: '123' }, request } as any);
+        const body = await response.json();
+
+        expect(response.status).toBe(200);
+        expect(body).toEqual(mockScenario);
+        expect(scenarioService.expand).toHaveBeenCalledWith('123', 'apple');
     });
 
     it('should return 400 if ID is missing', async () => {

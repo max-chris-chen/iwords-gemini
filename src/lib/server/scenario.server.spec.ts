@@ -253,6 +253,51 @@ describe('Scenario Logic', () => {
 			expect(result.words).toHaveLength(3);
 		});
 
+		it('should add new words recursively if targetWord is provided', async () => {
+			const scenarioId = new ObjectId();
+			const mockDate = new Date();
+			const mockScenario = {
+				_id: scenarioId,
+				prompt: 'coding',
+				words: [{ word: 'variable', examples: [], phonetics: '', definition: '', definition_cn: '' }],
+				createdAt: mockDate
+			};
+
+			const findOneMock = vi.fn()
+				.mockResolvedValueOnce(mockScenario)
+				.mockResolvedValueOnce({
+					...mockScenario,
+					words: [...mockScenario.words,
+						{ word: 'integer', examples: [], phonetics: '', definition: '', definition_cn: '' },
+						{ word: 'float', examples: [], phonetics: '', definition: '', definition_cn: '' }
+					]
+				});
+			const updateOneMock = vi.fn().mockResolvedValue({ modifiedCount: 1 });
+			const collectionMock = { findOne: findOneMock, updateOne: updateOneMock };
+			const dbMock = { collection: vi.fn().mockReturnValue(collectionMock) };
+			const clientMock = { db: vi.fn().mockReturnValue(dbMock) };
+
+			vi.doMock('./db', () => ({
+				default: Promise.resolve(clientMock)
+			}));
+
+			const mockAiResponse = JSON.stringify({
+				words: [
+					{ word: 'integer', examples: [], phonetics: '', definition: '', definition_cn: '' },
+					{ word: 'float', examples: [], phonetics: '', definition: '', definition_cn: '' }
+				]
+			});
+			(ai.generateRecursiveExpansion as any).mockResolvedValue(mockAiResponse);
+
+			const { scenarioService: mockedService } = await import('./scenario');
+			const result = await mockedService.expand(scenarioId.toHexString(), 'variable');
+
+			expect(findOneMock).toHaveBeenCalled();
+			expect(ai.generateRecursiveExpansion).toHaveBeenCalledWith('variable', 'coding', ['variable']);
+			expect(updateOneMock).toHaveBeenCalled();
+			expect(result.words).toHaveLength(3);
+		});
+
 		it('should throw error if scenario not found', async () => {
 			const scenarioId = new ObjectId().toHexString();
 			const findOneMock = vi.fn().mockResolvedValue(null);

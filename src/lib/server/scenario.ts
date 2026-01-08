@@ -1,7 +1,7 @@
 // src/lib/server/scenario.ts
 import { ObjectId } from 'mongodb';
 import type { Scenario, Word } from '../models/types';
-import { generateContent, generateExpansion } from './ai';
+import { generateContent, generateExpansion, generateRecursiveExpansion } from './ai';
 import { validatePrompt, sanitizeScenarioData } from './security';
 import clientPromise from './db';
 
@@ -166,14 +166,20 @@ async function addWordsToScenario(id: string, newWords: Word[]): Promise<Scenari
 	return getById(id);
 }
 
-async function expand(id: string): Promise<Scenario> {
+async function expand(id: string, targetWord?: string): Promise<Scenario> {
 	const scenario = await getById(id);
 	if (!scenario) {
 		throw new Error(`Scenario not found: ${id}`);
 	}
 
 	const existingWords = scenario.words.map((w) => w.word);
-	const content = await generateExpansion(scenario.prompt, existingWords);
+	
+	let content: string;
+	if (targetWord) {
+		content = await generateRecursiveExpansion(targetWord, scenario.prompt, existingWords);
+	} else {
+		content = await generateExpansion(scenario.prompt, existingWords);
+	}
 
 	try {
 		const cleanedContent = content.replace(/```json/g, '').replace(/```/g, '').trim();
