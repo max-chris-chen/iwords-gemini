@@ -96,7 +96,8 @@ describe('WordNode component', () => {
     const expandButton = getByRole('button', { name: /expand word/i });
     expect(expandButton).toBeInTheDocument();
     
-    // Check for loading state (e.g. spinner or emoji change)
-    expect(expandButton).toHaveTextContent('⏳');
+    // Check for loading state (spinner div)
+    const spinner = expandButton.querySelector('.animate-spin');
+    expect(spinner).toBeInTheDocument();
   });
 });

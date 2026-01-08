@@ -56,16 +56,18 @@
       disabled={data.isExpanding}
     >
       {#if data.isExpanding}
-        <span class="text-lg animate-spin">⏳</span>
+        <div class="w-5 h-5 border-2 border-indigo-600 border-t-transparent rounded-full animate-spin"></div>
       {:else}
-        <span class="text-lg">➕</span>
+        <svg xmlns="http://www.w3.org/2000/svg" class="w-5 h-5" viewBox="0 0 20 20" fill="currentColor">
+          <path fill-rule="evenodd" d="M10 3a1 1 0 011 1v5h5a1 1 0 110 2h-5v5a1 1 0 11-2 0v-5H4a1 1 0 110-2h5V4a1 1 0 011-1z" clip-rule="evenodd" />
+        </svg>
       {/if}
     </button>
 
     <div
       role="button"
       tabindex="0"
-      class="toggle-examples-btn p-1.5 bg-indigo-50 hover:bg-indigo-100 text-indigo-400 hover:text-indigo-600 rounded-md transition-colors cursor-pointer z-50 ml-auto flex items-center justify-center"
+      class="toggle-examples-btn p-1.5 bg-indigo-50 hover:bg-indigo-100 text-indigo-400 hover:text-indigo-600 rounded-md transition-colors cursor-pointer z-50 flex items-center justify-center"
       aria-label="toggle examples"
     >
       <span class="text-xs font-bold tracking-tighter pointer-events-none">>></span>
