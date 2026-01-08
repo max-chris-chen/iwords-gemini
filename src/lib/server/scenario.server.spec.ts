@@ -296,6 +296,8 @@ describe('Scenario Logic', () => {
 			expect(ai.generateRecursiveExpansion).toHaveBeenCalledWith('variable', 'coding', ['variable']);
 			expect(updateOneMock).toHaveBeenCalled();
 			expect(result.words).toHaveLength(3);
+			// Verify parentId would be handled (though this test mocks the service internals mostly, 
+			// the integration logic relies on sanitizeScenarioData which we just fixed)
 		});
 
 		it('should throw error if scenario not found', async () => {

@@ -28,7 +28,8 @@ export function sanitizeScenarioData(wordData: Word): Word {
             cn: ex.cn ? clean(ex.cn) : undefined,
             audioUrl: ex.audioUrl 
         })),
-        audioUrl: wordData.audioUrl
+        audioUrl: wordData.audioUrl,
+        parentId: wordData.parentId ? clean(wordData.parentId) : undefined
     };
 }
 
