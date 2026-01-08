@@ -13,6 +13,7 @@ export interface Word {
     definition_cn?: string;
     examples: ExampleSentence[];
     audioUrl?: string;
+    parentId?: string; // word or 'scenario'
 }
 
 export interface Scenario {

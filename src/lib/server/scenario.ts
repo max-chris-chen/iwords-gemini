@@ -75,7 +75,8 @@ Provide at least 5 words. Each word should have 2 examples.
 				definition: w.definition,
 				definition_cn: w.definition_cn,
 				examples: w.examples || [],
-				audioUrl: w.audioUrl
+				audioUrl: w.audioUrl,
+				parentId: 'scenario'
 			})
 		);
 
@@ -196,7 +197,8 @@ async function expand(id: string, targetWord?: string): Promise<Scenario> {
 				definition: w.definition,
 				definition_cn: w.definition_cn,
 				examples: w.examples || [],
-				audioUrl: w.audioUrl
+				audioUrl: w.audioUrl,
+				parentId: targetWord || 'scenario'
 			})
 		);
 

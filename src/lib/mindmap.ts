@@ -23,17 +23,46 @@ export function transformScenarioToFlowData(scenario: Scenario): { nodes: Node[]
     // Word and Example nodes
     scenario.words.forEach((word, wordIndex) => {
         const wordId = `word-${word.word}`;
-        const wordX = startX + wordIndex * wordSpacing;
+        
+        // Simple level detection
+        const getLevel = (w: Word): number => {
+            if (!w.parentId || w.parentId === 'scenario') return 1;
+            const parent = scenario.words.find(pw => pw.word === w.parentId);
+            if (!parent) return 1;
+            return 1 + getLevel(parent);
+        };
+
+        const level = getLevel(word);
+        
+        // For children, try to position them near parent
+        let wordX = startX + wordIndex * wordSpacing;
+        let wordY = 400 + (level - 1) * 450;
+
+        if (word.parentId && word.parentId !== 'scenario') {
+            const parentIndex = scenario.words.findIndex(pw => pw.word === word.parentId);
+            if (parentIndex !== -1) {
+                // Offset from parent
+                const siblings = scenario.words.filter(pw => pw.parentId === word.parentId);
+                const siblingIndex = siblings.findIndex(sw => sw.word === word.word);
+                const parentX = startX + parentIndex * wordSpacing;
+                wordX = parentX + (siblingIndex === 0 ? -100 : 100);
+            }
+        }
         
         nodes.push({
             id: wordId,
             type: 'word', 
             data: { word: word },
-            position: { x: wordX, y: 400 } // Pushed down from 300
+            position: { x: wordX, y: wordY }
         });
+
+        const parentId = word.parentId && word.parentId !== 'scenario' 
+            ? `word-${word.parentId}` 
+            : 'scenario';
+
         edges.push({
-            id: `e-scenario-${wordId}`,
-            source: 'scenario',
+            id: `e-${parentId}-${wordId}`,
+            source: parentId,
             target: wordId
         });
 
@@ -44,8 +73,8 @@ export function transformScenarioToFlowData(scenario: Scenario): { nodes: Node[]
                 type: 'example', 
                 data: { example: example },
                 position: { 
-                    x: wordX + (exampleIndex % 2 === 0 ? -80 : 80), // Wider horizontal spread
-                    y: 750 + exampleIndex * 180 // Pushed down from 550, larger gap (180)
+                    x: wordX + (exampleIndex % 2 === 0 ? -80 : 80), 
+                    y: wordY + 350 + exampleIndex * 180 
                 },
                 hidden: true
             });
