@@ -20,9 +20,16 @@ export function transformScenarioToFlowData(scenario: Scenario): { nodes: Node[]
         position: { x: centerX - 64, y: 50 } // x minus half node width (128/2)
     });
 
+    const processedWordIds = new Set<string>();
+
     // Word and Example nodes
     scenario.words.forEach((word, wordIndex) => {
         const wordId = `word-${word.word}`;
+        
+        if (processedWordIds.has(wordId)) {
+            return; // Skip duplicates
+        }
+        processedWordIds.add(wordId);
         
         // Simple level detection
         const getLevel = (w: Word): number => {

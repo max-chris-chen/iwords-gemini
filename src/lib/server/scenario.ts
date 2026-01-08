@@ -200,7 +200,11 @@ async function expand(id: string, targetWord?: string): Promise<Scenario> {
 				audioUrl: w.audioUrl,
 				parentId: targetWord || 'scenario'
 			})
-		);
+		).filter((w: Word) => !existingWords.includes(w.word)); // Deduplicate against existing words
+
+		if (newWords.length === 0) {
+			return scenario;
+		}
 
 		const updatedScenario = await addWordsToScenario(id, newWords);
 		if (!updatedScenario) {
