@@ -82,4 +82,21 @@ describe('WordNode component', () => {
     const nodeDiv = container.querySelector('div.backdrop-blur-md');
     expect(nodeDiv).toBeInTheDocument();
   });
+
+  it('should render an expansion button and show loading state', async () => {
+    const nodeData = {
+      data: {
+        word: { word: 'test' },
+        onExpand: vi.fn(),
+        isExpanding: true
+      },
+    };
+
+    const { getByRole } = render(WordNode, { props: { data: nodeData.data } });
+    const expandButton = getByRole('button', { name: /expand word/i });
+    expect(expandButton).toBeInTheDocument();
+    
+    // Check for loading state (e.g. spinner or emoji change)
+    expect(expandButton).toHaveTextContent('⏳');
+  });
 });

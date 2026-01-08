@@ -12,6 +12,13 @@
         audioManager.speak(data.word.word);
     }
   }
+
+  function handleExpand(event: MouseEvent) {
+    event.stopPropagation();
+    if (data?.onExpand) {
+      data.onExpand(data.word.word);
+    }
+  }
 </script>
 
 <div 
@@ -39,6 +46,20 @@
       onclick={handlePlayAudio}
     >
       <span class="text-lg">🔊</span>
+    </button>
+
+    <button
+      type="button"
+      class="p-2 bg-indigo-100/80 hover:bg-indigo-200 text-indigo-600 rounded-full transition-colors cursor-pointer inline-flex items-center justify-center z-50 shadow-sm backdrop-blur-sm disabled:opacity-50 disabled:cursor-not-allowed"
+      aria-label="expand word"
+      onclick={handleExpand}
+      disabled={data.isExpanding}
+    >
+      {#if data.isExpanding}
+        <span class="text-lg animate-spin">⏳</span>
+      {:else}
+        <span class="text-lg">➕</span>
+      {/if}
     </button>
 
     <div
