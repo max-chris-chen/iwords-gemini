@@ -94,4 +94,28 @@ describe('AI Service', () => {
             expect(content).toContain('exactly 2 new');
         });
     });
+
+    describe('generateRecursiveExpansion', () => {
+        it('should format recursive expansion prompt with target word, root scenario, and existing words', async () => {
+            const { generateRecursiveExpansion } = await import('./ai');
+            const mockResponse = {
+                choices: [{ message: { content: '{"words":[]}' } }]
+            };
+            (global.fetch as any).mockResolvedValue({
+                ok: true,
+                json: async () => mockResponse
+            });
+
+            await generateRecursiveExpansion('apple', 'supermarket', ['banana', 'milk']);
+
+            const fetchCall = vi.mocked(global.fetch).mock.calls[0];
+            const body = JSON.parse(fetchCall[1]?.body as string);
+            const content = body.messages[0].content;
+
+            expect(content).toContain('Primary Topic: "apple"');
+            expect(content).toContain('Root Scenario: "supermarket"');
+            expect(content).toContain('banana, milk');
+            expect(content).toContain('simple, daily life, high-frequency');
+        });
+    });
 });

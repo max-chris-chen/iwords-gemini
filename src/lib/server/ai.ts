@@ -65,3 +65,30 @@ Each word should have exactly 2 examples.
 `;
     return generateContent(aiPrompt);
 }
+
+export async function generateRecursiveExpansion(targetWord: string, rootScenario: string, existingWords: string[]): Promise<string> {
+    const aiPrompt = `
+Generate exactly 2 new English words related to the Primary Topic: "${targetWord}", within the broader context of the Root Scenario: "${rootScenario}".
+
+Constraints:
+1. These words MUST NOT be any of the following (Exclusion List): ${existingWords.join(', ')}.
+2. Priority: Choose simple, daily life, high-frequency vocabulary.
+3. Output strictly valid JSON with the following structure:
+{
+  "words": [
+    {
+      "word": "english word",
+      "phonetics": "IPA",
+      "definition": "english definition",
+      "definition_cn": "中文意思",
+      "examples": [
+        { "en": "example sentence 1", "cn": "chinese translation" },
+        { "en": "example sentence 2", "cn": "chinese translation" }
+      ]
+    }
+  ]
+}
+Each word should have exactly 2 examples.
+`;
+    return generateContent(aiPrompt);
+}
