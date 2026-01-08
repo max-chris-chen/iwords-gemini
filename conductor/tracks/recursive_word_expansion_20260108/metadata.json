@@ -1,0 +1,8 @@
+{
+  "track_id": "recursive_word_expansion_20260108",
+  "type": "feature",
+  "status": "new",
+  "created_at": "2026-01-08T21:09:00Z",
+  "updated_at": "2026-01-08T21:09:00Z",
+  "description": "root 下的单词节点上加一个跟root 上的加号 跟生成scenario 同样的在这个单词为场景生成2个单词 并生成叶子节点 并展示出来 叶子节点也可以继续添加"
+}
