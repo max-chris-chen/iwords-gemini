@@ -23,16 +23,16 @@
 
 - [ ] Task: Conductor - User Manual Verification 'Backend - Expansion API' (Protocol in workflow.md)
 
-## Phase 2: Frontend - UI Components (`WordNode`)
+## Phase 2: Frontend - UI Components (WordNode) [checkpoint: 1547c26]
 
-- [ ] Task: Update `WordNode` Layout
+- [x] Task: Update WordNode Layout (3c95bd7)
     - [ ] Sub-task: Open `src/lib/components/WordNode.svelte`.
     - [ ] Sub-task: Add the `+` button element.
     - [ ] Sub-task: Position it absolute or flex between the Audio and Example buttons.
     - [ ] Sub-task: Style with Tailwind (cursor-pointer, hover effects).
     - [ ] Sub-task: Add `onclick` handler stub.
 
-- [ ] Task: Implement "Loading" State
+- [x] Task: Implement "Loading" State (3c95bd7)
     - [ ] Sub-task: Add internal state `isExpanding`.
     - [ ] Sub-task: Show a spinner or disable the button when `isExpanding` is true.
 
