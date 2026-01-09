@@ -22,31 +22,31 @@
     - [x] Sub-task: Verify incorrect/expired code validation returns false.
 
 ## Phase 3: Registration Implementation
-- [ ] Task: Implement Registration API
-    - [ ] Sub-task: Create `POST /api/auth/register` (or SvelteKit form action).
-    - [ ] Sub-task: Validate inputs (email format, uniqueness, etc.).
-    - [ ] Sub-task: Verify CAPTCHA first.
-    - [ ] Sub-task: Hash password and save user.
-- [ ] Task: Implement Registration UI
-    - [ ] Sub-task: Create `/register` page with form fields (Username, Email, Mobile, Password, CAPTCHA).
-    - [ ] Sub-task: Fetch and display CAPTCHA SVG.
-    - [ ] Sub-task: Handle form submission and error display.
-- [ ] Task: E2E Tests for Registration
-    - [ ] Sub-task: Test successful registration flow.
-    - [ ] Sub-task: Test validation errors (existing user, wrong CAPTCHA).
-- [ ] Task: Conductor - User Manual Verification 'Registration Implementation' (Protocol in workflow.md)
+- [x] Task: Implement Registration API e6edf09
+    - [x] Sub-task: Create `POST /api/auth/register` (or SvelteKit form action).
+    - [x] Sub-task: Validate inputs (email format, uniqueness, etc.).
+    - [x] Sub-task: Verify CAPTCHA first.
+    - [x] Sub-task: Hash password and save user.
+- [x] Task: Implement Registration UI e6edf09
+    - [x] Sub-task: Create `/register` page with form fields (Username, Email, Mobile, Password, CAPTCHA).
+    - [x] Sub-task: Fetch and display CAPTCHA SVG.
+    - [x] Sub-task: Handle form submission and error display.
+- [x] Task: E2E Tests for Registration e6edf09
+    - [x] Sub-task: Test successful registration flow.
+    - [x] Sub-task: Test validation errors (existing user, wrong CAPTCHA).
+- [x] Task: Conductor - User Manual Verification 'Registration Implementation' (Protocol in workflow.md) e6edf09
 
 ## Phase 4: Login Implementation
-- [ ] Task: Implement Login API
-    - [ ] Sub-task: Create `POST /api/auth/login` (or SvelteKit form action).
-    - [ ] Sub-task: Verify CAPTCHA first.
-    - [ ] Sub-task: Find user by email, verify password.
-    - [ ] Sub-task: Create session (cookie/token) on success.
-- [ ] Task: Implement Login UI
-    - [ ] Sub-task: Create `/login` page with form fields (Email, Password, CAPTCHA).
-    - [ ] Sub-task: Fetch and display CAPTCHA SVG.
-    - [ ] Sub-task: Handle form submission and error display.
-- [ ] Task: E2E Tests for Login
-    - [ ] Sub-task: Test successful login flow.
-    - [ ] Sub-task: Test login failure (wrong credentials, wrong CAPTCHA).
-- [ ] Task: Conductor - User Manual Verification 'Login Implementation' (Protocol in workflow.md)
+- [x] Task: Implement Login API e6edf09
+    - [x] Sub-task: Create `POST /api/auth/login` (or SvelteKit form action).
+    - [x] Sub-task: Verify CAPTCHA first.
+    - [x] Sub-task: Find user by email, verify password.
+    - [x] Sub-task: Create session (cookie/token) on success.
+- [x] Task: Implement Login UI e6edf09
+    - [x] Sub-task: Create `/login` page with form fields (Email, Password, CAPTCHA).
+    - [x] Sub-task: Fetch and display CAPTCHA SVG.
+    - [x] Sub-task: Handle form submission and error display.
+- [x] Task: E2E Tests for Login e6edf09
+    - [x] Sub-task: Test successful login flow.
+    - [x] Sub-task: Test login failure (wrong credentials, wrong CAPTCHA).
+- [x] Task: Conductor - User Manual Verification 'Login Implementation' (Protocol in workflow.md) e6edf09
