@@ -23,6 +23,7 @@
 		"@tailwindcss/postcss": "^4.1.18",
 		"@tailwindcss/vite": "^4.1.17",
 		"@testing-library/svelte": "^5.3.1",
+		"@types/bcryptjs": "^2.4.6",
 		"@types/sanitize-html": "^2.16.0",
 		"@vitest/browser-playwright": "^4.0.15",
 		"@vitest/coverage-v8": "^4.0.16",
@@ -38,9 +39,11 @@
 	},
 	"dependencies": {
 		"@xyflow/svelte": "^1.5.0",
+		"bcryptjs": "^3.0.3",
 		"dotenv": "^17.2.3",
 		"mongodb": "^7.0.0",
 		"sanitize-html": "^2.17.0",
+		"svg-captcha": "^1.4.0",
 		"zod": "^4.3.4"
 	}
 }
