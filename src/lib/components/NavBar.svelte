@@ -45,9 +45,15 @@
         <CapsuleInput onsubmit={handleGenerate} {isLoading} />
     </div>
 
-    <ul class="flex space-x-6 text-lg font-bold shrink-0">
+    <ul class="flex space-x-6 text-lg font-bold shrink-0 items-center">
         <li>
             <a href="/" data-testid="home-link" class="hover:text-yellow-300 transition-colors duration-200">Home</a>
+        </li>
+        <li>
+            <a href="/login" class="hover:text-yellow-300 transition-colors duration-200">Login</a>
+        </li>
+        <li>
+            <a href="/register" class="bg-white text-indigo-600 px-4 py-2 rounded-full hover:bg-yellow-300 hover:text-indigo-800 transition-all duration-200">Register</a>
         </li>
     </ul>
 </nav>
