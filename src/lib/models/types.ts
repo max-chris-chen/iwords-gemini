@@ -23,3 +23,20 @@ export interface Scenario {
     words: Word[];
     mindMapData?: any; // To store Svelte Flow data structure
 }
+
+export interface User {
+    _id?: string;
+    username: string;
+    email: string;
+    mobile: string;
+    passwordHash: string;
+    createdAt: Date;
+    updatedAt: Date;
+}
+
+export interface Captcha {
+    _id?: string;
+    token: string;
+    answer: string;
+    createdAt: Date;
+}
