@@ -11,7 +11,7 @@
     - [x] Sub-task: Create functions for storing and retrieving CAPTCHA data.
 - [ ] Task: Conductor - User Manual Verification 'Backend Foundations & Database Schema' (Protocol in workflow.md)
 
-## Phase 2: CAPTCHA API & Logic
+## Phase 2: CAPTCHA API & Logic [checkpoint: 59f5a29]
 - [x] Task: Create CAPTCHA Generation Endpoint 09a6bb0
     - [x] Sub-task: Implement `GET /api/auth/captcha`: Generates SVG, stores answer in DB, returns SVG + Token (e.g. in cookie or response body).
 - [x] Task: Create CAPTCHA Verification Logic 09a6bb0
