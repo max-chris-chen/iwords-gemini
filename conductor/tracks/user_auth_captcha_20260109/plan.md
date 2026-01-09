@@ -12,15 +12,14 @@
 - [ ] Task: Conductor - User Manual Verification 'Backend Foundations & Database Schema' (Protocol in workflow.md)
 
 ## Phase 2: CAPTCHA API & Logic
-- [ ] Task: Create CAPTCHA Generation Endpoint
-    - [ ] Sub-task: Implement `GET /api/auth/captcha`: Generates SVG, stores answer in DB, returns SVG + Token (e.g. in cookie or response body).
-- [ ] Task: Create CAPTCHA Verification Logic
-    - [ ] Sub-task: Implement helper to verify user-submitted code against DB record.
-- [ ] Task: Unit Tests for CAPTCHA Logic
-    - [ ] Sub-task: Verify generation creates DB entry.
-    - [ ] Sub-task: Verify correct code validation returns true.
-    - [ ] Sub-task: Verify incorrect/expired code validation returns false.
-- [ ] Task: Conductor - User Manual Verification 'CAPTCHA API & Logic' (Protocol in workflow.md)
+- [x] Task: Create CAPTCHA Generation Endpoint 09a6bb0
+    - [x] Sub-task: Implement `GET /api/auth/captcha`: Generates SVG, stores answer in DB, returns SVG + Token (e.g. in cookie or response body).
+- [x] Task: Create CAPTCHA Verification Logic 09a6bb0
+    - [x] Sub-task: Implement helper to verify user-submitted code against DB record.
+- [x] Task: Unit Tests for CAPTCHA Logic 09a6bb0
+    - [x] Sub-task: Verify generation creates DB entry.
+    - [x] Sub-task: Verify correct code validation returns true.
+    - [x] Sub-task: Verify incorrect/expired code validation returns false.
 
 ## Phase 3: Registration Implementation
 - [ ] Task: Implement Registration API
