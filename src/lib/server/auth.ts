@@ -2,6 +2,7 @@ import clientPromise from './db';
 import type { User, Captcha } from '../models/types';
 import { ObjectId } from 'mongodb';
 import bcrypt from 'bcryptjs';
+import type { Cookies } from '@sveltejs/kit';
 
 export const USERS_COLLECTION = 'users';
 export const CAPTCHAS_COLLECTION = 'captchas';
@@ -13,6 +14,20 @@ export async function hashPassword(password: string): Promise<string> {
 
 export async function verifyPassword(password: string, hash: string): Promise<boolean> {
     return bcrypt.compare(password, hash);
+}
+
+export async function verifyCaptchaFromCookies(cookies: Cookies, answer: string): Promise<boolean> {
+    const token = cookies.get('captcha-token');
+    if (!token) return false;
+    
+    const isValid = await verifyCaptcha(token, answer.toLowerCase());
+    
+    // Optionally delete the captcha after verification (one-time use)
+    if (isValid) {
+        cookies.delete('captcha-token', { path: '/' });
+    }
+    
+    return isValid;
 }
 
 export async function findUserByEmail(email: string): Promise<User | null> {

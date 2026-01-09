@@ -157,6 +157,30 @@ describe('Auth Service', () => {
         });
     });
 
+    describe('verifyCaptchaFromCookies', () => {
+        it('should return true and delete cookie if valid', async () => {
+            const mockCookies = {
+                get: vi.fn().mockReturnValue('token123'),
+                delete: vi.fn()
+            };
+            mockCollection.findOne.mockResolvedValue({ token: 'token123', answer: 'abcd' });
+
+            const isValid = await authService.verifyCaptchaFromCookies(mockCookies as any, 'ABCD'); // Test case insensitivity
+
+            expect(isValid).toBe(true);
+            expect(mockCookies.get).toHaveBeenCalledWith('captcha-token');
+            expect(mockCookies.delete).toHaveBeenCalledWith('captcha-token', { path: '/' });
+        });
+
+        it('should return false if no token in cookies', async () => {
+            const mockCookies = {
+                get: vi.fn().mockReturnValue(undefined)
+            };
+            const isValid = await authService.verifyCaptchaFromCookies(mockCookies as any, 'abcd');
+            expect(isValid).toBe(false);
+        });
+    });
+
     describe('Password Utils', () => {
         it('should hash a password', async () => {
             const password = 'mysecretpassword';
