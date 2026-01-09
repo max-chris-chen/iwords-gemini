@@ -21,7 +21,7 @@
     - [x] Sub-task: Verify correct code validation returns true.
     - [x] Sub-task: Verify incorrect/expired code validation returns false.
 
-## Phase 3: Registration Implementation
+## Phase 3: Registration Implementation [checkpoint: 82c15c5]
 - [x] Task: Implement Registration API e6edf09
     - [x] Sub-task: Create `POST /api/auth/register` (or SvelteKit form action).
     - [x] Sub-task: Validate inputs (email format, uniqueness, etc.).
@@ -36,7 +36,7 @@
     - [x] Sub-task: Test validation errors (existing user, wrong CAPTCHA).
 - [x] Task: Conductor - User Manual Verification 'Registration Implementation' (Protocol in workflow.md) e6edf09
 
-## Phase 4: Login Implementation
+## Phase 4: Login Implementation [checkpoint: 82c15c5]
 - [x] Task: Implement Login API e6edf09
     - [x] Sub-task: Create `POST /api/auth/login` (or SvelteKit form action).
     - [x] Sub-task: Verify CAPTCHA first.
