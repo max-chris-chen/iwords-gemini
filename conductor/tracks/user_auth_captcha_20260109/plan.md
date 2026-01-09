@@ -1,6 +1,6 @@
 # Implementation Plan - User Authentication with CAPTCHA
 
-## Phase 1: Backend Foundations & Database Schema
+## Phase 1: Backend Foundations & Database Schema [checkpoint: 714b822]
 - [x] Task: Install Dependencies 9d6d7a3
     - [x] Sub-task: Install `svg-captcha`, `bcryptjs` (or equivalent), and types.
 - [x] Task: Define Mongoose Schemas f63f005
