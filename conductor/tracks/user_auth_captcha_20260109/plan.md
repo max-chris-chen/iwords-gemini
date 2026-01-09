@@ -3,12 +3,12 @@
 ## Phase 1: Backend Foundations & Database Schema
 - [x] Task: Install Dependencies 9d6d7a3
     - [x] Sub-task: Install `svg-captcha`, `bcryptjs` (or equivalent), and types.
-- [ ] Task: Define Mongoose Schemas
-    - [ ] Sub-task: Create `User` schema (username, email, mobile, passwordHash, createdAt, updatedAt).
-    - [ ] Sub-task: Create `Captcha` schema (token, answer, createdAt) with TTL index for expiration.
-- [ ] Task: Implement Database Helpers
-    - [ ] Sub-task: Create functions for finding users (by email/username), creating users, and verifying passwords.
-    - [ ] Sub-task: Create functions for storing and retrieving CAPTCHA data.
+- [x] Task: Define Mongoose Schemas f63f005
+    - [x] Sub-task: Create `User` schema (username, email, mobile, passwordHash, createdAt, updatedAt).
+    - [x] Sub-task: Create `Captcha` schema (token, answer, createdAt) with TTL index for expiration.
+- [x] Task: Implement Database Helpers f63f005
+    - [x] Sub-task: Create functions for finding users (by email/username), creating users, and verifying passwords.
+    - [x] Sub-task: Create functions for storing and retrieving CAPTCHA data.
 - [ ] Task: Conductor - User Manual Verification 'Backend Foundations & Database Schema' (Protocol in workflow.md)
 
 ## Phase 2: CAPTCHA API & Logic
