@@ -8,7 +8,7 @@
 ## Phase 2: API & Backend Logic
 - [x] Task: Update scenario creation logic (e.g., in `src/lib/server/scenario.ts`) to automatically set `ownerId` from the session and default `isPublic` to `false`. [356bc8a]
 - [x] Task: Enhance `listScenarios` in `src/lib/server/db.ts` to support filtering by `ownerId` and/or `isPublic` status. [3e8517e]
-- [ ] Task: Update `GET /api/scenario` (public listing) to only return scenarios where `isPublic: true`.
+- [x] Task: Update `GET /api/scenario` (public listing) to only return scenarios where `isPublic: true`. [c363881]
 - [ ] Task: Implement `PATCH /api/scenario/[id]` endpoint to allow owners to toggle the `isPublic` status.
 - [ ] Task: Conductor - User Manual Verification 'Phase 2: API & Backend Logic' (Protocol in workflow.md)
 
