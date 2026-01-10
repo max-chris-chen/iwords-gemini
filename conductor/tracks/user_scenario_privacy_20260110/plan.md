@@ -2,7 +2,7 @@
 
 ## Phase 1: Database & Model Foundation
 - [x] Task: Update `Scenario` type and database schema to include `ownerId` (string, optional) and `isPublic` (boolean). [908a059]
-- [~] Task: Create a migration script or utility to mark all existing (legacy) scenarios as `isPublic: true`.
+- [x] Task: Create a migration script or utility to mark all existing (legacy) scenarios as `isPublic: true`. [2ecd423]
 - [ ] Task: Conductor - User Manual Verification 'Phase 1: Database & Model Foundation' (Protocol in workflow.md)
 
 ## Phase 2: API & Backend Logic
