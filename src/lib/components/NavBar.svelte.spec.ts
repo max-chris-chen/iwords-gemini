@@ -39,6 +39,7 @@ describe('NavBar component', () => {
         const { getByText, container, unmount } = render(NavBar, { props: { user } });
         expect(getByText('Dashboard')).toBeInTheDocument();
         expect(getByText('TestUser')).toBeInTheDocument();
+        expect(getByText('Logout')).toBeInTheDocument();
         
         const loginLink = Array.from(container.querySelectorAll('a')).find(a => a.textContent === 'Login');
         expect(loginLink).toBeUndefined();

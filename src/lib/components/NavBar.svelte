@@ -58,6 +58,11 @@
             <li class="hidden sm:block">
                  <span class="text-sm font-normal opacity-80 border border-white/30 rounded px-2 py-1">{user.username}</span>
             </li>
+            <li>
+                <form action="/logout" method="POST" class="inline">
+                    <button type="submit" class="hover:text-yellow-300 transition-colors duration-200 cursor-pointer">Logout</button>
+                </form>
+            </li>
         {:else}
             <li>
                 <a href="/login" class="hover:text-yellow-300 transition-colors duration-200">Login</a>
