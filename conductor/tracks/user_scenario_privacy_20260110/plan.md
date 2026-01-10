@@ -13,7 +13,7 @@
 - [x] Task: Conductor - User Manual Verification 'Phase 2: API & Backend Logic' (Protocol in workflow.md)
 
 ## Phase 3: Dashboard & Navigation
-- [ ] Task: Create the `/dashboard` route (`src/routes/dashboard/+page.svelte` and `+page.server.ts`) to display the user's personal scenarios.
+- [x] Task: Create the `/dashboard` route (`src/routes/dashboard/+page.svelte` and `+page.server.ts`) to display the user's personal scenarios. [6b9a685]
 - [ ] Task: Implement redirection logic in `login` and `register` actions to send users to `/dashboard` upon success.
 - [ ] Task: Update `NavBar.svelte` to show "Dashboard" for logged-in users and ensure "Home" points to the public gallery.
 - [ ] Task: Update the root page (`src/routes/+page.server.ts`) to only fetch public scenarios.
