@@ -1,9 +1,9 @@
 # Plan: User Scenario Ownership and Privacy
 
-## Phase 1: Database & Model Foundation
+## Phase 1: Database & Model Foundation [checkpoint: d41dcca]
 - [x] Task: Update `Scenario` type and database schema to include `ownerId` (string, optional) and `isPublic` (boolean). [908a059]
 - [x] Task: Create a migration script or utility to mark all existing (legacy) scenarios as `isPublic: true`. [2ecd423]
-- [ ] Task: Conductor - User Manual Verification 'Phase 1: Database & Model Foundation' (Protocol in workflow.md)
+- [x] Task: Conductor - User Manual Verification 'Phase 1: Database & Model Foundation' (Protocol in workflow.md)
 
 ## Phase 2: API & Backend Logic
 - [ ] Task: Update scenario creation logic (e.g., in `src/lib/server/scenario.ts`) to automatically set `ownerId` from the session and default `isPublic` to `false`.
