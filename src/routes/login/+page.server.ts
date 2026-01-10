@@ -32,8 +32,13 @@ export const actions: Actions = {
             return fail(400, { error: 'Invalid email or password' });
         }
 
-        // TODO: In a real app, set a session cookie here.
-        // For now, we just return success.
+        cookies.set('userId', user._id!.toString(), {
+            path: '/',
+            httpOnly: true,
+            sameSite: 'strict',
+            secure: process.env.NODE_ENV === 'production',
+            maxAge: 60 * 60 * 24 * 7 // 1 week
+        });
         
         return { success: true };
     }

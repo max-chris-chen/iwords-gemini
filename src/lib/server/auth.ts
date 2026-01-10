@@ -44,6 +44,14 @@ export async function findUserByUsername(username: string): Promise<User | null>
     return user;
 }
 
+export async function findUserById(id: string): Promise<User | null> {
+    const client = await clientPromise;
+    const db = client.db('iwords');
+    if (!ObjectId.isValid(id)) return null;
+    const user = await db.collection<User>(USERS_COLLECTION).findOne({ _id: new ObjectId(id) });
+    return user;
+}
+
 export async function createUser(userData: Omit<User, '_id' | 'createdAt' | 'updatedAt'>): Promise<User> {
     const client = await clientPromise;
     const db = client.db('iwords');

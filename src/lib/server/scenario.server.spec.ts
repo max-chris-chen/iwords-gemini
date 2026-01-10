@@ -62,6 +62,23 @@ describe('Scenario Logic', () => {
 				words: expect.arrayContaining([expect.objectContaining({ word: 'test' })])
 			}));
 		});
+
+		it('should generate a scenario with ownerId and isPublic: false', async () => {
+			const mockAiResponse = JSON.stringify({ words: [{ word: 'test' }] });
+			(ai.generateContent as any).mockResolvedValue(mockAiResponse);
+			const saveSpy = vi.spyOn(scenarioService, 'save').mockImplementation(async (s) => ({ ...s, _id: 'id' }));
+			
+			const ownerId = 'user-123';
+			const result = await scenarioService.generate('test', ownerId);
+
+			expect(saveSpy).toHaveBeenCalledWith(expect.objectContaining({
+				prompt: 'test',
+				ownerId: 'user-123',
+				isPublic: false
+			}));
+			expect(result.ownerId).toBe('user-123');
+			expect(result.isPublic).toBe(false);
+		});
 	});
 
 	describe('save', () => {

@@ -38,11 +38,19 @@ export const actions: Actions = {
 
         const passwordHash = await hashPassword(password);
         
-        await createUser({
+        const user = await createUser({
             username,
             email,
             mobile,
             passwordHash
+        });
+
+        cookies.set('userId', user._id!.toString(), {
+            path: '/',
+            httpOnly: true,
+            sameSite: 'strict',
+            secure: process.env.NODE_ENV === 'production',
+            maxAge: 60 * 60 * 24 * 7 // 1 week
         });
 
         return { success: true };

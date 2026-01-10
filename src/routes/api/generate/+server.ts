@@ -2,7 +2,7 @@ import { json } from '@sveltejs/kit';
 import { scenarioService } from '$lib/server/scenario';
 import type { RequestHandler } from './$types';
 
-export const POST: RequestHandler = async ({ request }) => {
+export const POST: RequestHandler = async ({ request, locals }) => {
     try {
         const { prompt } = await request.json();
 
@@ -10,7 +10,7 @@ export const POST: RequestHandler = async ({ request }) => {
             return json({ error: 'Invalid prompt provided' }, { status: 400 });
         }
 
-        const scenario = await scenarioService.generate(prompt);
+        const scenario = await scenarioService.generate(prompt, locals.user?.id);
         return json(scenario, { status: 201 });
     } catch (error: any) {
         console.error('API Error:', error);

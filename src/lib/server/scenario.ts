@@ -35,7 +35,7 @@ function toScenarioDocument(scenario: Scenario): ScenarioDocument {
 	};
 }
 
-async function generate(prompt: string): Promise<Scenario> {
+async function generate(prompt: string, ownerId?: string): Promise<Scenario> {
 	validatePrompt(prompt);
 
 	const aiPrompt = `
@@ -83,7 +83,9 @@ Provide at least 5 words. Each word should have 2 examples.
 		const scenario: Scenario = {
 			prompt,
 			createdAt: new Date(),
-			words
+			words,
+			ownerId,
+			isPublic: false
 		};
 
 		const savedScenario = await scenarioService.save(scenario);
