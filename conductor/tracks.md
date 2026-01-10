@@ -44,5 +44,5 @@ This file tracks all major tracks for the project. Each track has its own detail
 
 ---
 
-## [~] Track: User Scenario Ownership and Privacy
+## [x] Track: User Scenario Ownership and Privacy
 *Link: [./conductor/tracks/user_scenario_privacy_20260110/](./conductor/tracks/user_scenario_privacy_20260110/)*

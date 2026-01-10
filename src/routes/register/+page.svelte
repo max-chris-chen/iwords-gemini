@@ -1,5 +1,6 @@
 <script lang="ts">
     import { enhance } from '$app/forms';
+    import { invalidateAll } from '$app/navigation';
     import { onMount } from 'svelte';
 
     let { form } = $props();
@@ -31,7 +32,14 @@
             Join iWords
         </h1>
 
-        <form method="POST" use:enhance class="space-y-6">
+        <form method="POST" use:enhance={() => {
+            return async ({ result, update }) => {
+                if (result.type === 'redirect') {
+                    await invalidateAll();
+                }
+                await update();
+            };
+        }} class="space-y-6">
             <div>
                 <label for="username" class="block text-sm font-bold text-gray-700 mb-1">Username</label>
                 <input
