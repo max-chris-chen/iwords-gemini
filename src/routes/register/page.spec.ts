@@ -29,7 +29,7 @@ describe('/register Actions', () => {
         vi.clearAllMocks();
     });
 
-    it('should register a new user on valid input', async () => {
+    it('should register a new user and redirect to dashboard', async () => {
         const formData = new FormData();
         formData.append('username', 'testuser');
         formData.append('email', 'test@example.com');
@@ -37,20 +37,29 @@ describe('/register Actions', () => {
         formData.append('password', 'password123');
         formData.append('captcha', 'abcd');
 
-        const mockCookies = {};
+        const mockCookies = { set: vi.fn() };
         
         mockVerifyCaptchaFromCookies.mockResolvedValue(true);
         mockFindUserByEmail.mockResolvedValue(null);
         mockFindUserByUsername.mockResolvedValue(null);
         mockHashPassword.mockResolvedValue('hashed_password');
-        mockCreateUser.mockResolvedValue({ username: 'testuser' });
+        mockCreateUser.mockResolvedValue({ _id: 'user-123', username: 'testuser' });
 
         const event = {
             request: { formData: () => Promise.resolve(formData) },
             cookies: mockCookies
         } as any;
 
-        const result = await actions.default(event);
+        try {
+            await actions.default(event);
+            expect.fail('Should have thrown redirect');
+        } catch (e: any) {
+            if (e.status === 302 && e.location === '/dashboard') {
+                expect(e.status).toBe(302);
+            } else {
+                throw e;
+            }
+        }
 
         expect(mockVerifyCaptchaFromCookies).toHaveBeenCalledWith(mockCookies, 'abcd');
         expect(mockFindUserByEmail).toHaveBeenCalledWith('test@example.com');
@@ -60,7 +69,7 @@ describe('/register Actions', () => {
             mobile: '1234567890',
             passwordHash: 'hashed_password'
         });
-        expect(result).toEqual({ success: true });
+        expect(mockCookies.set).toHaveBeenCalledWith('userId', 'user-123', expect.any(Object));
     });
 
     it('should return error if captcha is wrong', async () => {

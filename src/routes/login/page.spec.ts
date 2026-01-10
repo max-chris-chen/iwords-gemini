@@ -22,7 +22,7 @@ describe('/login Actions', () => {
         vi.clearAllMocks();
     });
 
-    it('should login successfully with correct credentials', async () => {
+    it('should login successfully and redirect to dashboard', async () => {
         const formData = new FormData();
         formData.append('email', 'test@example.com');
         formData.append('password', 'password123');
@@ -30,6 +30,7 @@ describe('/login Actions', () => {
 
         mockVerifyCaptchaFromCookies.mockResolvedValue(true);
         mockFindUserByEmail.mockResolvedValue({ 
+            _id: 'user-123',
             email: 'test@example.com', 
             passwordHash: 'hashed' 
         });
@@ -37,14 +38,23 @@ describe('/login Actions', () => {
 
         const event = {
             request: { formData: () => Promise.resolve(formData) },
-            cookies: {}
+            cookies: { set: vi.fn() }
         } as any;
 
-        const result = await actions.default(event);
+        try {
+            await actions.default(event);
+            expect.fail('Should have thrown redirect');
+        } catch (e: any) {
+            if (e.status === 302 && e.location === '/dashboard') {
+                expect(e.status).toBe(302);
+            } else {
+                throw e;
+            }
+        }
 
         expect(mockVerifyCaptchaFromCookies).toHaveBeenCalled();
         expect(mockVerifyPassword).toHaveBeenCalledWith('password123', 'hashed');
-        expect(result).toEqual({ success: true });
+        expect(event.cookies.set).toHaveBeenCalledWith('userId', 'user-123', expect.any(Object));
     });
 
     it('should fail with incorrect password', async () => {
