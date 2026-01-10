@@ -1,0 +1,8 @@
+{
+  "track_id": "user_scenario_privacy_20260110",
+  "type": "feature",
+  "status": "new",
+  "created_at": "2026-01-10T18:14:00Z",
+  "updated_at": "2026-01-10T18:14:00Z",
+  "description": "用户登录后创建的 scenario 只有自己能看到， 登录后跳到自己的 页面 只显示自己创建的scenario（跟主页可以共享一个页面 主页显示的是公共的scenario)公共主页也还能看到"
+}
