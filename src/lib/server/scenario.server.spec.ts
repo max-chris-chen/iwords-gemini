@@ -188,13 +188,40 @@ describe('Scenario Logic', () => {
 			const { scenarioService: mockedService } = await import('./scenario');
 			const result = await mockedService.getAll();
 
-			expect(clientMock.db).toHaveBeenCalledWith('iwords');
-			expect(dbMock.collection).toHaveBeenCalledWith('scenarios');
-			expect(findMock).toHaveBeenCalled();
+			expect(findMock).toHaveBeenCalledWith({});
 			expect(result).toEqual([
 				{ _id: id1.toHexString(), prompt: 'test1', words: [], createdAt: mockDate },
 				{ _id: id2.toHexString(), prompt: 'test2', words: [], createdAt: mockDate }
 			]);
+		});
+	});
+
+	describe('list', () => {
+		it('should filter scenarios by ownerId and/or isPublic', async () => {
+			const toArrayMock = vi.fn().mockResolvedValue([]);
+			const sortMock = vi.fn().mockReturnValue({ toArray: toArrayMock });
+			const findMock = vi.fn().mockReturnValue({ sort: sortMock });
+			const collectionMock = { find: findMock };
+			const dbMock = { collection: vi.fn().mockReturnValue(collectionMock) };
+			const clientMock = { db: vi.fn().mockReturnValue(dbMock) };
+
+			vi.doMock('./db', () => ({
+				default: Promise.resolve(clientMock)
+			}));
+
+			const { scenarioService: mockedService } = await import('./scenario');
+
+			// Test filtering by ownerId
+			await mockedService.list({ ownerId: 'user-1' });
+			expect(findMock).toHaveBeenCalledWith({ ownerId: 'user-1' });
+
+			// Test filtering by isPublic
+			await mockedService.list({ isPublic: true });
+			expect(findMock).toHaveBeenCalledWith({ isPublic: true });
+
+			// Test complex filter
+			await mockedService.list({ ownerId: 'user-1', isPublic: false });
+			expect(findMock).toHaveBeenCalledWith({ ownerId: 'user-1', isPublic: false });
 		});
 	});
 

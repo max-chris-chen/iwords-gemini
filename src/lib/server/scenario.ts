@@ -141,10 +141,19 @@ async function deleteById(id: string): Promise<boolean> {
 }
 
 async function getAll(): Promise<Scenario[]> {
+	return list({});
+}
+
+async function list(filter: { ownerId?: string; isPublic?: boolean }): Promise<Scenario[]> {
 	const client = await clientPromise;
 	const db = client.db('iwords');
 	const collection = db.collection<ScenarioDocument>('scenarios');
-	const docs = await collection.find().sort({ createdAt: -1 }).toArray();
+	
+	const query: any = {};
+	if (filter.ownerId !== undefined) query.ownerId = filter.ownerId;
+	if (filter.isPublic !== undefined) query.isPublic = filter.isPublic;
+
+	const docs = await collection.find(query).sort({ createdAt: -1 }).toArray();
 	return docs.map(toScenario);
 }
 
@@ -229,6 +238,8 @@ export const scenarioService = {
 	getById: getById,
 
 	getAll: getAll,
+
+	list: list,
 
 	deleteById: deleteById,
 
