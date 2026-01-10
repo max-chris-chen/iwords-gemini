@@ -6,7 +6,7 @@
 - [x] Task: Conductor - User Manual Verification 'Phase 1: Database & Model Foundation' (Protocol in workflow.md)
 
 ## Phase 2: API & Backend Logic
-- [ ] Task: Update scenario creation logic (e.g., in `src/lib/server/scenario.ts`) to automatically set `ownerId` from the session and default `isPublic` to `false`.
+- [x] Task: Update scenario creation logic (e.g., in `src/lib/server/scenario.ts`) to automatically set `ownerId` from the session and default `isPublic` to `false`. [356bc8a]
 - [ ] Task: Enhance `listScenarios` in `src/lib/server/db.ts` to support filtering by `ownerId` and/or `isPublic` status.
 - [ ] Task: Update `GET /api/scenario` (public listing) to only return scenarios where `isPublic: true`.
 - [ ] Task: Implement `PATCH /api/scenario/[id]` endpoint to allow owners to toggle the `isPublic` status.
