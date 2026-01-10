@@ -102,13 +102,15 @@ async function save(scenario: Scenario): Promise<Scenario> {
 	const db = client.db('iwords');
 	const collection = db.collection<ScenarioDocument>('scenarios');
 	
-    // The mongo driver mutates the object, so we work on a copy
-    const docToInsert = toScenarioDocument(scenario);
+    const doc = toScenarioDocument(scenario);
     
-	await collection.insertOne(docToInsert);
-
-	// After insertion, docToInsert._id is populated by the driver.
-	return toScenario(docToInsert);
+    if (doc._id) {
+        await collection.replaceOne({ _id: doc._id }, doc, { upsert: true });
+        return toScenario(doc);
+    } else {
+        await collection.insertOne(doc);
+        return toScenario(doc);
+    }
 }
 
 async function getById(id: string): Promise<Scenario | null> {
