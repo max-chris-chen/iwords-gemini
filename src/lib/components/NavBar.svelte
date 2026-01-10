@@ -4,10 +4,6 @@
 
     let { user } = $props<{ user?: { id: string; username: string } | null }>();
 
-    $effect(() => {
-        console.log('NavBar user prop:', user);
-    });
-
     let isLoading = $state(false);
 
     async function handleGenerate(prompt: string) {
