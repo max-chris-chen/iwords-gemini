@@ -36,3 +36,13 @@ This file tracks all major tracks for the project. Each track has its own detail
 
 ## [x] Track: root 下的单词节点上加一个跟root 上的加号 跟生成scenario 同样的在这个单词为场景生成2个单词 并生成叶子节点 并展示出来 叶子节点也可以继续添加
 *Link: [./conductor/tracks/recursive_word_expansion_20260108/](./conductor/tracks/recursive_word_expansion_20260108/)*
+
+---
+
+## [x] Track: 添加一个登录注册功能，注册登录时都需要一个验证码
+*Link: [./conductor/tracks/user_auth_captcha_20260109/](./conductor/tracks/user_auth_captcha_20260109/)*
+
+---
+
+## [~] Track: User Scenario Ownership and Privacy
+*Link: [./conductor/tracks/user_scenario_privacy_20260110/](./conductor/tracks/user_scenario_privacy_20260110/)*
