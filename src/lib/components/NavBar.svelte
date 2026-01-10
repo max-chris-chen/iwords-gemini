@@ -4,6 +4,10 @@
 
     let { user } = $props<{ user?: { id: string; username: string } | null }>();
 
+    $effect(() => {
+        console.log('NavBar user prop:', user);
+    });
+
     let isLoading = $state(false);
 
     async function handleGenerate(prompt: string) {
@@ -55,7 +59,7 @@
             <li>
                 <a href="/dashboard" class="hover:text-yellow-300 transition-colors duration-200">Dashboard</a>
             </li>
-            <li class="hidden sm:block">
+            <li class="block">
                  <span class="text-sm font-normal opacity-80 border border-white/30 rounded px-2 py-1">{user.username}</span>
             </li>
             <li>

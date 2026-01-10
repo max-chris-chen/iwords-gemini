@@ -1,4 +1,5 @@
 import { fail, redirect } from '@sveltejs/kit';
+import { dev } from '$app/environment';
 import { 
     verifyCaptchaFromCookies, 
     findUserByEmail, 
@@ -48,8 +49,8 @@ export const actions: Actions = {
         cookies.set('userId', user._id!.toString(), {
             path: '/',
             httpOnly: true,
-            sameSite: 'strict',
-            secure: process.env.NODE_ENV === 'production',
+            sameSite: 'lax',
+            secure: !dev,
             maxAge: 60 * 60 * 24 * 7 // 1 week
         });
 
