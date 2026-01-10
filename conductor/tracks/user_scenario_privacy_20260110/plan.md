@@ -19,8 +19,8 @@
 - [x] Task: Update the root page (`src/routes/+page.server.ts`) to only fetch public scenarios. [356c3c3]
 - [ ] Task: Conductor - User Manual Verification 'Phase 3: Dashboard & Navigation' (Protocol in workflow.md)
 
-## Phase 4: Sharing & Publishing UI
-- [ ] Task: In the scenario detail page (`src/routes/scenario/[id]`), add a "Publish to Gallery" toggle for scenarios owned by the current user.
-- [ ] Task: Implement the frontend logic to call the `PATCH` API when the "Publish" toggle is flipped.
-- [ ] Task: Ensure the "Share" link functionality is clearly visible (copying the current URL).
-- [ ] Task: Conductor - User Manual Verification 'Phase 4: Sharing & Publishing UI' (Protocol in workflow.md)
+## Phase 4: Sharing & Publishing UI [checkpoint: b9d1e7e]
+- [x] Task: In the scenario detail page (`src/routes/scenario/[id]`), add a "Publish to Gallery" toggle for scenarios owned by the current user. [b9d1e7e]
+- [x] Task: Implement the frontend logic to call the `PATCH` API when the "Publish" toggle is flipped. [b9d1e7e]
+- [x] Task: Ensure the "Share" link functionality is clearly visible (copying the current URL). [b9d1e7e]
+- [x] Task: Conductor - User Manual Verification 'Phase 4: Sharing & Publishing UI' (Protocol in workflow.md)
