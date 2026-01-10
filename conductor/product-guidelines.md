@@ -21,4 +21,5 @@
     - **Injection Protection**: Validation to prevent NoSQL injection attacks against MongoDB.
     - **API Security**: Rate limiting to prevent abuse of the AI generation endpoints.
     - **CSRF Protection**: Ensure cross-site request forgery protection is enabled for all state-changing actions.
+    - **User Authentication**: Secure registration and login flows with server-side CAPTCHA verification and hashed password storage.
 - **Data Protection**: Secure handling of user data and scenario history.
