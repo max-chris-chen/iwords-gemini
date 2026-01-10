@@ -4,7 +4,7 @@ import { scenarioService } from '$lib/server/scenario';
 import { transformScenarioToFlowData } from '$lib/mindmap';
 import type { PageServerLoad } from './$types';
 
-export const load: PageServerLoad = async ({ params }) => {
+export const load: PageServerLoad = async ({ params, locals }) => {
     const scenario = await scenarioService.getById(params.id);
 
     if (!scenario) {
@@ -17,5 +17,7 @@ export const load: PageServerLoad = async ({ params }) => {
         scenario,
         nodes: flowData.nodes,
         edges: flowData.edges,
+        isOwner: locals.user?.id === scenario.ownerId,
+        user: locals.user
     };
 };

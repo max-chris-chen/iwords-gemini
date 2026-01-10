@@ -6,6 +6,23 @@
 
     const { nodes, edges } = data;
     let wordCount = $state(data.scenario.words.length);
+
+    async function handleTogglePublic(isPublic: boolean) {
+        const response = await fetch(`/api/scenario/${data.scenario._id}`, {
+            method: 'PATCH',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({ isPublic })
+        });
+
+        if (!response.ok) {
+            alert('Failed to update visibility');
+        }
+    }
+
+    function handleShare() {
+        navigator.clipboard.writeText(window.location.href);
+        alert('Link copied to clipboard!');
+    }
 </script>
 
 <div class="p-4 sm:p-6 bg-linear-to-br from-slate-50 to-blue-50 min-h-screen">
@@ -24,7 +41,24 @@
                 <p class="text-slate-500 mt-1 text-sm sm:text-base">Explore related vocabulary and example sentences</p>
             </div>
             
-            <div class="flex items-center gap-2">
+            <div class="flex flex-wrap items-center gap-2">
+                {#if data.isOwner}
+                    <div class="flex items-center bg-white/80 backdrop-blur-sm border border-slate-200 rounded-full px-3 py-1 gap-2 shadow-xs">
+                        <span class="text-xs font-semibold text-slate-600">Public Gallery</span>
+                        <input 
+                            type="checkbox" 
+                            checked={data.scenario.isPublic} 
+                            onchange={(e) => handleTogglePublic(e.currentTarget.checked)}
+                            class="w-4 h-4 text-indigo-600 rounded focus:ring-indigo-500 cursor-pointer"
+                        />
+                    </div>
+                {/if}
+                <button 
+                    onclick={handleShare}
+                    class="px-3 py-1 bg-white/80 backdrop-blur-sm border border-slate-200 rounded-full text-xs font-semibold text-slate-600 shadow-xs hover:bg-white transition-colors cursor-pointer"
+                >
+                    Share Link
+                </button>
                 <div class="px-3 py-1 bg-white/80 backdrop-blur-sm border border-slate-200 rounded-full text-xs font-semibold text-slate-600 shadow-xs">
                     {wordCount} Words
                 </div>
