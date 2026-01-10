@@ -2,6 +2,8 @@
     import CapsuleInput from './CapsuleInput.svelte';
     import { goto } from '$app/navigation';
 
+    let { user } = $props<{ user?: { id: string; username: string } | null }>();
+
     let isLoading = $state(false);
 
     async function handleGenerate(prompt: string) {
@@ -47,13 +49,19 @@
 
     <ul class="flex space-x-6 text-lg font-bold shrink-0 items-center">
         <li>
-            <a href="/" data-testid="home-link" class="hover:text-yellow-300 transition-colors duration-200">Home</a>
+            <a href="/" data-testid="home-link" class="hover:text-yellow-300 transition-colors duration-200">Public Gallery</a>
         </li>
-        <li>
-            <a href="/login" class="hover:text-yellow-300 transition-colors duration-200">Login</a>
-        </li>
-        <li>
-            <a href="/register" class="bg-white text-indigo-600 px-4 py-2 rounded-full hover:bg-yellow-300 hover:text-indigo-800 transition-all duration-200">Register</a>
-        </li>
+        {#if user}
+            <li>
+                <a href="/dashboard" class="hover:text-yellow-300 transition-colors duration-200">Dashboard</a>
+            </li>
+            <li class="hidden sm:block">
+                 <span class="text-sm font-normal opacity-80 border border-white/30 rounded px-2 py-1">{user.username}</span>
+            </li>
+        {:else}
+            <li>
+                <a href="/login" class="hover:text-yellow-300 transition-colors duration-200">Login</a>
+            </li>
+        {/if}
     </ul>
 </nav>

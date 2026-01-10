@@ -19,11 +19,30 @@ describe('NavBar component', () => {
         unmount();
     });
 
-    it('should render a "Home" link', () => {
+    it('should render a "Public Gallery" link', () => {
         const { container, unmount } = render(NavBar);
         const homeLink = container.querySelector('[data-testid="home-link"]');
         expect(homeLink).toBeInTheDocument();
+        expect(homeLink?.textContent).toContain('Public Gallery');
         expect(homeLink?.getAttribute('href')).toBe('/');
+        unmount();
+    });
+
+    it('should render Login link when no user', () => {
+        const { getByText, unmount } = render(NavBar, { props: { user: null } });
+        expect(getByText('Login')).toBeInTheDocument();
+        unmount();
+    });
+
+    it('should render Dashboard and username when user is logged in', () => {
+        const user = { id: '1', username: 'TestUser' };
+        const { getByText, container, unmount } = render(NavBar, { props: { user } });
+        expect(getByText('Dashboard')).toBeInTheDocument();
+        expect(getByText('TestUser')).toBeInTheDocument();
+        
+        const loginLink = Array.from(container.querySelectorAll('a')).find(a => a.textContent === 'Login');
+        expect(loginLink).toBeUndefined();
+        
         unmount();
     });
 
