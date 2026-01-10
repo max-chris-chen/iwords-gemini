@@ -19,12 +19,29 @@ describe('API Route: /api/generate', () => {
             headers: { 'Content-Type': 'application/json' },
         });
 
-        const response = await POST({ request } as any);
+        const response = await POST({ request, locals: {} } as any);
         const body = await response.json();
 
         expect(response.status).toBe(201);
         expect(body).toEqual(mockScenario);
-        expect(scenarioService.generate).toHaveBeenCalledWith('test');
+        expect(scenarioService.generate).toHaveBeenCalledWith('test', undefined);
+    });
+
+    it('should pass ownerId from session if logged in', async () => {
+        const mockScenario = { prompt: 'test', words: [], ownerId: 'user-123' };
+        (scenarioService.generate as any).mockResolvedValue(mockScenario);
+
+        const request = new Request('http://localhost/api/generate', {
+            method: 'POST',
+            body: JSON.stringify({ prompt: 'test' }),
+            headers: { 'Content-Type': 'application/json' },
+        });
+
+        const response = await POST({ request, locals: { user: { id: 'user-123' } } } as any);
+        const body = await response.json();
+
+        expect(response.status).toBe(201);
+        expect(scenarioService.generate).toHaveBeenCalledWith('test', 'user-123');
     });
 
     it('should return 400 for an invalid prompt', async () => {
@@ -34,7 +51,7 @@ describe('API Route: /api/generate', () => {
             headers: { 'Content-Type': 'application/json' },
         });
 
-        const response = await POST({ request } as any);
+        const response = await POST({ request, locals: {} } as any);
         const body = await response.json();
 
         expect(response.status).toBe(400);
@@ -50,7 +67,7 @@ describe('API Route: /api/generate', () => {
             headers: { 'Content-Type': 'application/json' },
         });
 
-        const response = await POST({ request } as any);
+        const response = await POST({ request, locals: {} } as any);
         const body = await response.json();
 
         expect(response.status).toBe(500);
