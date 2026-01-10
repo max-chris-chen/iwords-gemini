@@ -22,6 +22,8 @@ export interface Scenario {
     createdAt: Date;
     words: Word[];
     mindMapData?: any; // To store Svelte Flow data structure
+    ownerId?: string;
+    isPublic?: boolean;
 }
 
 export interface User {
