@@ -5,12 +5,12 @@
 - [x] Task: Create a migration script or utility to mark all existing (legacy) scenarios as `isPublic: true`. [2ecd423]
 - [x] Task: Conductor - User Manual Verification 'Phase 1: Database & Model Foundation' (Protocol in workflow.md)
 
-## Phase 2: API & Backend Logic
+## Phase 2: API & Backend Logic [checkpoint: f8ba72b]
 - [x] Task: Update scenario creation logic (e.g., in `src/lib/server/scenario.ts`) to automatically set `ownerId` from the session and default `isPublic` to `false`. [356bc8a]
-- [x] Task: Enhance `listScenarios` in `src/lib/server/db.ts` to support filtering by `ownerId` and/or `isPublic` status. [3e8517e]
-- [x] Task: Update `GET /api/scenario` (public listing) to only return scenarios where `isPublic: true`. [c363881]
-- [x] Task: Implement `PATCH /api/scenario/[id]` endpoint to allow owners to toggle the `isPublic` status. [b1355af]
-- [ ] Task: Conductor - User Manual Verification 'Phase 2: API & Backend Logic' (Protocol in workflow.md)
+- [x] Task: Enhance `listScenarios` in `src/lib/server/db.ts` to support filtering by `ownerId` and/or `isPublic` status. [ec146e6]
+- [x] Task: Update `GET /api/scenario` (public listing) to only return scenarios where `isPublic: true`. [6f1303c]
+- [x] Task: Implement `PATCH /api/scenario/[id]` endpoint to allow owners to toggle the `isPublic` status. [f09fe67]
+- [x] Task: Conductor - User Manual Verification 'Phase 2: API & Backend Logic' (Protocol in workflow.md)
 
 ## Phase 3: Dashboard & Navigation
 - [ ] Task: Create the `/dashboard` route (`src/routes/dashboard/+page.svelte` and `+page.server.ts`) to display the user's personal scenarios.
